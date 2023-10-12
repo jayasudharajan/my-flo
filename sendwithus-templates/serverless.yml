@@ -1,0 +1,40 @@
+---
+service:
+  name: sendwithus-templates
+
+plugins:
+  - serverless-webpack
+
+custom:
+  defaultRegion: us-west-2
+  defaultLambdaTimeout: 300 # 5 minutes
+  defaultSendWithUsBaseUrl: https://api.sendwithus.com/api/v1/templates
+  defaultCronScheduleExpression: cron(0 0 ? * SUN *)
+  defaultS3Bucket: flosecurecloud-backup/sendwithus-templates
+  region: ${opt:region, self:custom.defaultRegion}
+  lambdaTimeout: ${env:LAMBDA_TIMEOUT, self:custom.defaultLambdaTimeout}
+  sendWithUsBaseUrl: ${env:SEND_WITH_US_BASE_URL, self:custom.defaultSendWithUsBaseUrl}
+  sendWithUsApiKey: ${env:SEND_WITH_US_API_KEY}
+  s3Bucket: ${env:S3_BUCKET, self:custom.defaultS3Bucket}
+  cronScheduleExpression: ${env:CRON_SCHEDULE_EXPRESSION, self:custom.defaultCronScheduleExpression}
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ${self:custom.region}
+  timeout: ${self:custom.lambdaTimeout}
+  environment:
+    SEND_WITH_US_BASE_URL: ${self:custom.sendWithUsBaseUrl}
+    SEND_WITH_US_API_KEY: ${self:custom.sendWithUsApiKey}
+    S3_BUCKET: ${self:custom.s3Bucket}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - "s3:PutObject"
+      Resource: 
+        - "arn:aws:s3:::${self:custom.s3Bucket}/*"
+functions:
+  backup:
+    handler: src/main.handle
+    events:
+      - schedule: ${self:custom.cronScheduleExpression}  

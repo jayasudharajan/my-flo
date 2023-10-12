@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "flo-sms-service.fullname" . }}-config
+  namespace: services
+data:
+  KILL_SWITCH_ENABLED: 'false'
+  KAFKA_ENCRYPTION_ENABLED: 'true'
+  #
+  KAFKA_HOST: 10.30.21.81:9092,10.30.21.91:9092,10.30.21.185:9092
+  #
+  #
+  KEY_PROVIDER_KEY_PATH_TEMPLATE: "flo-apps/flo-encryption/{{ env }}/kafka/@KEY_ID/@KEY_TYPE_key.pem"
+
+
+  NEW_RELIC_APP_NAME: "flo-sms-service-{{ .Values.environment }}"
+  NEW_RELIC_LOG: STDOUT
+
+  FLO_API_CLIENT_ID: "f77050b0-25b5-4305-9d54-bbb628b395f4"
+
+
+  KAFKA_FILTER_TIME_IN_SECONDS: 300
+  KAFKA_CONSUMER_MAX_POLL_RECORDS: 1
+  KAFKA_CONSUMER_POLL_TIMEOUT: 1000
+
+  KAFKA_GROUP_ID: "flo-sms-service-{{ .Values.environment }}"
+
+  KAFKA_TOPIC: sms-v2
+
+
+
+{{ tpl (.Files.Get "secrets.yaml") . | nindent 2 }}

@@ -1,0 +1,147 @@
+---
+service:
+  name: "eb-restarter"
+  publish: false
+
+
+custom: ${file(./serverless/${opt:stage, 'dev'}/env.yml)}
+
+frameworkVersion: '>=1.28.0 <2.0.0'
+functions:
+  task-scheduler-restarter:
+    environment:
+      EB_ENVIRONMENT_ID: ${self:custom.config.task_scheduler.environment_id}
+    events:
+      - schedule:
+          name: RestartTaskScheduler
+          description: 'Restart task scheduler Beanstalk environment'
+          rate: rate(12 hours)
+    handler: com.flotechnologies.RouterRestarter::handleRequest
+    timeout: 30
+
+package:
+  artifact: ./build/distributions/notification-router-restarter-1.0-SNAPSHOT.zip
+
+provider:
+  name: aws
+  profile: flo-${opt:stage, 'dev'}
+  region: us-west-2
+  stage: ${opt:stage, 'dev'}
+  runtime: java8
+  memorySize: 512
+  iamManagedPolicies:
+    - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+    - 'arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess'
+  iamRoleStatements:
+    - Sid: AllowAllTheThings
+      Effect: Allow
+      Action:
+        - autoscaling:DescribeAccountLimits
+        - autoscaling:DescribeAdjustmentTypes
+        - autoscaling:DescribeAutoScalingGroups
+        - autoscaling:DescribeAutoScalingInstances
+        - autoscaling:DescribeAutoScalingNotificationTypes
+        - autoscaling:DescribeLaunchConfigurations
+        - autoscaling:DescribeLifecycleHookTypes
+        - autoscaling:DescribeLifecycleHooks
+        - autoscaling:DescribeLoadBalancerTargetGroups
+        - autoscaling:DescribeLoadBalancers
+        - autoscaling:DescribeMetricCollectionTypes
+        - autoscaling:DescribeNotificationConfigurations
+        - autoscaling:DescribePolicies
+        - autoscaling:DescribeScalingActivities
+        - autoscaling:DescribeScalingProcessTypes
+        - autoscaling:DescribeScheduledActions
+        - autoscaling:DescribeTags
+        - autoscaling:DescribeTerminationPolicyTypes
+        - cloudformation:DescribeAccountLimits
+        - cloudformation:DescribeChangeSet
+        - cloudformation:DescribeStackDriftDetectionStatus
+        - cloudformation:DescribeStackEvents
+        - cloudformation:DescribeStackInstance
+        - cloudformation:DescribeStackResource
+        - cloudformation:DescribeStackResourceDrifts
+        - cloudformation:DescribeStackResources
+        - cloudformation:DescribeStackSet
+        - cloudformation:DescribeStackSetOperation
+        - cloudformation:DescribeStacks
+        - cloudformation:DetectStackDrift
+        - cloudformation:DetectStackResourceDrift
+        - cloudformation:EstimateTemplateCost
+        - cloudformation:GetStackPolicy
+        - cloudformation:GetTemplate
+        - cloudformation:GetTemplateSummary
+        - cloudformation:ListChangeSets
+        - cloudformation:ListExports
+        - cloudformation:ListImports
+        - cloudformation:ListStackInstances
+        - cloudformation:ListStackResources
+        - cloudformation:ListStackSetOperationResults
+        - cloudformation:ListStackSetOperations
+        - cloudformation:ListStackSets
+        - cloudformation:ListStacks
+        - elasticbeanstalk:AbortEnvironmentUpdate
+        - elasticbeanstalk:ApplyEnvironmentManagedAction
+        - elasticbeanstalk:ComposeEnvironments
+        - elasticbeanstalk:CreateApplication
+        - elasticbeanstalk:CreateApplicationVersion
+        - elasticbeanstalk:CreateConfigurationTemplate
+        - elasticbeanstalk:CreateEnvironment
+        - elasticbeanstalk:CreatePlatformVersion
+        - elasticbeanstalk:CreateStorageLocation
+        - elasticbeanstalk:DeleteApplication
+        - elasticbeanstalk:DeleteApplicationVersion
+        - elasticbeanstalk:DeleteConfigurationTemplate
+        - elasticbeanstalk:DeleteEnvironmentConfiguration
+        - elasticbeanstalk:DeletePlatformVersion
+        - elasticbeanstalk:DescribeApplicationVersions
+        - elasticbeanstalk:DescribeApplications
+        - elasticbeanstalk:DescribeEnvironments
+        - elasticbeanstalk:ListAvailableSolutionStacks
+        - elasticbeanstalk:ListPlatformVersions
+        - elasticbeanstalk:RebuildEnvironment
+        - elasticbeanstalk:RestartAppServer
+        - elasticbeanstalk:SwapEnvironmentCNAMEs
+        - elasticbeanstalk:TerminateEnvironment
+        - elasticbeanstalk:UpdateApplication
+        - elasticbeanstalk:UpdateApplicationResourceLifecycle
+        - elasticbeanstalk:UpdateApplicationVersion
+        - elasticbeanstalk:UpdateConfigurationTemplate
+        - elasticbeanstalk:UpdateEnvironment
+        - elasticloadbalancing:AddTags
+        - elasticloadbalancing:ApplySecurityGroupsToLoadBalancer
+        - elasticloadbalancing:AttachLoadBalancerToSubnets
+        - elasticloadbalancing:ConfigureHealthCheck
+        - elasticloadbalancing:CreateAppCookieStickinessPolicy
+        - elasticloadbalancing:CreateLBCookieStickinessPolicy
+        - elasticloadbalancing:CreateLoadBalancer
+        - elasticloadbalancing:CreateLoadBalancerListeners
+        - elasticloadbalancing:CreateLoadBalancerPolicy
+        - elasticloadbalancing:DeleteLoadBalancer
+        - elasticloadbalancing:DeleteLoadBalancerListeners
+        - elasticloadbalancing:DeleteLoadBalancerPolicy
+        - elasticloadbalancing:DeregisterInstancesFromLoadBalancer
+        - elasticloadbalancing:DescribeAccountLimits
+        - elasticloadbalancing:DescribeInstanceHealth
+        - elasticloadbalancing:DescribeListenerCertificates
+        - elasticloadbalancing:DescribeListeners
+        - elasticloadbalancing:DescribeLoadBalancerAttributes
+        - elasticloadbalancing:DescribeLoadBalancerPolicies
+        - elasticloadbalancing:DescribeLoadBalancerPolicyTypes
+        - elasticloadbalancing:DescribeLoadBalancers
+        - elasticloadbalancing:DescribeRules
+        - elasticloadbalancing:DescribeSSLPolicies
+        - elasticloadbalancing:DescribeTags
+        - elasticloadbalancing:DescribeTargetGroupAttributes
+        - elasticloadbalancing:DescribeTargetGroups
+        - elasticloadbalancing:DescribeTargetHealth
+        - elasticloadbalancing:DetachLoadBalancerFromSubnets
+        - elasticloadbalancing:DisableAvailabilityZonesForLoadBalancer
+        - elasticloadbalancing:EnableAvailabilityZonesForLoadBalancer
+        - elasticloadbalancing:ModifyLoadBalancerAttributes
+        - elasticloadbalancing:RegisterInstancesWithLoadBalancer
+        - elasticloadbalancing:RemoveTags
+        - elasticloadbalancing:SetLoadBalancerListenerSSLCertificate
+        - elasticloadbalancing:SetLoadBalancerPoliciesForBackendServer
+        - elasticloadbalancing:SetLoadBalancerPoliciesOfListener
+      Resource: "*"

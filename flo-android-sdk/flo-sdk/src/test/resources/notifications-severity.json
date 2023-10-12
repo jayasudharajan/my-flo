@@ -1,0 +1,468 @@
+{
+    "total": 317,
+    "aggregations": [
+        {
+            "total": 315,
+            "severity": 2,
+            "alerts": [
+                {
+                    "account": {
+                        "account_id": "39645174-d1d3-474a-9c81-5010d8dca84f",
+                        "group_id": "00895a25-cc08-44e6-b290-9bd4fdced2af"
+                    },
+                    "alarm_id": 15,
+                    "icd_id": "e11c22d2-5b35-4295-babb-0a5df28bc694",
+                    "severity": 2,
+                    "is_cleared": false,
+                    "alarm_id_system_mode": "15_3",
+                    "system_mode": 3,
+                    "telemetry_data": {
+                        "pmax": 100,
+                        "tmax": 150,
+                        "f": 0,
+                        "tmin": 40,
+                        "sw1": 1,
+                        "m": 0,
+                        "ft": 0,
+                        "pefl": 50,
+                        "wf": 0,
+                        "sw2": 0,
+                        "fdl": 3600,
+                        "o": 0,
+                        "p": 0.3,
+                        "pef": 0,
+                        "mafr": 8,
+                        "t": 88,
+                        "pmin": 20,
+                        "fd": 3,
+                        "ftl": 8
+                    },
+                    "friendly_description": "On ##INCIDENT_DATE_TIME##, your water pressure dropped below your normal range of ##MIN_PRESSURE## to ##REAL_PRESSURE## psi. We recommend you troubleshoot the issue to ensure you're protected against any long term effects on your water system.",
+                    "geo_location": {
+                        "country": "USA",
+                        "location_id": "800a8b9b-1e56-43ea-86b2-98cdefda4d30",
+                        "timezone": "America/Los_Angeles"
+                    },
+                    "user_actions": {
+                        "support_options": [
+                            {
+                                "action_path": "user.meetflo.com/support/alarms/15",
+                                "text": "Learn More",
+                                "id": 1,
+                                "sort": 1,
+                                "action_type": 0
+                            }
+                        ],
+                        "title": "Clear this alert",
+                        "prompt": "Do you want to ignore this alert if it happens again?",
+                        "actions": [
+                            {
+                                "success_message": "You will not be alerted about this alert again for 2 hours.",
+                                "display": "Ignore for 2 hours",
+                                "id": 1,
+                                "sort": 1,
+                                "failure_message": "Sorry, there was a problem processing your request. Please try again later or call support.",
+                                "display_when": {
+                                    "time": {},
+                                    "alarm_notification_delivery_filter": {
+                                        "status": 3
+                                    },
+                                    "valve": {},
+                                    "chains": {}
+                                },
+                                "option": "Ignore For 2 hours"
+                            },
+                            {
+                                "success_message": "You will not be alerted about this alert again for 24 hours.",
+                                "display": "Ignore for 24 hours",
+                                "id": 6,
+                                "sort": 2,
+                                "failure_message": "Sorry, there was a problem processing your request. Please try again later or call support.",
+                                "display_when": {
+                                    "time": {},
+                                    "alarm_notification_delivery_filter": {
+                                        "status": 3
+                                    },
+                                    "valve": {},
+                                    "chains": {}
+                                },
+                                "option": "Ignore For 24 hours"
+                            },
+                            {
+                                "success_message": "You will be alerted the next time this issue occurs.",
+                                "display": "Do not ignore this alert",
+                                "id": 4,
+                                "sort": 3,
+                                "failure_message": "Sorry, there was a problem processing your request. Please try again later or call support.",
+                                "display_when": {
+                                    "time": {},
+                                    "alarm_notification_delivery_filter": {
+                                        "status": 3
+                                    },
+                                    "valve": {},
+                                    "chains": {}
+                                },
+                                "option": "Do not ignore this alert"
+                            }
+                        ]
+                    },
+                    "self_resolved": 0,
+                    "acknowledged_by_user": 0,
+                    "self_resolved_message": null,
+                    "user_action_taken": null,
+                    "status": 3,
+                    "incident_id": "35ec096e-6655-11e7-a979-8cc7aa02773b",
+                    "incident_time": "2017-07-11T16:23:02.384Z",
+                    "updated_at": "2017-07-11T16:23:02.782Z",
+                    "friendly_name": "Low Water Pressure",
+                    "default_delivery_media": [
+                        2,
+                        3
+                    ]
+                },
+                {
+                    "account": {
+                        "account_id": "39645174-d1d3-474a-9c81-5010d8dca84f",
+                        "group_id": "00895a25-cc08-44e6-b290-9bd4fdced2af"
+                    },
+                    "alarm_id": 15,
+                    "icd_id": "e11c22d2-5b35-4295-babb-0a5df28bc694",
+                    "severity": 2,
+                    "is_cleared": false,
+                    "alarm_id_system_mode": "15_3",
+                    "system_mode": 3,
+                    "telemetry_data": {
+                        "pmax": 100,
+                        "tmax": 150,
+                        "f": 0,
+                        "tmin": 40,
+                        "sw1": 1,
+                        "m": 0,
+                        "ft": 0,
+                        "pefl": 50,
+                        "wf": 0,
+                        "sw2": 0,
+                        "fdl": 3600,
+                        "o": 0,
+                        "p": 0.3,
+                        "pef": 0,
+                        "mafr": 8,
+                        "t": 89,
+                        "pmin": 20,
+                        "fd": 2,
+                        "ftl": 8
+                    },
+                    "friendly_description": "On ##INCIDENT_DATE_TIME##, your water pressure dropped below your normal range of ##MIN_PRESSURE## to ##REAL_PRESSURE## psi. We recommend you troubleshoot the issue to ensure you're protected against any long term effects on your water system.",
+                    "geo_location": {
+                        "country": "USA",
+                        "location_id": "800a8b9b-1e56-43ea-86b2-98cdefda4d30",
+                        "timezone": "America/Los_Angeles"
+                    },
+                    "user_actions": {
+                        "support_options": [
+                            {
+                                "action_path": "user.meetflo.com/support/alarms/15",
+                                "text": "Learn More",
+                                "id": 1,
+                                "sort": 1,
+                                "action_type": 0
+                            }
+                        ],
+                        "title": "Clear this alert",
+                        "prompt": "Do you want to ignore this alert if it happens again?",
+                        "actions": [
+                            {
+                                "success_message": "You will not be alerted about this alert again for 2 hours.",
+                                "display": "Ignore for 2 hours",
+                                "id": 1,
+                                "sort": 1,
+                                "failure_message": "Sorry, there was a problem processing your request. Please try again later or call support.",
+                                "display_when": {
+                                    "time": {},
+                                    "alarm_notification_delivery_filter": {
+                                        "status": 3
+                                    },
+                                    "valve": {},
+                                    "chains": {}
+                                },
+                                "option": "Ignore For 2 hours"
+                            },
+                            {
+                                "success_message": "You will not be alerted about this alert again for 24 hours.",
+                                "display": "Ignore for 24 hours",
+                                "id": 6,
+                                "sort": 2,
+                                "failure_message": "Sorry, there was a problem processing your request. Please try again later or call support.",
+                                "display_when": {
+                                    "time": {},
+                                    "alarm_notification_delivery_filter": {
+                                        "status": 3
+                                    },
+                                    "valve": {},
+                                    "chains": {}
+                                },
+                                "option": "Ignore For 24 hours"
+                            },
+                            {
+                                "success_message": "You will be alerted the next time this issue occurs.",
+                                "display": "Do not ignore this alert",
+                                "id": 4,
+                                "sort": 3,
+                                "failure_message": "Sorry, there was a problem processing your request. Please try again later or call support.",
+                                "display_when": {
+                                    "time": {},
+                                    "alarm_notification_delivery_filter": {
+                                        "status": 3
+                                    },
+                                    "valve": {},
+                                    "chains": {}
+                                },
+                                "option": "Do not ignore this alert"
+                            }
+                        ]
+                    },
+                    "self_resolved": 0,
+                    "acknowledged_by_user": 0,
+                    "self_resolved_message": null,
+                    "user_action_taken": null,
+                    "status": 3,
+                    "incident_id": "b27cb936-664c-11e7-8ba1-8cc7aa02773b",
+                    "incident_time": "2017-07-11T15:22:05.896Z",
+                    "updated_at": "2017-07-11T15:22:06.338Z",
+                    "friendly_name": "Low Water Pressure",
+                    "default_delivery_media": [
+                        2,
+                        3
+                    ]
+                },
+                {
+                    "account": {
+                        "account_id": "39645174-d1d3-474a-9c81-5010d8dca84f",
+                        "group_id": "00895a25-cc08-44e6-b290-9bd4fdced2af"
+                    },
+                    "alarm_id": 15,
+                    "icd_id": "e11c22d2-5b35-4295-babb-0a5df28bc694",
+                    "severity": 2,
+                    "is_cleared": false,
+                    "alarm_id_system_mode": "15_3",
+                    "system_mode": 3,
+                    "telemetry_data": {
+                        "pmax": 100,
+                        "tmax": 150,
+                        "f": 0,
+                        "tmin": 40,
+                        "sw1": 1,
+                        "m": 0,
+                        "ft": 0,
+                        "pefl": 50,
+                        "wf": 0,
+                        "sw2": 0,
+                        "fdl": 3600,
+                        "o": 0,
+                        "p": 0.3,
+                        "pef": 0,
+                        "mafr": 8,
+                        "t": 89,
+                        "pmin": 20,
+                        "fd": 2,
+                        "ftl": 8
+                    },
+                    "friendly_description": "On ##INCIDENT_DATE_TIME##, your water pressure dropped below your normal range of ##MIN_PRESSURE## to ##REAL_PRESSURE## psi. We recommend you troubleshoot the issue to ensure you're protected against any long term effects on your water system.",
+                    "geo_location": {
+                        "country": "USA",
+                        "location_id": "800a8b9b-1e56-43ea-86b2-98cdefda4d30",
+                        "timezone": "America/Los_Angeles"
+                    },
+                    "user_actions": {
+                        "support_options": [
+                            {
+                                "action_path": "user.meetflo.com/support/alarms/15",
+                                "text": "Learn More",
+                                "id": 1,
+                                "sort": 1,
+                                "action_type": 0
+                            }
+                        ],
+                        "title": "Clear this alert",
+                        "prompt": "Do you want to ignore this alert if it happens again?",
+                        "actions": [
+                            {
+                                "success_message": "You will not be alerted about this alert again for 2 hours.",
+                                "display": "Ignore for 2 hours",
+                                "id": 1,
+                                "sort": 1,
+                                "failure_message": "Sorry, there was a problem processing your request. Please try again later or call support.",
+                                "display_when": {
+                                    "time": {},
+                                    "alarm_notification_delivery_filter": {
+                                        "status": 3
+                                    },
+                                    "valve": {},
+                                    "chains": {}
+                                },
+                                "option": "Ignore For 2 hours"
+                            },
+                            {
+                                "success_message": "You will not be alerted about this alert again for 24 hours.",
+                                "display": "Ignore for 24 hours",
+                                "id": 6,
+                                "sort": 2,
+                                "failure_message": "Sorry, there was a problem processing your request. Please try again later or call support.",
+                                "display_when": {
+                                    "time": {},
+                                    "alarm_notification_delivery_filter": {
+                                        "status": 3
+                                    },
+                                    "valve": {},
+                                    "chains": {}
+                                },
+                                "option": "Ignore For 24 hours"
+                            },
+                            {
+                                "success_message": "You will be alerted the next time this issue occurs.",
+                                "display": "Do not ignore this alert",
+                                "id": 4,
+                                "sort": 3,
+                                "failure_message": "Sorry, there was a problem processing your request. Please try again later or call support.",
+                                "display_when": {
+                                    "time": {},
+                                    "alarm_notification_delivery_filter": {
+                                        "status": 3
+                                    },
+                                    "valve": {},
+                                    "chains": {}
+                                },
+                                "option": "Do not ignore this alert"
+                            }
+                        ]
+                    },
+                    "self_resolved": 0,
+                    "acknowledged_by_user": 0,
+                    "self_resolved_message": null,
+                    "user_action_taken": null,
+                    "status": 3,
+                    "incident_id": "28cd5014-6644-11e7-8c9a-8cc7aa02773b",
+                    "incident_time": "2017-07-11T14:20:58.961Z",
+                    "updated_at": "2017-07-11T14:20:59.385Z",
+                    "friendly_name": "Low Water Pressure",
+                    "default_delivery_media": [
+                        2,
+                        3
+                    ]
+                }
+            ]
+        },
+        {
+            "total": 2,
+            "severity": 3,
+            "alerts": [
+                {
+                    "account": {
+                        "account_id": "39645174-d1d3-474a-9c81-5010d8dca84f",
+                        "group_id": "00895a25-cc08-44e6-b290-9bd4fdced2af"
+                    },
+                    "alarm_id": 34,
+                    "icd_id": "e11c22d2-5b35-4295-babb-0a5df28bc694",
+                    "severity": 3,
+                    "is_cleared": false,
+                    "alarm_id_system_mode": "34_3",
+                    "system_mode": 3,
+                    "telemetry_data": {
+                        "pmax": 100,
+                        "f": 0,
+                        "tmax": 150,
+                        "tmin": 40,
+                        "sw1": 0,
+                        "m": 0,
+                        "ft": 0,
+                        "fdl": 3600,
+                        "o": 0,
+                        "pefl": 50,
+                        "sw2": 1,
+                        "wf": 0,
+                        "p": 0.3,
+                        "pef": 0,
+                        "mafr": 8,
+                        "t": 87,
+                        "pmin": 20,
+                        "fd": 2,
+                        "ftl": 8
+                    },
+                    "friendly_description": "Congrats! Your home water system passed the Health Test at %@. You're Secure.",
+                    "geo_location": {
+                        "country": "USA",
+                        "location_id": "800a8b9b-1e56-43ea-86b2-98cdefda4d30",
+                        "timezone": "America/Los_Angeles"
+                    },
+                    "user_actions": {},
+                    "self_resolved": 0,
+                    "acknowledged_by_user": 0,
+                    "self_resolved_message": null,
+                    "user_action_taken": null,
+                    "status": 3,
+                    "incident_id": "008d1649-c52d-4146-a6c7-16bcc694c15a",
+                    "incident_time": "2017-06-22T17:44:21.485Z",
+                    "updated_at": "2017-06-22T17:44:21.930Z",
+                    "friendly_name": "Health Test Successful",
+                    "default_delivery_media": [
+                        2,
+                        3
+                    ]
+                },
+                {
+                    "account": {
+                        "account_id": "39645174-d1d3-474a-9c81-5010d8dca84f",
+                        "group_id": "00895a25-cc08-44e6-b290-9bd4fdced2af"
+                    },
+                    "alarm_id": 34,
+                    "icd_id": "e11c22d2-5b35-4295-babb-0a5df28bc694",
+                    "severity": 3,
+                    "is_cleared": false,
+                    "alarm_id_system_mode": "34_3",
+                    "system_mode": 3,
+                    "telemetry_data": {
+                        "pmax": 100,
+                        "f": 0,
+                        "tmax": 150,
+                        "tmin": 40,
+                        "sw1": 0,
+                        "m": 0,
+                        "ft": 0,
+                        "fdl": 3600,
+                        "o": 0,
+                        "pefl": 50,
+                        "sw2": 1,
+                        "wf": 0,
+                        "p": 0.3,
+                        "pef": 0,
+                        "mafr": 8,
+                        "t": 86,
+                        "pmin": 20,
+                        "fd": 2,
+                        "ftl": 8
+                    },
+                    "friendly_description": "Congrats! Your home water system passed the Health Test at %@. You're Secure.",
+                    "geo_location": {
+                        "country": "USA",
+                        "location_id": "800a8b9b-1e56-43ea-86b2-98cdefda4d30",
+                        "timezone": "America/Los_Angeles"
+                    },
+                    "user_actions": {},
+                    "self_resolved": 0,
+                    "acknowledged_by_user": 0,
+                    "self_resolved_message": null,
+                    "user_action_taken": null,
+                    "status": 3,
+                    "incident_id": "5cdc17b4-f6dd-4d8f-ad2f-1c2d93954996",
+                    "incident_time": "2017-06-21T18:50:19.409Z",
+                    "updated_at": "2017-06-21T18:50:19.884Z",
+                    "friendly_name": "Health Test Successful",
+                    "default_delivery_media": [
+                        2,
+                        3
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,49 @@
+{
+  "id": "52d7a8c6-5ad6-47ad-8d17-4c69c506c8b8",
+  "users": [
+    {
+      "id": "f339dce3-d7ea-4e43-be2e-25adb5018a60"
+    }
+  ],
+  "devices": [
+    {
+      "id": "8f844d4c-0924-4a66-9bee-ef448b32284c",
+      "macAddress": "74e182118ff6"
+    }
+  ],
+  "userRoles": [
+    {
+      "userId": "f339dce3-d7ea-4e43-be2e-25adb5018a60",
+      "roles": [
+        "owner"
+      ]
+    }
+  ],
+  "address": "No. 236, Section 2, Zhongyang Road",
+  "city": "Tucheng District",
+  "state": "CA",
+  "country": "us",
+  "postalCode": "236",
+  "timezone": "US/Pacific",
+  "gallonsPerDayGoal": 95.10193342230647,
+  "occupants": 6,
+  "stories": 4,
+  "isProfileComplete": true,
+  "nickname": "Home",
+  "irrigationSchedule": {
+    "isEnabled": false
+  },
+  "systemMode": {},
+  "locationType": "sfh",
+  "locationSize": "gt_2000_ft_lte_4000_ft",
+  "waterShutoffKnown": "yes",
+  "indoorAmenities": [
+    "dishwasher",
+    "bathtub"
+  ],
+  "outdoorAmenities": [],
+  "plumbingAppliances": [],
+  "account": {
+    "id": "51b26fbb-9bdb-4195-8246-a8b6069fc87e"
+  }
+}

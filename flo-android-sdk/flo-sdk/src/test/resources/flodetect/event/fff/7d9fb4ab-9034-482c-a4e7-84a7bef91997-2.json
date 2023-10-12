@@ -1,0 +1,4 @@
+[
+  {"cluster_means":[0.20551439566384203,0.7724671432552067,15.113495184695179],"gpm":0.682205058367358,"label":[0,8,3,7],"device_id":"8cc7aa0280f0","flow":0.11370084306122634,"fixture":"faucet","request_id":"7d9fb4ab-9034-482c-a4e7-84a7bef91997","end":"2018-07-16T22:57:13.143Z","sub_label":{"all":[0],"individual":3},"feedback":{"case":0,"correct_fixture":"faucet"},"duration":10,"start":"2018-07-16T22:57:04.142Z","type":4},
+  {"cluster_means":[0.20551439566384203,0.7724671432552067,15.113495184695179],"gpm":0.682205058367358,"label":[0,8,3,7],"device_id":"8cc7aa0280f0","flow":0.11370084306122634,"fixture":"faucet","request_id":"7d9fb4ab-9034-482c-a4e7-84a7bef91997","end":"2018-07-16T22:57:13.143Z","sub_label":{"all":[0],"individual":3},"feedback":{"case":0,"correct_fixture":"faucet"},"duration":10,"start":"2018-07-16T22:57:04.142Z","type":4}
+]

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -x
+
+helm template \
+  useradm \
+  --namespace mender \
+|| exit 1
+helm upgrade --install \
+  useradm \
+  ./useradm \
+  --recreate-pods \
+  --wait --debug \
+  --namespace mender

@@ -1,0 +1,7 @@
+{
+  "sdk_config": {
+    "networking": {
+      "capture_request_content_length": false
+    }
+  }
+}

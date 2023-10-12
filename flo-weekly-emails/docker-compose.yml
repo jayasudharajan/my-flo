@@ -1,0 +1,107 @@
+version: "3.8"
+
+services:
+  #NOTE: prod loc & user id (Gabe's) 0cae7dc582ea (1.25) 0cae7dc535f9 (0.75): 8ab11a12-872f-42d2-bdc0-40ab2a63cbd0, 6ed72bf3-be53-4464-b92f-f9a613ed2243
+  #NOTE: prod loc, Vince's 4924eighthave@gmail.com    6cd2ef33-6a91-474a-9916-d2576e4f11a1
+  #NOTE: prod loc, Josh's josh@flotechnologies.com    1c94283d-2f3c-411b-9677-2eff111d89e8
+  #NOTE: prod loc & user id (Henry's) : 28ec9a9ec5ae: e5cf18bb-ded4-42c0-8a42-9c02f6c3509c, f70adf45-b51e-4257-a2f6-64d4d7cd4cbd
+  #NOTE MUD!: dev mac, loc & user id (JP Fo Test Dev): a81087258984, 5981e72c-fd65-4b17-8201-7cbdf1820eeb, 17780e12-b228-4ff3-a8cb-f10e6dff16a8  jpm046+devtest@gmail.com
+  #NOTE: dev mac, loc & user id (David Braverman Dev): 74e182167461, 9774feb0-b9c0-4a76-83bb-59df397234ed, c6803533-d97e-4533-a695-7b8c555a555c david+13@flotechnologies.com
+  app:
+    image: flo-weekly-emails:local
+    ports:
+      - "8000:8000"
+    environment:
+      APPLICATION_NAME: "flo-weekly-emails"
+      ENVIRONMENT: "development"
+      FLO_HTTP_PORT: 8000
+      FLO_PGDB_CN: "postgres://postgres:pwd@postgres:5432?sslmode=disable"
+      FLO_REDIS_CN: "redis:6379"
+      PG_USER: "postgres"
+      PG_PASS: "pwd"
+      FLO_API_URL: "https://api-gw-dev.flocloud.co"
+      FLO_API_JWT: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiI1RDZFNUQyOC00OTZDLTRCNDMtOTY5Mi00Nzc1QzgzOEE2NkMiLCJpYXQiOjE1ODkzOTc2MjAsImp0aSI6IjcyYTg3NzUwLTU0ZjEtNDFmYS05NTU5LTg1ZGJlOWViNzUwYSJ9.Wi-Su5uN-gIRlkLDEtEEdXWenGze8vVkfVEi_FuBNqs"
+      FLO_KAFKA_CN: "kafka:9092"
+      FLO_LOCAL_DEBUG: "true"
+      FLO_KAFKA_TOPIC: "email-weekly-loc"
+      FLO_KAFKA_GROUP_ID: "flo-weekly-email-huyn"
+      FLO_LOG_MIN_LEVEL: 1
+      FLO_LOCALIZATION_SVC_URI: "http://flo-localization-service.flocloud.co/v1"
+      #FLO_MAIL_GW_URI: "http://email-gateway.flocloud.co"
+      FLO_MAIL_GW_URI: "http://host.docker.internal:8080"
+      #FLO_HTTP_LOG_PATH_IGNORES: "/|/ping"
+      FLO_DEV_API: "http://flo-device-service.flocloud.co"
+      FLO_DEFAULT_TEST_EMAIL: "huy+testing@flotechnologies.com"
+      #FLO_EMAIL_CRON_ASAP: "true"
+    volumes:
+      - "./src:/src"
+    #restart: on-failure
+    depends_on:
+      - kafka
+      - postgres
+      - redis
+    build:
+      context: .
+      dockerfile: ./Dockerfile.build
+      args:
+        CI_COMMIT_SHA: "${CI_COMMIT_SHA:-none}"
+
+  redis:
+    image: bitnami/redis:latest
+    #CONNECT w/ local client (psql can be used instead of redis-cli also): redis-cli -u redis://localhost:6379
+    ports:
+      - "6379:6379"
+    environment:
+      - "ALLOW_EMPTY_PASSWORD=yes"
+      #- "REDIS_PASSWORD=pwd"
+    volumes:
+      - "./db/tmp/redis:/bitnami/redis/data"
+    restart: on-failure
+    logging:
+      driver: none
+
+  postgres:
+    image: postgres:latest
+    #CONNECT w/ local client: pgcli -h localhost -U postgres
+    ports:
+      - "5432:5432"
+    #NOTE: schema bootstrap only happens if ./db/tmp/postgres is missing!
+    volumes:
+      - "./db/schema:/docker-entrypoint-initdb.d"
+      - "./db/tmp/postgres:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_PASSWORD: "pwd"
+
+  zookeeper:
+    image: "bitnami/zookeeper:3"
+    ports:
+      - "2181:2181"
+    restart: on-failure
+    volumes:
+      - "./db/tmp/zookeeper:/bitnami/zookeeper"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    logging:
+      driver: none
+
+  #NOTE: both zookeeper & kafka username & pwd are: user & bitnami
+  kafka:
+    image: "bitnami/kafka:2"
+    #CONNECT tail w/ local client (run 2x, 1st run will mk topic): kafkacat -C -b localhost:29092 -t 'email-weekly-loc' -p 0
+    #push dummy data w/ local client: echo '{"client_app_name":"kafcat"}' | kafkacat -P -b localhost:29092 -t 'email-weekly-loc' -p 0
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    volumes:
+      - "./db/tmp/kafka:/bitnami/kafka"
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,PLAINTEXT_HOST://:29092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+    depends_on:
+      - zookeeper
+    logging:
+      driver: none

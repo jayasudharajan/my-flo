@@ -1,0 +1,6 @@
+*.crt
+*.csr
+*.pem
+*.tgz
+
+secrets.yaml

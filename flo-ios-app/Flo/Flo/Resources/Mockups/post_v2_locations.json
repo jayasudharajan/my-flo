@@ -1,0 +1,45 @@
+{
+  "residenceType" : "rental",
+  "plumbingAppliances" : [
+
+  ],
+  "toiletCount" : 3,
+  "indoorAmenities" : [
+    "hottub",
+    "bathtub"
+  ],
+  "address" : "tedi",
+  "waterShutoffKnown" : "yes",
+  "gallonsPerDayGoal" : 50,
+  "homeownersInsurance" : "ttt",
+  "nickname" : "tedi",
+  "id" : "8ec0ab55-9c80-4253-9318-75ce3da1ab08",
+  "plumbingType" : "unsure",
+  "state" : "AR",
+  "devices" : [
+
+  ],
+  "city" : "fbf",
+  "account" : {
+    "id" : "54c3dceb-04a7-444e-86f5-c6194b091eef"
+  },
+  "waterSource" : "utility",
+  "userRoles" : [
+
+  ],
+  "outdoorAmenities" : [
+
+  ],
+  "stories" : 2,
+  "locationSize" : "gt_1000_ft_lte_2000_ft",
+  "country" : "us",
+  "locationType" : "condo",
+  "hasPastWaterDamage" : false,
+  "users" : [
+
+  ],
+  "occupants" : 4,
+  "postalCode" : "4521",
+  "timezone" : "US\/Pacific",
+  "showerBathCount" : 2
+}

@@ -1,0 +1,44 @@
+---
+service:
+  name: flo-device-state-service-install-sender
+
+plugins:
+  - serverless-webpack
+
+custom:
+  defaultRegion: us-west-2
+  defaultBatchSize: 100
+  defaultStartingPosition: TRIM_HORIZON
+  region: ${opt:region, self:custom.defaultRegion}
+  tablePrefix: ${env:TABLE_PREFIX, opt:stage}_
+  accountId: ${env:ACCOUNT_ID}
+  streamBatchSize: ${env:STREAM_BATCH_SIZE, self:custom.defaultBatchSize}
+  streamStartingPosition: ${env:STREAM_STARTING_POSITION, self:custom.defaultStartingPosition}
+  dynamoDbStreamId: ${env:DYNAMODB_STREAM_ID}
+  deviceStateServiceBaseUrl: ${env:DEVICE_STATE_SERVICE_BASE_URL}
+  fireWriterServiceBaseUrl: ${env:FIRE_WRITER_SERVICE_BASE_URL}
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ${self:custom.region}
+  vpc: ${file(vpc.${opt:stage}.yml):vpc}
+  environment:
+    TABLE_PREFIX: ${self:custom.tablePrefix}
+    DEVICE_STATE_SERVICE_BASE_URL: ${self:custom.deviceStateServiceBaseUrl}
+    FIRE_WRITER_SERVICE_BASE_URL: ${self:custom.fireWriterServiceBaseUrl}
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - "dynamodb:Get*"
+      Resource:
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}ICD"
+
+functions:
+  handle:
+    handler: src/main.handle
+    events:
+      - stream: arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}OnboardingLog/stream/${self:custom.dynamoDbStreamId}
+        batchSize: ${self:custom.streamBatchSize}
+        startingPosition: ${self:custom.streamStartingPosition}

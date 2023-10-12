@@ -1,0 +1,67 @@
+# Default values for flo-push-notification-service.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: registry.gitlab.com/flotechnologies/flo-sms-service
+  tag:
+  pullSecret: gitlab-registry
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+cronJob:
+  backoffLimit: 2
+  activeDeadlineSeconds: 600
+  command:
+    - /bin/sh
+  args:
+    - -c
+    - >-
+      kubectl set env deployment ${APPLICATION_NAME} LAST_RESTART_DATE="$(date)"
+      && kubectl rollout status deployment/${APPLICATION_NAME}
+  concurrencyPolicy: Forbid
+  image:
+    repository: registry.gitlab.com/flotechnologies/devops/kubectl
+    tag: 1.12.10
+    pullPolicy: Always
+    pullSecrets: gitlab-registry
+  restartPolicy: Never
+  schedule: "10 20 * * 2"
+
+service:
+  type: ClusterIP
+  port: 8000
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  paths: []
+  hosts:
+    - chart-example.local
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 1024Mi
+  limits:
+    cpu: 2000m
+    memory: 2048Mi
+
+terminationGracePeriodSeconds: 60
+
+tolerations: []
+
+affinity: {}
+
+secrets:
+  name: flo-sms-service-secrets

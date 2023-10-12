@@ -1,0 +1,40 @@
+{
+  "locales" : [
+    {
+      "name" : "Singapore",
+      "locale" : "sg"
+    },
+    {
+      "name" : "United Kingdom",
+      "locale" : "uk"
+    },
+    {
+      "name" : "Switzerland",
+      "locale" : "ch"
+    },
+    {
+      "name" : "United States",
+      "locale" : "us"
+    },
+    {
+      "name" : "Thailand",
+      "locale" : "th"
+    },
+    {
+      "name" : "Canada",
+      "locale" : "ca"
+    },
+    {
+      "name" : "New Zealand",
+      "locale" : "nz"
+    },
+    {
+      "name" : "Germany",
+      "locale" : "de"
+    },
+    {
+      "name" : "Australia",
+      "locale" : "au"
+    }
+  ]
+}

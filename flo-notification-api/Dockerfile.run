@@ -1,0 +1,32 @@
+FROM registry.gitlab.com/flotechnologies/flo-notification-api:build-latest as build
+
+MAINTAINER Flo Technologies Engineering Team
+
+ADD ./ /app/build/
+
+RUN cd /app/build/ && chmod +x build.sh && ./build.sh
+
+FROM openjdk:8-jre-alpine
+
+COPY --from=build /app/build/target/scala-*/*.jar /app/
+
+RUN sed -i 's/\/dev\/random/\/dev\/\.\/urandom/g' \
+  /usr/lib/jvm/java-1.8-openjdk/jre/lib/security/java.security
+
+RUN sed -i 's/NativePRNGBlocking\:SUN/NativePRNGNonBlocking/g' \
+  /usr/lib/jvm/java-1.8-openjdk/jre/lib/security/java.security
+
+
+################################################################################
+# Ports
+################################################################################
+
+EXPOSE 9999
+EXPOSE 9990
+
+################################################################################
+# Entrypoint
+################################################################################
+
+WORKDIR /app
+CMD ["java", "-jar", "app-assembly.jar"]

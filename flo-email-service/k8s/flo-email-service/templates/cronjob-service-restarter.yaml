@@ -1,0 +1,51 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: "{{ include "flo-email-service.fullname" . }}-restarter"
+  labels:
+    app.kubernetes.io/name: {{ include "flo-email-service.name" . }}
+    helm.sh/chart: {{ include "flo-email-service.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  concurrencyPolicy: {{ .Values.cronJob.concurrencyPolicy }}
+  schedule: "{{ .Values.cronJob.schedule }}"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            checksum/schedule: {{ .Values.cronJob.schedule | sha256sum }}
+            checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+          labels:
+            app.kubernetes.io/name: {{ include "flo-email-service.name" . }}
+            app.kubernetes.io/instance: {{ .Release.Name }}
+        spec:
+          imagePullSecrets:
+          - name: {{ .Values.cronJob.image.pullSecrets }}
+          containers:
+          - name: "flo-email-service-restarter"
+            image: "{{ .Values.cronJob.image.repository }}:{{ .Values.cronJob.image.tag }}"
+            imagePullPolicy: {{ .Values.cronJob.image.pullPolicy }}
+          {{- with .Values.cronJob.command }}
+            command: {{- toYaml . | nindent 14 }}
+          {{- end }}
+          {{- with .Values.cronJob.args }}
+            args: {{- toYaml . | nindent 14 }}
+          {{- end }}
+            env:
+            {{- range $key, $value := .Values.secrets.datas }}
+            - name: {{ $key | upper }}
+              valueFrom:
+                secretKeyRef:
+                    name:  flo-email-service-secrets
+                    key: {{ $key |   quote }}
+            {{- end }}
+            securityContext:
+              allowPrivilegeEscalation: false
+              runAsUser: 999
+            resources:
+              {{- toYaml .Values.resources | nindent 14 }}
+          restartPolicy: {{ .Values.cronJob.restartPolicy }}
+          serviceAccountName: "{{ include "flo-email-service.fullname" . }}-restarter"

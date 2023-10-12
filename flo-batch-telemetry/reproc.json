@@ -1,0 +1,5 @@
+{
+  "s3Files":[
+    "s3://flosecurecloud-bulk-device-telemetry/telemetry-v8.lf.csv.gz/year=2021/month=04/day=09/"
+  ]
+}

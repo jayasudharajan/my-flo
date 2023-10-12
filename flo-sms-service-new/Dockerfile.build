@@ -1,0 +1,17 @@
+FROM 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-scala-docker:SCALA_2.12.2-SBT_1.0.1-alpine-build
+
+RUN apk add --no-cache \
+    git \
+    bash \
+    openssl-dev \
+    musl-dev \
+    build-base \
+    zlib-dev \
+    python \
+    py-pip \
+    && \
+    pip install \
+      awscli \
+      awsebcli \
+      direnv \
+      pipenv

@@ -1,0 +1,1113 @@
+{
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "Localization Service (LS) is responsible for providing FLO Technologies localized content (language and country specific).",
+        "title": "Localization Service (LS) API",
+        "contact": {
+            "name": "Alexander Galushka",
+            "email": "alex.galushka@flotechnologies.com"
+        },
+        "license": {},
+        "version": "1.0"
+    },
+    "host": "flo-localization-service.flocloud.co",
+    "basePath": "/v1",
+    "paths": {
+        "/assets": {
+            "get": {
+                "description": "This endpoint gets filtered (if any filters provided) paginated localized assets. Default values for pagination are: 0 for offset, 10 for limit.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "localization"
+                ],
+                "summary": "gets localized assets",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "filter by name",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter by type",
+                        "name": "type",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter by locale",
+                        "name": "locale",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "filter by released flag",
+                        "name": "released",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "fuzzy search within asset name column, e.g. search=valve",
+                        "name": "search",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "pagination offset",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "pagination limit",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.Assets"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "This endpoint creates an asset. Asset is a unique record of name, type, locale, e.g. low_pressure_alert, sms, en-us.\nAsset is considered to be ready for production use if its released flag is set to true (it is defaulted to false).\nEach asset can be tagged. Name, type, locale and value are the mandatory properties. Released, tags are optional.\nAll other properties provided will be ignored. Multiple tags can be applied to the asset. The response is an echo\nof provided properties of the request body plus created time. updated time and an asset id. The returned asset id is uuid formatted.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "localization"
+                ],
+                "summary": "creates new asset",
+                "parameters": [
+                    {
+                        "description": "create asset",
+                        "name": "asset",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.Asset"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.Asset"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets/": {
+            "get": {
+                "description": "This endpoint gets localized asset by id, id has to be uuid formatted",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "localization"
+                ],
+                "summary": "gets localized asset by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "asset id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.Asset"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "This endpoint updates an asset by its id and provided json body. Id, created are the immutable fields.",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "localization"
+                ],
+                "summary": "updates an asset",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "asset id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "update asset",
+                        "name": "asset",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.Asset"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {},
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "This endpoint deletes localized asset by id, id has to be uuid formatted",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "localization"
+                ],
+                "summary": "deletes localized asset by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "asset id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.Asset"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/locales": {
+            "get": {
+                "description": "This endpoint gets filtered (if any filters provided) paginated locales. Default values for pagination are: 0 for offset, 10 for limit.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "localization"
+                ],
+                "summary": "gets locales",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "filter by fallback",
+                        "name": "fallback",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "filter by released flag",
+                        "name": "released",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "pagination offset",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "pagination limit",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.Locales"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "This endpoint creates a locale. Locale is in the format of ll-cc (ll is language, cc is country),\ne.g. en-us. The id of the locale is the locale itself. Locale is considered to be ready for production\nuse if its released flag is set to true. Each locale has a fallback",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "localization"
+                ],
+                "summary": "creates new locale",
+                "parameters": [
+                    {
+                        "description": "create locale",
+                        "name": "locale",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.Locale"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ResponseOnCreatingNewLocale"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/locales/": {
+            "get": {
+                "description": "This endpoint gets locale by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "localization"
+                ],
+                "summary": "gets locale by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "locale id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.Locale"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "This endpoint updates a locale by its id and provided json body. Id, created are the immutable fields.",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "localization"
+                ],
+                "summary": "updates locale",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "locale id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "update locale",
+                        "name": "locale",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.Locale"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {},
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "This endpoint deletes locale by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "localization"
+                ],
+                "summary": "deletes locale by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "locale id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.Locale"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/localized": {
+            "get": {
+                "description": "This endpoint gets localized asset filtered by asset name, asset delivery type and asset locale.\nIt can transform an asset value if it's stored as a template (simple find and replace). Find and replace\nvalues for an asset value have to be passed in as query parameters with a special args. prepend to manifest\nitself as find and replace one.\nNot implemented: If the asset has templated values but replacement query params have not been provided it will return 404.\nFor immediate non-cached data use caching=off query param",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "localization"
+                ],
+                "summary": "gets localized transformed asset",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "asset name",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "asset type",
+                        "name": "type",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "asset locale",
+                        "name": "locale",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "find and replace param for the localized value",
+                        "name": "args.*",
+                        "in": "path"
+                    },
+                    {
+                        "type": "string",
+                        "description": "caching flag",
+                        "name": "caching",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.Localized"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "This endpoint gets localized assets filtered by asset name, asset delivery type and asset locale\n(each individual filter is baked in items of request body).\nIt can transform an asset value if it's stored as a template (simple find and replace). Find and replace\nvalues for an asset value have to be passed as an args property of the request body of the item.\nNot implemented: If the asset has templated values but replacement query params have not been provided it will return 404.\nFor immediate non-cached data use caching=off query param",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "localization"
+                ],
+                "summary": "gets one or more localized transformed assets",
+                "parameters": [
+                    {
+                        "description": "create asset",
+                        "name": "asset",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.LocalizedRequestItems"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "caching flag",
+                        "name": "caching",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.Localized"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/ping": {
+            "get": {
+                "description": "check the health status of the service (web server and db connection), lists its build data (commit sha, commit name, build date)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "localization"
+                ],
+                "summary": "validates if the service is up",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Ping"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/types": {
+            "get": {
+                "description": "This endpoint gets filtered (if any filters provided) paginated types. Default values for pagination are: 0 for offset, 10 for limit.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "localization"
+                ],
+                "summary": "gets types",
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "description": "caching=off forces the handler to go directly to database",
+                        "name": "caching",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "pagination offset",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "pagination limit",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.TypeItems"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Asset": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "string",
+                    "example": "2019-05-30T17:50:22.127785Z"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "bd3a7efc-680a-40f8-bb52-bb754f9b6869"
+                },
+                "locale": {
+                    "type": "string",
+                    "example": "ru-blr"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "low_pressure_alert"
+                },
+                "released": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "[wordy",
+                        " to_revise",
+                        " latest_release]"
+                    ]
+                },
+                "type": {
+                    "type": "string",
+                    "example": "sms"
+                },
+                "updated": {
+                    "type": "string",
+                    "example": "2019-05]6-30T17:50:22.127785Z"
+                },
+                "value": {
+                    "type": "string",
+                    "example": "FLO has detected water low pressure, recommend to inspect water lines"
+                }
+            }
+        },
+        "models.Assets": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Asset"
+                    }
+                },
+                "meta": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Meta"
+                }
+            }
+        },
+        "models.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Locale": {
+            "type": "object",
+            "properties": {
+                "created": {
+                    "type": "string",
+                    "example": "2019-05-23T04:13:14Z"
+                },
+                "fallback": {
+                    "type": "string",
+                    "example": "ru_ru"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "ru_blr"
+                },
+                "released": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "updated": {
+                    "type": "string",
+                    "example": "2019-06-22T04:13:14Z"
+                }
+            }
+        },
+        "models.Locales": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Locale"
+                    }
+                },
+                "meta": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Meta"
+                }
+            }
+        },
+        "models.Localized": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "bd3a7efc-680a-40f8-bb52-bb754f9b6869"
+                },
+                "locale": {
+                    "type": "string",
+                    "example": "ru-blr"
+                },
+                "localizedValue": {
+                    "type": "string",
+                    "example": "FLO has detected water low pressure, recommend to inspect water lines"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "low_pressure_alert"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "sms"
+                }
+            }
+        },
+        "models.LocalizedRequest": {
+            "type": "object",
+            "properties": {
+                "args": {
+                    "type": "object"
+                },
+                "locale": {
+                    "type": "string",
+                    "example": "ru-blr"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "low_pressure_alert"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "sms"
+                }
+            }
+        },
+        "models.LocalizedRequestItems": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.LocalizedRequest"
+                    }
+                }
+            }
+        },
+        "models.Meta": {
+            "type": "object",
+            "properties": {
+                "limit": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "offset": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "total": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "models.Ping": {
+            "type": "object",
+            "properties": {
+                "build_date": {
+                    "type": "string",
+                    "example": "2019-05-03T18:44:37Z"
+                },
+                "commit_name": {
+                    "type": "string",
+                    "example": "Merge_branch_'ag_todos'_into_'dev'_cleanup_and_todo_See_merge_request_flotechnologies/flo-localization-service!49"
+                },
+                "commit_sha": {
+                    "type": "string",
+                    "example": "b32ecf837b64055626a7403c15c8fb8195f4197a"
+                },
+                "env": {
+                    "type": "string",
+                    "example": "dev"
+                },
+                "service_name": {
+                    "type": "string",
+                    "example": "flo-localization-service"
+                },
+                "timestamp": {
+                    "type": "string",
+                    "example": "flo-localization-service"
+                }
+            }
+        },
+        "models.ResponseOnCreatingNewLocale": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "bd3a7efc-680a-40f8-bb52-bb754f9b6969"
+                }
+            }
+        },
+        "models.Type": {
+            "type": "object",
+            "properties": {
+                "created": {
+                    "type": "string",
+                    "example": "2019-05-23T04:13:14Z"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "text message"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "sms"
+                },
+                "updated": {
+                    "type": "string",
+                    "example": "2019-06-22T04:13:14Z"
+                }
+            }
+        },
+        "models.TypeItems": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Type"
+                    }
+                }
+            }
+        },
+        "models.Types": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Type"
+                    }
+                },
+                "meta": {
+                    "type": "object",
+                    "$ref": "#/definitions/models.Meta"
+                }
+            }
+        }
+    }
+}

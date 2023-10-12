@@ -1,0 +1,31 @@
+---
+version: '3'
+
+services:
+  app: &app
+    image: "${CI_REGISTRY_IMAGE:-registry.gitlab.com/flotechnologies/flo-firewriter}:latest"
+
+    environment:
+      GOOGLE_PROJECT_ID: "${GOOGLE_PROJECT_ID:-flo-dev-ec388}"
+      KAFKA_BROKERS: "${KAFKA_BROKERS:-kafka-cherry-broker-1.dev.flocloud.co:9092,kafka-cherry-broker-2.dev.flocloud.co:9092,kafka-cherry-broker-3.dev.flocloud.co:9092}"
+      LOGS_LEVEL: "${LOGS_LEVEL:-2}"
+      KNOWN_FS_COLLECTIONS: "${KNOWN_FS_COLLECTIONS:-devices,locations,users}"
+      KAFKA_CONSUMERS_NUM: "${KAFKA_CONSUMERS_NUM:-6}"
+    ports:
+      - 3000:3000
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        CI_COMMIT_SHA: "${CI_COMMIT_SHA:-none}"
+        CI_COMMIT_MESSAGE: "${CI_COMMIT_MESSAGE:-none of foo bar}"
+        COMMIT_TIME: "${COMMIT_TIME:-none}"
+    volumes:
+      - ./creds:/app/creds
+  # This is used to automatically tag the image with CI_PIPELINE_ID
+  app-tag:
+    entrypoint: "true"
+    image: "${CI_REGISTRY_IMAGE:-registry.gitlab.com/flotechnologies/flo-firewriter}:${CI_PIPELINE_ID:-latest}"
+    ports: []
+    <<: *app

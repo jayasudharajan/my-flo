@@ -1,0 +1,2 @@
+kafka:
+  brokers: kafka-cherry-broker-1.prod.flosecurecloud.com:9092,kafka-cherry-broker-2.prod.flosecurecloud.com:9092,kafka-cherry-broker-3.prod.flosecurecloud.com:9092

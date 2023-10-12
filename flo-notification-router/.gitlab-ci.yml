@@ -1,0 +1,194 @@
+stages:
+  - build
+  - integration
+  - push
+  - deploy
+
+before_script:
+  - |
+    # Export Vars
+    export BUILD_TIMESTAMP="$(date '+%Y%m%d.%H%M')"
+    export BUILD_ROOT="${CI_PROJECT_DIR}"
+
+    # AWS Cli
+    mkdir -p ~/.aws /root/.aws
+
+    # Configure AWS credentials
+    echo -e "[flo-dev]\naws_access_key_id=$AWS_ACCESS_KEY_ID\naws_secret_access_key=$AWS_SECRET_ACCESS_KEY\nregion=us-west-2" > ~/.aws/credentials
+    # Login to ECR for docker images
+    eval $(aws ecr get-login --profile=flo-dev --no-include-email)
+
+    cd ${CI_PROJECT_DIR}
+
+    ./gradlew temp-repo
+
+Dependency:
+  stage: build
+  variables:
+    DOCKER_DRIVER: overlay2
+  allow_failure: true
+
+  cache:
+    key: "$CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG"
+    paths:
+      - target/
+      - .ivy2
+      - .sbt
+      - .m2
+
+  script: |
+      # Generate pom.xml that we can scan later
+      docker-compose run sbt makePom
+      cp target/scala-*/*.pom pom.xml
+      mkdir -p .m2 && echo '<settings><servers><server><id>FloRealm</id><username>${env.BINTRAY_USER}</username><password>${env.BINTRAY_KEY}</password></server></servers></settings>' > .m2/settings.xml
+      docker-compose run gemnasium-maven
+
+#      SP_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/') docker-compose run dependency-scanning
+
+  artifacts:
+    reports:
+      dependency_scanning: gemnasium-maven-plugin.json
+
+Code Quality:
+  stage: build
+  variables:
+    DOCKER_DRIVER: overlay2
+  allow_failure: true
+
+  cache:
+    key: "$CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG"
+    paths:
+      - target/
+      - .ivy2
+      - .sbt
+      - .m2
+
+  script: |
+      SP_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/') docker-compose run code-quality
+
+  artifacts:
+    reports:
+      codequality: gl-code-quality-report.json
+
+
+Compile:
+  stage: build
+  except:
+    - tags
+  artifacts:
+    paths:
+      - image
+      - target/scala-*/app.jar
+      - logs/
+
+    expire_in: 1 week
+    # Cache modules in between jobs
+  cache:
+    key: "$CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG"
+    paths:
+      - target/
+      - .ivy2
+      - .sbt
+
+  variables:
+    USER: ubuntu
+
+  script:
+    - |
+      source .app/.ci/.env.rc
+      set -euo pipefail
+
+      # In case we don't have .ebextensions
+      mkdir -p $BUILD_ROOT/.ebextensions/
+
+      # Copy .ebextentions
+      cp -R $BUILD_ROOT/.app/.ebextensions/* $BUILD_ROOT/.ebextensions/
+
+      # Logig to ECR
+      eval $(aws ecr get-login --profile=flo-dev --no-include-email)
+
+      # Run app build
+      docker-compose run build
+
+      docker-compose build app
+
+      # Ensure tags are set
+      docker tag ${AWS_ECR_REPOSITORY}/${CI_PROJECT_NAME} ${AWS_ECR_REPOSITORY}/${CI_PROJECT_NAME}:artifact
+      docker tag ${AWS_ECR_REPOSITORY}/${CI_PROJECT_NAME} ${AWS_ECR_REPOSITORY}/${CI_PROJECT_NAME}:artifact-${CI_PIPELINE_ID}
+      mkdir -p image && docker save ${AWS_ECR_REPOSITORY}/${CI_PROJECT_NAME}:artifact-${CI_PIPELINE_ID} > image/${CI_PROJECT_NAME}_${CI_PIPELINE_ID}.tar
+
+#Container Scan:
+#  stage: integration
+#  dependencies:
+#    - Compile
+#  variables:
+#    DOCKER_DRIVER: overlay2
+#    ## Define two new variables based on GitLab's CI/CD predefined variables
+#    ## https://docs.gitlab.com/ee/ci/variables/#predefined-variables-environment-variables
+#    CI_APPLICATION_REPOSITORY: ${AWS_ECR_REPOSITORY}/${CI_PROJECT_NAME}
+#    CI_APPLICATION_TAG: ${CI_PIPELINE_ID}
+#  allow_failure: true
+#  script:
+#    - docker run -d --name db arminc/clair-db:latest
+#    - docker run -p 6060:6060 --link db:postgres -d --name clair --restart on-failure arminc/clair-local-scan:v2.0.1
+#    - apk add -U wget ca-certificates
+#    - docker load < image/${CI_PROJECT_NAME}_${CI_PIPELINE_ID}.tar
+##    - docker pull ${CI_APPLICATION_REPOSITORY}:${CI_APPLICATION_TAG}
+#    - wget https://github.com/arminc/clair-scanner/releases/download/v8/clair-scanner_linux_amd64
+#    - mv clair-scanner_linux_amd64 clair-scanner
+#    - chmod +x clair-scanner
+#    - touch clair-whitelist.yml
+#    - while( ! wget -q -O /dev/null http://docker:6060/v1/namespaces ) ; do sleep 1 ; done
+#    - retries=0
+#    - echo "Waiting for clair daemon to start"
+#    - while( ! wget -T 10 -q -O /dev/null http://docker:6060/v1/namespaces ) ; do sleep 1 ; echo -n "." ; if [ $retries -eq 10 ] ; then echo " Timeout, aborting." ; exit 1 ; fi ; retries=$(($retries+1)) ; done
+#    - ./clair-scanner -c http://docker:6060 --ip $(hostname -i) -r gl-container-scanning-report.json -l clair.log -w clair-whitelist.yml ${AWS_ECR_REPOSITORY}/${CI_PROJECT_NAME}:${CI_PIPELINE_ID} || true
+#  artifacts:
+#    reports:
+#      container_scanning: gl-container-scanning-report.json
+
+Sanity:
+  stage: integration
+  dependencies:
+    - Compile
+  script: |
+    ./.app/.ci/test.sh
+
+ECR:
+  stage: push
+  dependencies:
+    - Compile
+  script: |
+    source ./.app/.ci/.env.rc
+    set -euo pipefail
+
+    docker load < image/${CI_PROJECT_NAME}_${CI_PIPELINE_ID}.tar
+    docker push ${AWS_ECR_REPOSITORY}/${CI_PROJECT_NAME}:artifact-${CI_PIPELINE_ID}
+
+
+dev:
+  stage: deploy
+  dependencies:
+    - Compile
+  except:
+    - master
+  environment:
+    name: dev
+    url: https://kibana.flotech.co
+  variables:
+    ENVIRONMENT: dev
+  script: |
+    ./.app/.ci/deploy.sh
+
+
+prod:
+  stage: deploy
+  dependencies:
+    - Compile
+  only:
+    - master
+  environment:
+    name: prod
+    url: https://kibana.flotech.co
+  script: |
+    ./.app/.ci/deploy.sh

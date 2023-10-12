@@ -1,0 +1,7 @@
+.env
+.idea
+.vscode
+
+k8s/pipeline.yaml
+src/main
+src/src

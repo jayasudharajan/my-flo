@@ -1,0 +1,91 @@
+---
+image: kloiadocker/docker-compose:v1
+
+services:
+  - name: docker:18.09-dind
+    command: ["--mtu=1300"]
+
+
+stages:
+  - build
+  - prepare
+  - deploy
+
+before_script:
+  - export DOCKER_HOST=tcp://localhost:2375
+  - wget https://nexus.flotech.co/repository/tools/kube-svc-ctl/alpine/kube-svc-ctl -O kube-svc-ctl && chmod +x kube-svc-ctl
+  - apk add --no-cache make bash jq gettext # TODO: this should be part of the compose image
+  - export CI_REGISTRY_IMAGE="registry.gitlab.com/flotechnologies/flo-task-scheduler"
+  - export CI_REGISTRY=registry.gitlab.com
+  - export COMMIT_TIME=$(git show -s --format=%ct $CI_COMMIT_SHA)
+
+
+Compile:
+  stage: build
+  image: registry.gitlab.com/flotechnologies/flo-scala-docker:SCALA_2.12.6-SBT_1.1.4-alpine-build-2020-06-06
+  except:
+    - tags
+  script:
+    - sbt assembly
+  artifacts:
+    paths:
+      - /builds/flotechnologies/flo-task-scheduler/target/scala-2.12/app.jar
+    untracked: true
+
+  tags:
+    - build
+
+
+
+DockerImageBuild:
+  stage: prepare
+  except:
+    - tags
+  script:
+    - mkdir -pv "${HOME}/.docker/"
+    - echo "${DOCKER_AUTH_CONFIG}" > "${HOME}/.docker/config.json"
+    - docker login
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker login --username "${CI_REGISTRY_USER}" --password "${CI_REGISTRY_PASSWORD}" "${CI_REGISTRY}"
+    - make prepare-build-image
+  tags:
+    - build
+
+K8sDev:
+  image: kloiadocker/kloiahelm:0.0.1
+  stage: deploy
+  variables:
+    KUBERNETES_SERVICE_ACCOUNT_OVERWRITE: tiller
+    VAULT_URL: ${VAULT_URL_DEV}
+    VAULT_TOKEN: ${VAULT_TOKEN_DEV}
+  dependencies:
+    - Compile
+  only:
+    - dev
+  environment:
+    name: dev
+  script:
+    - make environment
+    - make deploy-k8s
+  tags:
+    - dev
+
+K8sProd:
+  image: kloiadocker/kloiahelm:0.0.1
+  stage: deploy
+  variables:
+    KUBERNETES_SERVICE_ACCOUNT_OVERWRITE: tiller
+    VAULT_URL: ${VAULT_URL_PROD}
+    VAULT_TOKEN: ${VAULT_TOKEN_PROD}
+  dependencies:
+    - Compile
+  only:
+    - master
+    - k8s-deploy-prod
+  environment:
+    name: prod
+  script:
+    - make environment
+    - make deploy-k8s
+  tags:
+    - prod

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#set -x
+#
+#helm template \
+#  mender \
+#  --namespace mender \
+#|| exit 1
+#helm upgrade --install \
+#  mender \
+#  ./mender \
+#  --recreate-pods \
+#  --wait --debug \
+#  --namespace mender
+set -x
+
+helm template \
+  deployments \
+  --namespace mender \
+|| exit 1
+helm upgrade --install \
+  deployments \
+  ./deployments \
+  --recreate-pods \
+  --wait --debug \
+  --namespace mender

@@ -1,0 +1,42 @@
+{{- if .Values.ingress.enabled }}
+  {{- $fullName := include "fullname" . -}}
+  {{- $ingressPaths := .Values.ingress.paths -}}
+  {{- $ingressHosts := .Values.ingress.hosts -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name:  {{ include "fullname" . }}
+  labels:
+    app: {{ include "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    component: "mender"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  annotations:
+  {{- range $key, $value := .Values.ingress.annotations }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
+spec:
+  {{- if .Values.ingress.tls }}
+  tls:
+
+  - hosts:
+    {{- range $ingressHosts }}
+    - {{ . | quote }}
+    {{- end }}
+    secretName: {{ .Values.ingress.tls.secretName }}
+    {{- end }}
+
+  rules:
+  {{- range .Values.ingress.hosts }}
+  - host: {{ . | quote }}
+    http:
+      paths:
+    {{- range $ingressPaths }}
+      - path: {{ . }}
+        backend:
+          serviceName: {{ $fullName }}
+          servicePort: http
+    {{- end }}
+  {{- end }}
+{{- end -}}        

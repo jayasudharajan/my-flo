@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -x
+
+helm template \
+  openresty \
+  --namespace mender \
+|| exit 1
+helm upgrade --install \
+  openresty \
+  ./openresty \
+  --recreate-pods \
+  --wait --debug \
+  --namespace mender

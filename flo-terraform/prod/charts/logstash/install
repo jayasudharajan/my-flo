@@ -1,0 +1,28 @@
+#!/bin/bash
+
+
+set -x
+
+VALUESFILE="values.yaml"
+while [[ $# -gt 0 ]]
+do
+  k="${1}"
+  case $k in
+    -e|--eks)
+      VALUESFILE="values-eks.yaml"
+      shift
+      shift
+      ;;
+    *)
+      VALUESFILE="values.yaml"
+  esac
+done
+
+helm upgrade \
+  logstash \
+  ./logstash \
+  --install \
+  --wait --debug --timeout 300s \
+  --namespace logstash \
+  --values "${VALUESFILE}" \
+  --values secrets.yaml

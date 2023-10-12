@@ -1,0 +1,2 @@
+-keep interface androidx.** { *; }
+-keep class androidx.core.app.CoreComponentFactory { *; }

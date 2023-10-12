@@ -1,0 +1,29 @@
+{
+   "items":[
+      {
+         "account":{
+            "account_id":"eb840abe-1810-4e3c-b0db-80f1d8ddd36a"
+         },
+         "is_active":true,
+         "id":"ffbddca2-0a18-4adb-899c-d2cfc3bf44fc",
+         "email":"nicolass@nimble.la",
+         "phone_mobile":"+5493464521755",
+         "firstname":"Nicolás",
+         "is_system_user":false,
+         "geo_locations":[
+            {
+               "city":"Rosario",
+               "address2":"Office 3",
+               "address":"Cordoba 951",
+               "country":"us",
+               "timezone":"US\\/Central",
+               "state_or_province":"AR",
+               "postal_code":"2000",
+               "location_id":"05009464-5560-4c31-9f8a-a26e15f605d4"
+            }
+         ],
+         "lastname":"Stefoni"
+      }
+   ],
+   "total":1
+}

@@ -1,0 +1,4 @@
+appVersion: 0.1
+description: A chart for Openresty
+name: api-gateway
+version: 0.1

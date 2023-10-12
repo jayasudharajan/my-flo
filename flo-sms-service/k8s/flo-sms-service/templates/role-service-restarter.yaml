@@ -1,0 +1,10 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: "{{ include "flo-sms-service.fullname" . }}-restarter"
+rules:
+  - apiGroups: ["apps", "extensions"]
+    resources: ["deployments"]
+    resourceNames: ["{{ include "flo-sms-service.fullname" . }}"]
+    verbs: ["get", "patch", "list", "watch"]

@@ -1,0 +1,90 @@
+global:
+  deployment: dr
+  deploymentCode: dr
+  organisation: flo
+  profile: flo-dev
+  project: dr
+  domain: co
+  child_dns: dr
+  clusterName: k8s.dr.flocloud.co
+  kopsBucket: k8s-dr-state-store
+  nginx_ingress_elb: null
+  bucket_prefix: config
+  bucket_key_prefix: config
+  vpcId: vpc-02e1b6049256ac3f0
+  parentZoneId: nat-0f603bdf05acf74b7
+  natgatewayId: nat-0d855eb931f076e74
+privilegedIps:
+- 0.0.0.0/0
+aws:
+  accountId: "098786959887"
+  region: us-east-2
+  amiId: kope.io/k8s-1.12-debian-stretch-amd64-hvm-ebs-2020-07-20
+  cidrBlock: 10.0.0.0/16
+  parentZoneId: Z263XEVVERDMEB
+  childZoneId: null
+  az_count: 3
+  vpcId: vpc-02e1b6049256ac3f0
+vpc_peering:
+  accepter_vpc_id: vpc-0f1ec5cba8b0c0fbb
+kubernetes:
+  bastion:
+    instanceType: t2.medium
+    minSize: 1
+    maxSize: 1
+    subnets:
+    - public-us-east-2a
+    - public-us-east-2b
+    - public-us-east-2c
+  allowedIps:
+  - 31.145.22.154/32
+  - 95.37.0.0/18
+  stateStore: s3://k8s-dr-state-store
+  clusterName: k8s.dr.flocloud.co
+  sshKey: id_rsa_kops.pub
+  masters:
+  - name: a
+    instanceGroup: master-us-east-2a
+    subnet: private-us-east-2a
+    machineType: t3.medium
+    rootVolumeSize: 50
+  - name: b
+    instanceGroup: master-us-east-2b
+    subnet: private-us-east-2b
+    machineType: t3.medium
+    rootVolumeSize: 50
+  - name: c
+    instanceGroup: master-us-east-2c
+    subnet: private-us-east-2c
+    machineType: t3.medium
+    rootVolumeSize: 50
+  instanceGroups:
+  - name: nodes
+    countMin: 3
+    countMax: 10
+    instanceType: c5.xlarge
+    rootVolumeSize: 128
+    subnets:
+    - private-us-east-2a
+    - private-us-east-2b
+    - private-us-east-2c
+  - name: gitlabrunner
+    countMin: 1
+    countMax: 1
+    environment: gitlabrunner
+    instanceType: c5.xlarge
+    rootVolumeSize: 128
+    subnets:
+    - private-us-east-2a
+    - private-us-east-2b
+    - private-us-east-2c
+  - name: gitlabrunner-firmware
+    countMin: 1
+    countMax: 1
+    environment: gitlabrunner
+    instanceType: c5.4xlarge
+    rootVolumeSize: 500
+    subnets:
+    - private-us-east-2a
+    - private-us-east-2b
+    - private-us-east-2c

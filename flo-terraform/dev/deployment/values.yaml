@@ -1,0 +1,99 @@
+global:
+  deployment: dev
+  deploymentCode: dev
+  organisation: flo
+  profile: flo
+  project: k8s
+  domain: co
+  create_main_dns: '"false"'
+  create_child_dns: '"false"'
+  child_dns: k8s
+  clusterName: k8s.flocloud.co
+  nginx_ingress_elb: null
+  bucket: flo-terraform-state-098786959887
+  bucket_prefix: config
+  bucket_key_prefix: config
+  natgatewayId: '"nat-0417113c4eb405221"'
+  vpcId: '"vpc-06cc0d1f84a509986"'
+  parentZoneId: Z263XEVVERDMEB
+  parentZoneName: flocloud.co
+privilegedIps:
+  - 0.0.0.0/0
+aws:
+  accountId: "098786959887"
+  region: us-west-2
+  amiId: kope.io/k8s-1.12-debian-stretch-amd64-hvm-ebs-2019-05-13
+  cidrBlock: 10.0.0.0/16
+  parentZoneId: Z263XEVVERDMEB
+  childZoneId: null
+  az_count: 3
+  vpcId: vpc-06cc0d1f84a509986
+vpc_peering:
+  accepter_vpc_id: vpc-f9ac7c9d
+kubernetes:
+  bastion:
+    instanceType: t2.medium
+    minSize: 1
+    maxSize: 1
+    subnets:
+      - public-us-west-2a
+      - public-us-west-2b
+      - public-us-west-2c
+  allowedIps:
+    - 31.145.22.154/32
+  stateStore: s3://flo-k8s-kops
+  clusterName: k8s.flocloud.co
+  sshKey: id_rsa_kops.pub
+  masters:
+    - name: a
+      instanceGroup: master-us-west-2a
+      subnet: private-us-west-2a
+      machineType: t3.medium
+      rootVolumeSize: 50
+    - name: b
+      instanceGroup: master-us-west-2b
+      subnet: private-us-west-2b
+      machineType: t3.medium
+      rootVolumeSize: 50
+    - name: c
+      instanceGroup: master-us-west-2c
+      subnet: private-us-west-2c
+      machineType: t3.medium
+      rootVolumeSize: 50
+  instanceGroups:
+    - name: nodes
+      countMin: 10
+      countMax: 11
+      instanceType: c5.xlarge
+      rootVolumeSize: 128
+      subnets:
+        - private-us-west-2a
+        - private-us-west-2b
+        - private-us-west-2c
+    - name: gitlabrunner
+      countMin: 2
+      countMax: 2
+      environment: gitlabrunner
+      instanceType: c5.xlarge
+      rootVolumeSize: 128
+      subnets:
+        - private-us-west-2a
+        - private-us-west-2b
+        - private-us-west-2c
+    - name: gitlabrunner-firmware
+      countMin: 1
+      countMax: 1
+      environment: gitlabrunner
+      instanceType: c5.4xlarge
+      rootVolumeSize: 500
+      subnets:
+        - private-us-west-2a
+        - private-us-west-2b
+        - private-us-west-2c
+# - name: peering-node
+#   countMin: 1
+#   countMax: 1
+#   instanceType: t3a.micro
+#   rootVolumeSize: 10
+#   subnets:
+#   - peering-us-west-2a

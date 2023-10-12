@@ -1,0 +1,24 @@
+host: flo-resource-event.flosecurecloud.com flo-resource-event.flocloud.co
+info:
+  contact: {}
+  description: flo-resource-event Api Documentation
+  license: {}
+  title: flo-resource-event Api
+  version: "1.0"
+paths:
+  /ping:
+    get:
+      consumes:
+        - application/json
+      description: returns status of the service
+      produces:
+        - application/json
+      responses:
+        "200": {}
+      summary: check the health status of the service and list its config data
+      tags:
+        - system
+schemes:
+  - https
+  - http
+swagger: "2.0"

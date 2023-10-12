@@ -1,0 +1,26 @@
+FROM golang:1.13
+
+ARG COMMITSHA
+ARG COMMITTIME
+ARG COMMITBRANCH=unknown
+
+# Compile Kafka lib, with docker caching, this should happens once
+RUN cd /tmp \
+    && git clone --branch v1.3.0 https://github.com/edenhill/librdkafka.git \
+    && cd /tmp/librdkafka \
+    && ./configure --prefix /usr \
+    && make \
+    && make install \
+    && rm -rf /tmp/librdkafka
+
+WORKDIR /src
+
+ADD ./src /src
+
+RUN cd /src \
+    && ls -lh \
+    && mkdir /app \
+    && CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o /app/flo-task-scheduler \
+    -ldflags "-X main._commitSha=${COMMITSHA} -X main._commitTime=${COMMITTIME} -X main._commitBranch=${COMMITBRANCH}"
+
+ENTRYPOINT ["/app/flo-task-scheduler"]

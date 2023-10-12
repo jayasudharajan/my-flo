@@ -1,0 +1,277 @@
+name: flotechnologies
+description: A new Flutter application.
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.2.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  # These are the last available versions of all the flutter/plugins packages that are pre AndroidX:
+  # https://flutter.dev/docs/development/packages-and-plugins/androidx-compatibility
+  # android_alarm_manager: 0.2.3
+  # android_intent: 0.2.1
+  # battery: 0.3.0
+  # camera: 0.2.9+1
+  # cloud_firestore: 0.8.2+3
+  # cloud_functions: 0.0.5
+  # connectivity: 0.3.2
+  # device_info: 0.3.0
+  # firebase_admob: 0.7.0
+  # firebase_analytics: 1.1.0
+  # firebase_auth: 0.7.0
+  # firebase_core: 0.2.5+1
+  # firebase_database: 1.0.5
+  # firebase_dynamic_links: 0.1.1
+  # firebase_messaging: 2.1.0
+  # firebase_ml_vision: 0.2.1
+  # firebase_performance: 0.0.8+1
+  # firebase_remote_config: 0.0.6+1
+  # firebase_storage: 1.0.4
+  # google_maps_flutter: 0.1.0
+  # google_sign_in: 3.2.4
+  # image_picker: 0.4.12+1
+  # local_auth: 0.3.1
+  # package_info: 0.3.2+1
+  # path_provider: 0.4.1
+  # quick_actions: 0.2.2
+  # sensors: 0.3.5
+  # share: 0.5.3
+  # shared_preferences: 0.4.3
+  # url_launcher: 4.1.0+1
+  # video_player: 0.9.0
+  # webview_flutter: 0.2.0
+  cupertino_icons: ^0.1.2
+  chopper: 2.5.0
+
+  built_value: ^6.5.0
+  built_collection: ^4.2.1
+  flutter_localizations:
+    sdk: flutter
+  bubble_tab_indicator: "^0.1.4"
+  provider: ^3.0.0+1
+  rxdart: ^0.22.0
+  #flutter_stetho: ^0.2.2
+  flutter_stetho: # 2.4
+    git:
+      url: https://github.com/yongjhih/flutter_stetho.git
+      ref: 16a4ecfa59b68118659ba5947c74c4769fbaf0e4
+  # androidx
+  #webview_flutter: ^0.3.4
+  flutter_html: ^0.8.2
+  flutter_appavailability: ^0.0.21
+  country_pickers: ^1.1.0
+  #url_launcher: ^3.0.0
+  url_launcher: ^5.0.1
+  #flutter_custom_tabs: ^0.4.0 # support
+  flutter_custom_tabs: 0.6.0
+  #phone_number: ^0.2.0
+  phone_number:
+    git:
+      url: https://github.com/yongjhih/phone_number.git
+      ref: 3ce40cd443634ba50f4bdb8f37049e6f09fd1150
+  flutter_fimber: ^0.1.9
+  fancy_bottom_navigation: ^0.3.2
+  #shared_preferences: ^0.4.2
+  shared_preferences: ^0.5.3+4
+  #device_info: ^0.3.0
+  device_info: 0.4.0+3
+  #wave: ^0.0.8
+  country_code_picker: ^1.1.7
+  transparent_image: ^1.0.0
+  #package_info: ^0.3.2+1
+  package_info: ^0.4.0+6
+  flutter_svg:
+  flutter_responsive_screen: ^1.0.0
+  #animator: ^0.1.2
+  animator: ^1.0.0+1
+  wifi_iot:
+    git:
+      url: https://github.com/yongjhih/WiFiFlutter.git
+      ref: 5bce863335437770252013c9c13e47e51b414509
+  #web_socket_channel: ^1.0.13
+  permission_handler: ^3.1.0
+  #permission_handler: # support
+  #  git:
+  #    url: https://github.com/yongjhih/flutter-permission-handler.git
+  #    ref: 76c22ab3affbbc97a77e2f6dea1c2137402b9865
+  #flutter_qr_reader: ^1.0.1
+  #flutter_qr_reader:
+  #  git:
+  #    url: https://github.com/yongjhih/flutter_qr_reader.git
+  #    ref: 8eae446
+  #qr_mobile_vision: ^0.2.2
+  qr_mobile_vision:
+    git:
+      url: https://github.com/yongjhih/flutter_qr_mobile_vision.git
+      #ref: 9ace8191439aa783b637d8db54c3f522876a004f # support
+      ref: 1ba84026a3d271f2a04df02742c3bf4b93f4661f
+  #connectivity: ^0.3.2
+  connectivity: ^0.4.4
+  app_settings: ^1.0.3
+  uuid: 2.0.1
+  flutter_spinkit: "^3.1.0"
+  #json_rpc_2: ^2.1.0
+  flutter_okhttp_ws:
+    git:
+      url: https://github.com/yongjhih/flutter_okhttp_ws.git
+      ref: d3afccd8b7d95bfbd11740eebfbc75762202d04c
+  retry: ^3.0.0
+  validators: ^2.0.0
+  gradient_widgets: ^0.5.0
+  after_layout: ^1.0.7+2
+  superpower: ^0.4.0
+  carousel_slider: ^1.3.0
+  #charts_flutter: ^0.6.0
+  charts_flutter: ^0.8.1
+  tinycolor: ^1.0.2
+  timezone: ^0.5.4
+  badges: ^1.1.0
+  #get_it: ^1.0.3+2
+
+  ##firebase_core: ^0.2.5
+  ##firebase_core: ^0.4.0
+  ##cloud_firestore: ^0.12.5+2
+
+  #firebase_analytics: ^4.0.2
+  #cloud_firestore: ^0.12.9+4
+  #firebase_auth: ^0.14.0+5
+
+  firebase_auth: ^0.11.1+3
+  cloud_firestore: ^0.12.7+1
+
+  #firebase_core: ^0.4.0+6 # latest: works for ios
+  #cloud_firestore: ^0.12.7 # latest: works for ios
+  #firebase_auth: ^0.11.1+11 # latest: works for ios
+
+  #firebase_core: ^0.2.5+1 # last support-v4: not work for ios
+  #cloud_firestore: ^0.8.2+3 # last support-v4: not work for ios
+  #firebase_auth: ^0.7.0 # last support-v4: not work for ios
+
+  #firebase_auth: ^0.6.6 # try to fix ios runtime error
+  # ios: after 0.6.6
+  #GULReachabilityChecker.h:22:3: error: redefinition of enumerator 'kGULReachabilityUnknown'
+
+  pull_to_refresh: ^1.5.0
+  shimmer: ^1.0.0
+  recase: ^2.0.1
+  percent_indicator: ^2.1.1
+  #ssl_pinning_plugin: ^1.1.0
+  #flutter_range_slider: ^1.3.1
+  flutter_range_slider: "^1.4.0"
+  speech_bubble: ^0.0.5
+  auto_size_text: ^2.1.0
+  #timeago: ^2.0.18
+  timeago:
+    git:
+      url: https://github.com/yongjhih/timeago.dart.git
+      ref: 6fa6905abb9813d26f71a9f2459461cdd5bd85e3
+      path: timeago
+  #zendesk: ^1.0.1
+  zendesk:
+    git:
+      url: https://github.com/yongjhih/flutter-zendesk.git
+      ref: 60e898fa7dd5cc8ba0d9481b7eb70a85d511c8b0
+  progress_dialog: ^1.1.0+1
+  #fl_chart: 0.1.5
+  fl_chart: ^0.2.2
+  #instabug_flutter: ^8.6.4
+  instabug_flutter:
+    git:
+      url: https://github.com/yongjhih/Instabug-Flutter.git
+      ref: 6e03d8ba4572b86de0cd8a7901957732c391aa88
+  #instabug_http_client:
+  #  git:
+  #    url: https://github.com/yongjhih/Instabug-Dart-http-Adapter.git
+  #    ref: db3bdf0f19a117db31bcc794f9d3da9ee30f1657
+  firebase_messaging: ^5.1.6
+  flutter_aws:
+    git:
+      url: https://github.com/yongjhih/flutter_aws.git
+      ref: 4920040addb6d037b272ce2ef3efb76805c5a761
+  flutter_embrace:
+    git:
+      url: https://github.com/yongjhih/flutter_embrace.git
+      ref: 0.0.8
+  uni_links: ^0.2.0
+  version: ^1.0.0
+  flutter_local_notifications: ^0.8.4
+  flushbar: ^1.9.1
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^1.0.0
+  built_value_generator: ^6.5.0
+  chopper_generator: ^2.5.0
+  #test: ^1.6.3
+  gen_lang: 0.1.0
+  faker: ^1.1.0
+
+
+# For information on the generic Dart part of this file, see the
+# following page: https://www.dartlang.org/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  # assets:
+  #  - images/a_dot_burr.jpeg
+  #  - images/a_dot_ham.jpeg
+  assets:
+    - assets/
+    - assets/terms.html
+    - assets/bg_locations.png
+    - android/app/src/main/res/
+    - assets/2019a.tzf
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware.
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: Questrial
+      fonts:
+        - asset: fonts/Questrial-Regular.ttf

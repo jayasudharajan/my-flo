@@ -1,0 +1,26 @@
+{
+  "name": "flo-installed-event-pinpoint-sender",
+  "version": "1.0.0",
+  "description": "Send Installed events to Pinpoint",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.450.0",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "source-map-support": "^0.5.10"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.25",
+    "@types/aws-sdk": "^2.7.0",
+    "@types/lodash": "^4.14.123",
+    "@types/node": "^10.12.18",
+    "serverless-webpack": "^5.2.0",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.2.4",
+    "webpack": "^4.29.0"
+  },
+  "author": "Flo Technologies"
+}

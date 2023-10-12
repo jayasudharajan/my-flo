@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export CHT_API_TOKEN=b1edffcbc9f320ce84338c516e34180a56f4a1e21c83278b
+export CHT_CLUSTER_NAME=oceanus.flosecurecloud.com
+kubectl create secret generic --namespace default --from-literal=api-token=$CHT_API_TOKEN --from-literal=cluster-name=$CHT_CLUSTER_NAME cloudhealth-config
+kubectl apply -f kubernetes-collector-pod-template.yaml

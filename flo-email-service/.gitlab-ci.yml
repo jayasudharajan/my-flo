@@ -1,0 +1,90 @@
+---
+image: registry.gitlab.com/flotechnologies/devops/docker-tools:master
+
+services:
+- name: docker:18.09-dind
+  command: ["--mtu=1300"]
+
+stages:
+- build
+- prepare
+- deploy
+
+variables:
+  CI_REGISTRY: registry.gitlab.com
+  CI_REGISTRY_IMAGE: "registry.gitlab.com/flotechnologies/flo-email-service"
+  DOCKER_DRIVER: overlay2
+  DOCKER_HOST: "tcp://127.0.0.1:2375"
+
+before_script:
+  - |
+    apk add --no-cache bash make git jq gettext
+    export BASE_PATH=$(eval "pwd")
+    export COMMITTIME=$(git show -s --format=%ct $CI_COMMIT_SHA)
+
+Compile:
+  stage: build
+  image: registry.gitlab.com/flotechnologies/flo-scala-docker:SCALA_2.12.6-SBT_1.1.4-alpine-build-2020-06-06
+  except:
+    - tags
+  script:
+    #- export sbt_version=1.2.8 && export sbt_home=/usr/local/sbt && export PATH=$PATH:/usr/local/sbt/bin
+    #- wget -qO - --no-check-certificate "https://github.com/sbt/sbt/releases/download/v$sbt_version/sbt-$sbt_version.tgz" | tar xz -C $sbt_home --strip-components=1
+    - bash build.sh
+  artifacts:
+    paths:
+    - /builds/flotechnologies/flo-email-service/target/scala-2.12/app.jar
+    untracked: true
+
+  tags:
+    - build
+
+DockerImageBuild:
+  stage: prepare
+  except:
+  - tags
+  script:
+    - mkdir -pv "${HOME}/.docker/"
+    - echo "${DOCKER_AUTH_CONFIG}" > "${HOME}/.docker/config.json"
+    - docker login
+    - docker login --username "${GITLAB_REGISTRY_USERNAME}" --password "${GITLAB_REGISTRY_TOKEN}" "${CI_REGISTRY}"
+    - make prepare-build-image
+  tags:
+    - build
+
+K8sDev:
+  image: registry.gitlab.com/flotechnologies/devops/docker-tools:helm-v3-5-4
+  stage: deploy
+  variables:
+    VAULT_URL: ${VAULT_URL_DEV}
+    VAULT_TOKEN: ${VAULT_TOKEN_DEV}
+  dependencies:
+    - Compile
+  only:
+    - dev
+    - eks
+  environment:
+    name: eks
+  script:
+    - make environment
+    - make deploy
+  tags:
+    - eks
+
+K8sProd:
+  image: registry.gitlab.com/flotechnologies/devops/docker-tools:helm-v3-5-4
+  stage: deploy
+  variables:
+    VAULT_URL: ${VAULT_URL_PROD}
+    VAULT_TOKEN: ${VAULT_TOKEN_PROD}
+  dependencies:
+    - Compile
+  only:
+    - master
+  environment:
+    name: prod-eks
+  script:
+    - make environment
+    - make deploy
+  tags:
+    - eks-prod

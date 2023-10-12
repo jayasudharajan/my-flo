@@ -1,0 +1,3 @@
+[submodule ".app"]
+	path = .app
+	url = git@gitlab.com:flotechnologies/devops/flo-app-templates-hivemq.git

@@ -1,0 +1,721 @@
+{
+  "trigger_url": "https://api.runscope.com/radar/7deaec88-56aa-4385-808b-0c9c6111f20f/trigger",
+  "name": "Localization Smoke Test",
+  "version": "1.0",
+  "exported_at": 1559337907,
+  "steps": [
+    {
+      "skipped": false,
+      "headers": {},
+      "url": "{{baseUrl}}/ping",
+      "variables": [],
+      "args": {},
+      "step_type": "request",
+      "auth": {},
+      "multipart_form": [],
+      "note": "check if service is up",
+      "fragment": "",
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": 200,
+          "source": "response_status"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "data": "",
+      "method": "GET"
+    },
+    {
+      "body": "{  \r\n   \"id\":\"{{localeId}}\",\r\n   \"fallback\":\"{{localeFallback}}\",\r\n   \"released\":false\r\n}",
+      "skipped": false,
+      "form": {},
+      "url": "{{baseUrl}}/v1/locales",
+      "variables": [],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "note": "create locale",
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "201",
+          "source": "response_status"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "POST"
+    },
+    {
+      "skipped": false,
+      "url": "{{baseUrl}}/v1/locales/{{localeId}}",
+      "variables": [],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "note": "get locale",
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "200",
+          "source": "response_status"
+        },
+        {
+          "comparison": "equal",
+          "property": "id",
+          "value": "{{localeId}}",
+          "source": "response_json"
+        },
+        {
+          "comparison": "equal",
+          "property": "fallback",
+          "value": "{{localeFallback}}",
+          "source": "response_json"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "GET"
+    },
+    {
+      "body": "{  \r\n   \"id\":\"{{localeId}}\",\r\n   \"released\":true\r\n}",
+      "skipped": false,
+      "form": {},
+      "url": "{{baseUrl}}/v1/locales/{{localeId}}",
+      "variables": [],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "note": "update locale",
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "204",
+          "source": "response_status"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "POST"
+    },
+    {
+      "skipped": false,
+      "url": "{{baseUrl}}/v1/locales/{{localeId}}",
+      "variables": [],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "note": "get updated locale",
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "200",
+          "source": "response_status"
+        },
+        {
+          "comparison": "equal",
+          "property": "id",
+          "value": "{{localeId}}",
+          "source": "response_json"
+        },
+        {
+          "comparison": "equal",
+          "property": "fallback",
+          "value": "{{localeFallback}}",
+          "source": "response_json"
+        },
+        {
+          "comparison": "equal",
+          "property": "released",
+          "value": "true",
+          "source": "response_json"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "GET"
+    },
+    {
+      "body": "",
+      "skipped": false,
+      "form": {},
+      "url": "{{baseUrl}}/v1/locales/{{localeId}}",
+      "variables": [],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "note": "delete locale",
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "204",
+          "source": "response_status"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "DELETE"
+    },
+    {
+      "body": "{  \r\n   \"name\":\"{{assetName}}\",\r\n   \"type\":\"{{assetType}}\",\r\n   \"locale\":\"es_mx\",\r\n   \"value\":\"Lorem ipsum dolor sit amet, nec ut prompta placerat, vim saepe iracundia ad.\",\r\n   \"released\":false,\r\n   \"tags\":[\"{{tag1}}\",\"{{tag2}}\"]\r\n}",
+      "skipped": false,
+      "form": {},
+      "url": "{{baseUrl}}/v1/assets",
+      "variables": [],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "note": "try to create a new asset",
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "400",
+          "source": "response_status"
+        },
+        {
+          "comparison": "equal",
+          "property": "message",
+          "value": "locale es_mx is not supported",
+          "source": "response_json"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "POST"
+    },
+    {
+      "body": "{  \r\n   \"name\":\"{{assetName}}\",\r\n   \"type\":\"{{assetType}}\",\r\n   \"locale\":\"{{assetLocale}}\",\r\n   \"value\":\"Lorem ipsum dolor sit amet, nec ut prompta placerat, vim saepe iracundia ad.\",\r\n   \"released\":false,\r\n   \"tags\":[\"{{tag1}}\",\"{{tag2}}\"]\r\n}",
+      "skipped": false,
+      "form": {},
+      "url": "{{baseUrl}}/v1/assets",
+      "variables": [
+        {
+          "source": "response_json",
+          "property": "id",
+          "name": "assetId"
+        }
+      ],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "note": "create a new asset",
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "201",
+          "source": "response_status"
+        },
+        {
+          "comparison": "not_empty",
+          "property": "id",
+          "value": null,
+          "source": "response_json"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "POST"
+    },
+    {
+      "body": "{  \r\n   \"name\":\"{{assetName}}\",\r\n   \"type\":\"{{assetType}}\",\r\n   \"locale\":\"{{assetLocale}}\",\r\n   \"value\":\"Lorem ipsum dolor sit amet, nec ut prompta placerat, vim saepe iracundia ad.\",\r\n   \"released\":false,\r\n   \"tags\":[\"{{tag1}}\",\"{{tag2}}\"]\r\n}",
+      "skipped": false,
+      "form": {},
+      "url": "{{baseUrl}}/v1/assets",
+      "variables": [],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "note": "try to create same asset",
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "409",
+          "source": "response_status"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "POST"
+    },
+    {
+      "skipped": false,
+      "url": "{{baseUrl}}/v1/assets/{{assetId}}",
+      "variables": [],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "note": "get an asset",
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "200",
+          "source": "response_status"
+        },
+        {
+          "comparison": "equal",
+          "property": "name",
+          "value": "{{assetName}}",
+          "source": "response_json"
+        },
+        {
+          "comparison": "equal",
+          "property": "type",
+          "value": "{{assetType}}",
+          "source": "response_json"
+        },
+        {
+          "comparison": "equal",
+          "property": "locale",
+          "value": "{{assetLocale}}",
+          "source": "response_json"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "GET"
+    },
+    {
+      "body": "{\r\n    \"type\": \"email\",\r\n    \"released\": true\r\n}",
+      "skipped": false,
+      "form": {},
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "url": "{{baseUrl}}/v1/assets/{{assetId}}",
+      "variables": [],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "note": "try to update an asset without id in request body",
+      "fragment": "",
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "400",
+          "source": "response_status"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "POST"
+    },
+    {
+      "body": "{\r\n    \"id\": \"{{assetId}}\",\r\n    \"type\": \"email\",\r\n    \"released\": true\r\n}",
+      "skipped": false,
+      "form": {},
+      "url": "{{baseUrl}}/v1/assets/{{assetId}}",
+      "variables": [],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "fragment": "",
+      "note": "update an asset",
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "204",
+          "source": "response_status"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "POST"
+    },
+    {
+      "body": "{\r\n    \"id\": \"{{assetId}}\",\r\n    \"locale\":\"{{supportedLocale}}\",\r\n    \"type\": \"email\",\r\n    \"released\": true\r\n}",
+      "skipped": false,
+      "form": {},
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "url": "{{baseUrl}}/v1/assets/{{assetId}}",
+      "variables": [],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "note": "update an asset with supported locale",
+      "fragment": "",
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "204",
+          "source": "response_status"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "POST"
+    },
+    {
+      "body": "{\r\n    \"id\": \"{{assetId}}\",\r\n    \"locale\":\"{{unsupportedLocale}}\",\r\n    \"type\": \"email\",\r\n    \"released\": true\r\n}",
+      "skipped": false,
+      "form": {},
+      "url": "{{baseUrl}}/v1/assets/{{assetId}}",
+      "variables": [],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "fragment": "",
+      "note": "try to update an asset wtih unsupported locale",
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "400",
+          "source": "response_status"
+        },
+        {
+          "comparison": "equal",
+          "property": "message",
+          "value": "locale es_mx is not supported",
+          "source": "response_json"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "POST"
+    },
+    {
+      "skipped": false,
+      "url": "{{baseUrl}}/v1/assets/{{assetId}}",
+      "variables": [],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "note": "get an asset",
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "200",
+          "source": "response_status"
+        },
+        {
+          "comparison": "equal",
+          "property": "name",
+          "value": "{{assetName}}",
+          "source": "response_json"
+        },
+        {
+          "comparison": "equal",
+          "property": "type",
+          "value": "email",
+          "source": "response_json"
+        },
+        {
+          "comparison": "equal",
+          "property": "released",
+          "value": "true",
+          "source": "response_json"
+        },
+        {
+          "comparison": "equal",
+          "property": "locale",
+          "value": "{{supportedLocale}}",
+          "source": "response_json"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "GET"
+    },
+    {
+      "body": "",
+      "skipped": false,
+      "form": {},
+      "url": "{{baseUrl}}/v1/assets/{{assetId}}",
+      "variables": [],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "fragment": "",
+      "note": "delete an asset",
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "204",
+          "source": "response_status"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "DELETE"
+    },
+    {
+      "body": "",
+      "skipped": false,
+      "form": {},
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "url": "{{baseUrl}}/v1/assets/{{assetId}}",
+      "variables": [],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "note": "try to delete the same asset again",
+      "fragment": "",
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "404",
+          "source": "response_status"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "DELETE"
+    },
+    {
+      "skipped": false,
+      "url": "{{baseUrl}}/v1/assets/{{assetId}}",
+      "variables": [],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "note": "check if the asset has been deleted",
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "404",
+          "source": "response_status"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "GET"
+    },
+    {
+      "body": "{  \r\n   \"name\":\"{{assetName}}\",\r\n   \"type\":\"{{assetType}}\",\r\n   \"locale\":\"{{assetLocale}}\",\r\n   \"value\":\"{$username}, you have {$numberofalerts} alert(s).\",\r\n   \"released\":true,\r\n   \"tags\":[\"{{tag1}}\",\"{{tag2}}\"]\r\n}",
+      "skipped": false,
+      "form": {},
+      "url": "{{baseUrl}}/v1/assets",
+      "variables": [],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "note": "create a new asset with template as a value",
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "201",
+          "source": "response_status"
+        },
+        {
+          "comparison": "not_empty",
+          "property": "id",
+          "value": null,
+          "source": "response_json"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "POST"
+    },
+    {
+      "skipped": false,
+      "url": "{{baseUrl}}/v1/localized?_name={{assetName}}&_type={{assetType}}&_locale={{supportedLocale}}&username=Alexander&numberofalerts=5",
+      "variables": [
+        {
+          "source": "response_json",
+          "property": "id",
+          "name": "localizedId"
+        }
+      ],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "note": "get localized transformed asset",
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "200",
+          "source": "response_status"
+        },
+        {
+          "comparison": "equal",
+          "property": "localizedValue",
+          "value": "Alexander, you have 5 alert(s).",
+          "source": "response_json"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "GET"
+    },
+    {
+      "body": "",
+      "skipped": false,
+      "form": {},
+      "url": "{{baseUrl}}/v1/assets/{{localizedId}}",
+      "variables": [],
+      "multipart_form": [],
+      "step_type": "request",
+      "auth": {},
+      "fragment": "",
+      "note": "delete the localized transformed asset",
+      "headers": {
+        "": [
+          ""
+        ],
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "assertions": [
+        {
+          "comparison": "equal_number",
+          "value": "204",
+          "source": "response_status"
+        }
+      ],
+      "scripts": [],
+      "before_scripts": [],
+      "method": "DELETE"
+    }
+  ],
+  "description": "end-to-end localization smoke test:\r\n\r\n1. create an asset\r\n2. get an asset\r\n3. update an asset\r\n4. get updated asset\r\n5. deleted an asset\r\n6. get a deleted asset\r\n"
+}

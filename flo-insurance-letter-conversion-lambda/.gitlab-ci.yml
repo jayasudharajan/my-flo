@@ -1,0 +1,84 @@
+---
+image: public.ecr.aws/lambda/nodejs:18
+
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  key: "${CI_PROJECT_NAME}-${CI_COMMIT_REF_SLUG}"
+  paths:
+    - lib/
+    - node_modules/
+
+variables:
+  AWS_DEFAULT_REGION: us-west-2
+  AWS_REGION: us-west-2
+
+stages:
+  - build
+  - deploy
+
+before_script:
+  - yum --assumeyes --quiet install bzip2 fontconfig-devel gzip tar unzip
+
+compile:
+  stage: build
+  except:
+    - tags
+  script:
+    - |
+      mkdir -p lib
+      mkdir -p fonts
+      cp -v \
+        /usr/lib64/libz.so.1 \
+        /usr/lib64/libfontconfig.so.1 \
+        /usr/lib64/libfreetype.so.6 \
+        /usr/lib64/libdl.so.2 \
+        /usr/lib64/librt.so.1 \
+        /usr/lib64/libpthread.so.0 \
+        /usr/lib64/libstdc++.so.6 \
+        /usr/lib64/libm.so.6 \
+        /usr/lib64/libgcc_s.so.1 \
+        /usr/lib64/libc.so.6 \
+        /usr/lib64/libexpat.so.1 \
+        /usr/lib64/libuuid.so.1 \
+        /usr/lib64/libbz2.so.1 \
+        /usr/lib64/libpng15.so.15 \
+        ./lib/
+      cp -v /usr/share/fonts/dejavu/* ./fonts/
+      export PATH="$(pwd)/node_modules/.bin:${PATH}"
+      npm ci
+      npx serverless package --verbose --stage dev
+  artifacts:
+    paths:
+      - .serverless
+
+
+dev:
+  stage: deploy
+  environment:
+    name: dev
+  only:
+    - dev
+    - dev.fix-packaging-issue
+  variables:
+    ACCOUNT_ID: "${ACCOUNT_ID_DEV}"
+    AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID_DEV}"
+    AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY_DEV}"
+  script:
+    - npm ci
+    - npx serverless deploy --verbose --stage dev --package .serverless
+
+prod:
+  stage: deploy
+  environment:
+    name: prod
+  only:
+    - master
+  variables:
+    ACCOUNT_ID: "${ACCOUNT_ID_PROD}"
+    AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID_PROD}"
+    AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY_PROD}"
+    S3_BUCKET: "flosecurecloud-letters"
+  script:
+    - npm ci
+    - npx serverless deploy --verbose --force --stage prod

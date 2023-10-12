@@ -1,0 +1,15 @@
+FROM golang:1.13
+
+ARG COMMITSHA
+ARG COMMITTIME
+
+ADD ./src /src
+
+WORKDIR /src
+
+RUN cd /src \
+    && ls -lh \
+    && mkdir /app \
+    && CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o /app/flo-incident-archiver -ldflags "-X main._commitSha=${COMMITSHA} -X main._commitTime=${COMMITTIME}"
+
+ENTRYPOINT ["/app/flo-incident-archiver"]

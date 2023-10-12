@@ -1,0 +1,217 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ include "fullname" . | quote }}
+  labels:
+    app: {{ include "fullname" . | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    component: "mender"
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ include "fullname" . | quote }}
+        component: "mender"
+        hostPort: {{ .Values.restPort | quote }}
+        containerPort: {{ .Values.restPort | quote }}
+    spec:
+      volumes:
+        - name: config-dir-map
+          configMap:
+            name: {{ include "config-dir-map" . | quote }}
+        - name: openresty-config-dir
+          configMap:
+            name: {{ include "openresty-config-dir" . | quote }}
+        - name: conductor-config-dir
+          configMap:
+            name: {{ include "conductor-config-dir" . | quote }}
+        - name: redis-data
+          persistentVolumeClaim:
+            claimName: {{ include "redis-storage-claim-name" . | quote }}
+        - name: secrets
+          secret:
+            secretName: {{ include "fullname" . | quote }}
+            items:
+              - key: api-gateway.private.key
+                path: api-gateway.private.key
+              - key: api-gateway.cert.crt
+                path: api-gateway.cert.crt
+              - key: deviceauth.private.key
+                path: deviceauth.private.key
+              - key: useradm.private.key
+                path: useradm.private.key
+              - key: deployments.storageproxy.crt
+                path: deployments.storageproxy.crt
+
+      containers:
+      - name: api-gateway
+        image: "{{ .Values.apigateway.image.repository }}:{{if .Values.apigateway.image.tag }}{{ .Values.apigateway.image.tag }}{{else}}{{ .Chart.AppVersion }}{{end}}"
+        imagePullPolicy: {{ .Values.apigateway.image.pullPolicy | quote }}
+        ports:
+          - containerPort: {{ .Values.apigateway.restPort }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.apigateway.restPort }}
+          initialDelaySeconds: 120
+          periodSeconds: 3
+        volumeMounts:
+          - name: secrets
+            mountPath: "/var/www/mendersoftware/cert/cert.crt"
+            subPath: "api-gateway.cert.crt"
+          - name: secrets
+            mountPath: "/var/www/mendersoftware/cert/private.key"
+            subPath: "api-gateway.private.key"
+
+      - name: deviceauth
+        image: "{{ .Values.deviceauth.image.repository }}:{{if .Values.deviceauth.image.tag }}{{ .Values.deviceauth.image.tag }}{{else}}{{ .Chart.AppVersion }}{{end}}"
+        imagePullPolicy: {{ .Values.deviceauth.image.pullPolicy | quote }}
+        ports:
+          - containerPort: {{ .Values.deviceauth.restPort }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.deviceauth.restPort }}
+          initialDelaySeconds: 120
+          periodSeconds: 3
+        volumeMounts:
+          - name: secrets
+            mountPath: "/etc/deviceauth/rsa/private.pem"
+            subPath: "deviceauth.private.key"
+      - name: conductor
+        image: "{{ .Values.conductor.image.repository }}:{{if .Values.conductor.image.tag }}{{ .Values.conductor.image.tag }}{{else}}{{ .Chart.AppVersion }}{{end}}"
+        imagePullPolicy: {{ .Values.conductor.image.pullPolicy }}
+        ports:
+          - containerPort: {{ .Values.conductor.restPort }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.conductor.restPort }}
+          initialDelaySeconds: 120
+          periodSeconds: 3
+      - name: inventory
+        image: "{{ .Values.inventory.image.repository }}:{{if .Values.inventory.image.tag }}{{ .Values.inventory.image.tag }}{{else}}{{ .Chart.AppVersion }}{{end}}"
+        imagePullPolicy: {{ .Values.inventory.image.pullPolicy }}
+        ports:
+          - containerPort: {{ .Values.inventory.restPort }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.inventory.restPort }}
+          initialDelaySeconds: 120
+          periodSeconds: 3
+      - name: useradm
+        image: "{{ .Values.useradm.image.repository }}:{{if .Values.useradm.image.tag }}{{ .Values.useradm.image.tag }}{{else}}{{ .Chart.AppVersion }}{{end}}"
+        imagePullPolicy: {{ .Values.useradm.image.pullPolicy }}
+        ports:
+          - containerPort: {{ .Values.useradm.restPort }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.useradm.restPort }}
+          initialDelaySeconds: 120
+          periodSeconds: 3
+        volumeMounts:
+          - name: secrets
+            mountPath: "/etc/useradm/rsa/private.pem"
+            subPath: "useradm.private.key"
+      - name: deployments
+        image: "{{ .Values.deployments.image.repository }}:{{if .Values.deployments.image.tag }}{{ .Values.deployments.image.tag }}{{else}}{{ .Chart.AppVersion }}{{end}}"
+        imagePullPolicy: {{ .Values.deployments.image.pullPolicy }}
+        ports:
+          - containerPort: {{ .Values.deployments.restPort }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.deployments.restPort }}
+          initialDelaySeconds: 120
+          periodSeconds: 3
+        volumeMounts:
+          - name: secrets
+            mountPath: "/etc/ssl/certs/storage-proxy.crt"
+            subPath: "deployments.storageproxy.crt"
+
+      - name: openresty
+        image: "{{ .Values.openresty.image.repository }}:{{if .Values.openresty.image.tag }}{{ .Values.openresty.image.tag }}{{else}}{{ .Chart.AppVersion }}{{end}}"
+        imagePullPolicy: {{ .Values.openresty.image.pullPolicy }}
+        ports:
+          - containerPort: {{ .Values.openresty.restPort }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.openresty.restPort }}
+          initialDelaySeconds: 120
+          periodSeconds: 3
+        volumeMounts:
+          - name: openresty-config-dir
+            mountPath: "/usr/local/openresty/nginx/conf/nginx.conf"
+            subPath: "nginx.conf"
+
+      - name: redis
+        image: "{{ .Values.redis.image.repository }}:{{if .Values.redis.image.tag }}{{ .Values.redis.image.tag }}{{else}}{{ .Chart.AppVersion }}{{end}}"
+        imagePullPolicy: {{ .Values.redis.image.pullPolicy }}
+        ports:
+          - containerPort: {{ .Values.redis.restPort }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.redis.restPort }}
+          initialDelaySeconds: 120
+          periodSeconds: 3
+        volumeMounts:
+          - name: config-dir-map
+            mountPath: "/etc/redis/redis.conf"
+            subPath: "redis.conf.tpl"
+          - name: config-dir-map
+            mountPath: "/redis/entrypoint.sh"
+            subPath: "redis.entrypoint.sh"
+          - name: redis-data
+            mountPath: "/var/lib/redis"
+
+      - name: elasticsearch
+        image: "{{ .Values.elasticsearch.image.repository }}:{{if .Values.elasticsearch.image.tag }}{{ .Values.elasticsearch.image.tag }}{{else}}{{ .Chart.AppVersion }}{{end}}"
+        imagePullPolicy: {{ .Values.elasticsearch.image.pullPolicy }}
+        ports:
+          - containerPort: {{ .Values.elasticsearch.restPort }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.elasticsearch.restPort }}
+          initialDelaySeconds: 120
+          periodSeconds: 3
+        volumeMounts:
+          - name: config-dir-map
+            mountPath: "/usr/share/elasticsearch/config/elasticsearch.yml"
+            subPath: "elasticsearch.yml.tpl"
+          - name: config-dir-map
+            mountPath: "/redis/entrypoint.sh"
+            subPath: "redis.entrypoint.sh"
+          - name: redis-data
+            mountPath: "/var/lib/redis"
+
+      - name: gui
+        image: "{{ .Values.gui.image.repository }}:{{if .Values.gui.image.tag }}{{ .Values.gui.image.tag }}{{else}}{{ .Chart.AppVersion }}{{end}}"
+        imagePullPolicy: {{ .Values.gui.image.pullPolicy }}
+        ports:
+          - containerPort: {{ .Values.gui.restPort }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.gui.restPort }}
+          initialDelaySeconds: 120
+          periodSeconds: 3
+
+
+      - name: minio
+        image: "{{ .Values.minio.image.repository }}:{{if .Values.minio.image.tag }}{{ .Values.minio.image.tag }}{{else}}{{ .Chart.AppVersion }}{{end}}"
+        imagePullPolicy: {{ .Values.minio.image.pullPolicy }}
+        ports:
+          - containerPort: {{ .Values.minio.restPort }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.minio.restPort }}
+          initialDelaySeconds: 120
+          periodSeconds: 3

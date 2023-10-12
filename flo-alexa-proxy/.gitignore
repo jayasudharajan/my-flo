@@ -1,0 +1,13 @@
+.vscode
+.vscodex
+.idea
+.aws
+.ssh
+**/.env
+**/*.env
+**/node_modules/*
+**/src/*.js
+**/local/tmp
+**/.webpack
+**/lib
+**/.serverless

@@ -1,0 +1,31 @@
+{
+  "total": 1,
+  "items": [
+    {
+      "firstname": "Andrew",
+      "lastname": "Chen",
+      "phone_mobile": "+886000000000",
+      "geo_locations": [
+        {
+          "state_or_province": null,
+          "country": "us",
+          "address": null,
+          "address2": null,
+          "city": null,
+          "timezone": null,
+          "postal_code": null,
+          "location_id": "ffffffff-ffff-ffff-ffff-ffffffffffff"
+        }
+      ],
+      "is_active": true,
+      "is_system_user": false,
+      "id": "ffffffff-ffff-ffff-ffff-ffffffffffff",
+      "source": "mobile",
+      "email": "andrew@example.com",
+      "account": {
+        "account_id": "ffffffff-ffff-ffff-ffff-ffffffffffff",
+        "group_id": null
+      }
+    }
+  ]
+}

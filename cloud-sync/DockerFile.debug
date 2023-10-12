@@ -1,0 +1,43 @@
+FROM golang:1.20.5-bullseye
+ENV CGO_ENABLED 0
+
+ARG COMMITSHA
+ARG COMMITTIME
+ARG COMMITBRANCH=unknown
+
+# Compile Kafka lib, with docker caching, this should happens once
+RUN cd /tmp \
+    && git clone --branch v1.3.0 https://github.com/edenhill/librdkafka.git \
+    && cd /tmp/librdkafka \
+    && ./configure --prefix /usr \
+    && make \
+    && make install \
+    && rm -rf /tmp/librdkafka
+
+EXPOSE 8082
+
+ADD ./src /src
+
+RUN apt-get install -y inotify-tools
+
+RUN mkdir /build/
+WORKDIR /build/
+
+# installing Delve debugger
+RUN go get github.com/derekparker/delve/cmd/dlv
+
+RUN cd /src \
+    && ls -lh \
+    && mkdir /app \
+    && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /app/cloud-sync -gcflags "all=-N -l" -ldflags "-X main._commitSha=${COMMITSHA} -X main._commitTime=${COMMITTIME} -X main._commitBranch=${COMMITBRANCH}"
+
+FROM scratch
+COPY --from=build /src /src
+
+COPY src/main.go /build/main.go
+COPY startScript.sh /build/startScript.sh
+
+
+CMD ["/dlv", "--listen=:40000", "--headless=true", "--api-version=2", "--accept-multiclient", "exec", "/server"]
+
+ENTRYPOINT sh startScript.sh

@@ -1,0 +1,47 @@
+[tool.dephell.main]
+from = {format = "poetry", path = "pyproject.toml"}
+to = {format = "setuppy", path = "setup.py"}
+
+[tool.poetry]
+name = "icd-provisioner"
+version = "2.10.9"
+description = ""
+authors = ["Developers <dev@flotechnologies.com>"]
+readme = "README.md"
+homepage = "https://github.com/FloTechnologies/uni-provisioner"
+packages = [
+    {include = "icd_provisioner", from = "packages"},
+    {include = "icd_provisioner_desktop", from = "packages"},
+    {include = "icd_provisioner_sdk", from = "packages"},
+]
+
+[tool.poetry.dependencies]
+python = "~3.9"
+aiohttp = "3.7.4"
+asyncssh = "2.5.0"
+cryptography = "3.4.6"
+dacite = "1.6.0"
+dnspython = "2.1.0"
+ipcq = "1.1.1"
+Jinja2 = "2.11.3"
+macross-serial = "1.1.0"
+plumbum = "1.7.0"
+pyserial = "3.5"
+PySide6 = "6.0.1"
+toml = "0.10.2"
+xdg = "5.0.1"
+
+[tool.poetry.dev-dependencies]
+dephell = "^0.8.3"
+mypy = "^0.812"
+pipdeptree = "^2.0.0"
+pydeps = "^1.9.3"
+pynsist = "^2.6"
+
+[tool.poetry.scripts]
+icd-provisioner = 'icd_provisioner.icd_provisioner:main'
+icd-provisioner-desktop = 'icd_provisioner_desktop.icd_provisioner_desktop:main'
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

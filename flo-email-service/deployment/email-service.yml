@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: email-service
+  labels:
+    name: email-service
+spec:
+  containers:
+  - image: 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-email-service-new:latest
+    name: email-service-pod
+    ports:
+      - containerPort: 8000
+    envFrom:
+    - configMapRef:
+        name: email-servic-config

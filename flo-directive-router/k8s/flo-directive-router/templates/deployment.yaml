@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "flo-directive-router.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "flo-directive-router.name" . }}
+    helm.sh/chart: {{ include "flo-directive-router.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "flo-directive-router.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "flo-directive-router.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      automountServiceAccountToken: false
+      imagePullSecrets:
+        - name: gitlab-registry
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8778
+              protocol: TCP
+          securityContext:
+            allowPrivilegeEscalation: false
+          env:
+          {{- range $key, $value := .Values.secrets.datas }}
+          {{ if eq $key "EnvironmentType" }}
+          - name: {{ $key  }}
+            valueFrom:
+              secretKeyRef:
+                  name:  flo-directive-router-secrets
+                  key: {{ $key |   quote }}
+          {{ else  }}
+          - name: {{ $key | upper }}
+            valueFrom:
+              secretKeyRef:
+                  name:  flo-directive-router-secrets
+                  key: {{ $key |   quote }}
+          {{ end }}
+          {{- end }}
+
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

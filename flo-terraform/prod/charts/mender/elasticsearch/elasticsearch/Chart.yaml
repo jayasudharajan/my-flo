@@ -1,0 +1,4 @@
+appVersion: 0.1
+description: A chart for a single node Elasticsearch
+name: elasticsearch
+version: 0.1

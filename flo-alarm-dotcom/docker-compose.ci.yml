@@ -1,0 +1,58 @@
+#version: "3.8"
+
+#CI overrides
+services:
+  app:
+    image: ${APP}:${BUILD_TAG}
+    restart: on-failure
+    working_dir: /src
+    environment:
+      ENV: ci
+      FLO_LOCAL_DEBUG: ""
+      #disable trace logs, set to 0 to enable
+      FLO_LOG_MIN_LEVEL: 1
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  redis:
+    logging:
+      driver: none
+
+  postgres:
+    restart: on-failure
+    healthcheck:
+      timeout: 3s
+      retries: 40
+#    logging:
+#      driver: none
+
+  zookeeper:
+    #disable this for ci, we don't need it
+    deploy:
+      replicas: 0
+    logging:
+      driver: none
+
+  kafka:
+    #disable this for ci, we don't need it
+    deploy:
+      replicas: 0
+    logging:
+      driver: none
+
+  kafka_bootstrap_ent:
+    #disable this for ci, we don't need it
+    deploy:
+      replicas: 0
+    logging:
+      driver: none
+
+  kafka_bootstrap_hb:
+    #disable this for ci, we don't need it
+    deploy:
+      replicas: 0
+    logging:
+      driver: none

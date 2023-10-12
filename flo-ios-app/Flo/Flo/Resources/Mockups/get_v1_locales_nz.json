@@ -1,0 +1,13 @@
+{
+  "timezones" : [
+    {
+      "display" : "UTC+12:00 NZST (Auckland)",
+      "tz" : "Pacific\/Auckland"
+    }
+  ],
+  "name" : "New Zealand",
+  "regions" : [
+
+  ],
+  "locale" : "nz"
+}

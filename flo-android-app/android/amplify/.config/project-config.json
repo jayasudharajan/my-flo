@@ -1,0 +1,16 @@
+{
+    "projectName": "floandroidapp",
+    "projectPath": "/Users/yongjhih/works/flo-android-app",
+    "defaultEditor": "vim",
+    "frontendHandler": {
+        "android": "/Users/yongjhih/.config/yarn/global/node_modules/amplify-frontend-android"
+    },
+    "amplify-frontend-android": {
+        "config": {
+            "ResDir": "app/src/main/res"
+        }
+    },
+    "providers": {
+        "awscloudformation": "/Users/yongjhih/.config/yarn/global/node_modules/amplify-provider-awscloudformation"
+    }
+}

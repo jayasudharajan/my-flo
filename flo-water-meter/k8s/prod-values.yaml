@@ -1,0 +1,16 @@
+---
+replicaCount: 3
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
+    kubernetes.io/ingress.class: nginx-internal
+    kubernetes.io/tls-acme: "true"
+  paths:
+    - /
+  hosts:
+    - flo-water-meter.flosecurecloud.com
+  tls:
+    - secretName: flo-water-meter-tls
+      hosts:
+        - flo-water-meter.flosecurecloud.com

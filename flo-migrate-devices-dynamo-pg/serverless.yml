@@ -1,0 +1,47 @@
+---
+service:
+  name: flo-migrate-devices-dynamo-pg
+
+plugins:
+  - serverless-webpack
+
+custom:
+  bundle:
+    ignorePackages:
+      - pg-native
+  defaultRegion: us-west-2
+  defaultBatchSize: 100
+  defaultStartingPosition: TRIM_HORIZON
+  region: ${opt:region, self:custom.defaultRegion}
+  tablePrefix: ${env:TABLE_PREFIX, opt:stage}_
+  accountId: ${env:ACCOUNT_ID}
+  awsKmsKeyArn: ${env:AWS_KMS_KEY_ARN}
+  streamBatchSize: ${env:STREAM_BATCH_SIZE, self:custom.defaultBatchSize}
+  streamStartingPosition: ${env:STREAM_STARTING_POSITION, self:custom.defaultStartingPosition}
+  dynamoDbICDStreamId: ${env:DYNAMODB_ICD_STREAM_ID}
+  pgUser: ${env:PG_USER}
+  pgPw: ${env:PG_PW}
+  pgHost: ${env:PG_HOST}
+  pgDb: ${env:PG_DB}
+  pgPort: ${env:PG_PORT}
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ${self:custom.region}
+  vpc: ${file(vpc.${opt:stage}.yml):vpc}
+  awsKmsKeyArn: ${self:custom.awsKmsKeyArn}
+  environment:
+    PG_USER: ${self:custom.pgUser}
+    PG_PW: ${self:custom.pgPw}
+    PG_HOST: ${self:custom.pgHost}
+    PG_DB: ${self:custom.pgDb}
+    PG_PORT: ${self:custom.pgPort}
+
+functions:
+  handle:
+    handler: src/handler.handle
+    events:
+      - stream: arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}ICD/stream/${self:custom.dynamoDbICDStreamId}
+        batchSize: ${self:custom.streamBatchSize}
+        startingPosition: ${self:custom.streamStartingPosition}

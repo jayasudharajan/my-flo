@@ -1,0 +1,40 @@
+FROM flotechnologies/flo-pes-docker:latest
+MAINTAINER Flo Technologies PES Team
+ENV REFRESHED_AT 2017-04-12
+
+# We are minimizing the number of layers by combining all commands.
+# Steps Explained:
+# - Add 'flo' group and 'flo' user.
+# - Update and install Supervisord
+# - Update permissions for flo user for supervisord related directories.
+
+ENV PATH "/opt/conda/envs/fpw/bin:$PATH"
+ENV PYTHONPATH "/app/flo-ml:/app/flo-pes"
+ARG DEPLOY_TOKEN
+
+RUN mkdir -p /app/celery
+WORKDIR /app/
+
+RUN groupadd -r flo \
+    && useradd -r -g flo flo \
+    && chown -Rf flo:flo /app \
+    \
+    && mkdir -p /var/logs/supervisor \
+    && chown -Rf flo:flo /var/logs/supervisor
+
+RUN git clone https://$DEPLOY_TOKEN@github.com/FloTechnologies/flo-ml
+RUN git clone https://$DEPLOY_TOKEN@github.com/FloTechnologies/flo-pes
+
+RUN conda env create -n fpw -f /app/flo-pes/environment.yml
+
+# Add supervisor configuration to manage our app
+ADD config/supervisord.conf /etc/supervisor/
+
+ADD . /app/
+
+# Clean image
+RUN conda clean --all -y > /dev/null
+
+EXPOSE 8000
+
+ENTRYPOINT ["/usr/bin/supervisord", "-c", "/app/config/supervisord.conf"]

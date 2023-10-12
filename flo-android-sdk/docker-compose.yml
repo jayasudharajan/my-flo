@@ -1,0 +1,8 @@
+version: '2'
+services:
+  assemble:
+    image: yongjhih/android:24
+    volumes:
+      - ".:/home/ubuntu"
+      - "$HOME/.gradle:/root/.gradle"
+    command: ./gradlew assemble

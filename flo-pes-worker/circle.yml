@@ -1,0 +1,78 @@
+machine:
+  pre:
+    - curl -ssl https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
+  services:
+    - docker
+  environment:
+    DOCKER_USERNAME: flotechnologies
+    AWS_REGION: us-west-2
+    AWS_REGION_PROD: us-west-2
+    AWS_CREDENTIALS_PROFILE_PROD: floprod
+    BUILD_TIMESTAMP: "$(date '+%Y%m%d.%H%M')"
+
+dependencies:
+  pre:
+    - sudo -H pip install --upgrade pip
+    - sudo -H pip install docker-py==1.7.2 --upgrade --ignore-installed
+    - sudo -H pip install awsebcli --upgrade --ignore-installed
+    - sudo -H pip install docker-compose==1.7.1 --upgrade --ignore-installed
+
+  override:
+    - docker info
+    - docker login -e ${DOCKER_EMAIL} -u ${DOCKER_USER} -p ${DOCKER_PASS}
+    - docker-compose build
+    - docker tag ${DOCKER_USERNAME}/${CIRCLE_PROJECT_REPONAME} ${DOCKER_USERNAME}/${CIRCLE_PROJECT_REPONAME}:latest
+    - docker tag ${DOCKER_USERNAME}/${CIRCLE_PROJECT_REPONAME} ${DOCKER_USERNAME}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_BUILD_NUM}
+
+    # This is required to push Dockerfile with a right build number, so we can roll back to a specific build (and not latest)
+    - sed -i "s/:latest/:${CIRCLE_BUILD_NUM}/g" Dockerfile
+
+    # Since we did a sed replacement earlier we need to commit it in order EB to deploy the changes
+    - git config --global user.email "circleci@flocloud.co"
+    - git config --global user.name "Circle CI"
+    - git commit -am "eb commit"
+
+test:
+  override:
+    - docker-compose up >> $CIRCLE_ARTIFACTS/$CIRCLE_PROJECT_REPONAME.$BUILD_TIMESTAMP.$CIRCLE_BUILD_NUM-test.log 2>&1 & sleep 30
+    - docker-compose run test
+
+deployment:
+  development:
+    branch: [dev, stg]
+    owner: FloTechnologies
+    commands:
+      - docker push ${DOCKER_USERNAME}/${CIRCLE_PROJECT_REPONAME}:$CIRCLE_BUILD_NUM
+      - docker push ${DOCKER_USERNAME}/${CIRCLE_PROJECT_REPONAME}:latest
+
+      - eb init ${CIRCLE_PROJECT_REPONAME} --region ${AWS_REGION} --platform docker
+      - eb deploy ${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH} --message "$CIRCLE_PROJECT_REPONAME.$BUILD_TIMESTAMP.$CIRCLE_BUILD_NUM" --label "$BUILD_TIMESTAMP.$CIRCLE_BUILD_NUM" | tee /dev/tty | grep "update completed successfully"
+
+      # create a backup of the container in EB. See https://docs.docker.com/engine/reference/commandline/save/
+      - docker save ${DOCKER_USERNAME}/${CIRCLE_PROJECT_REPONAME} | gzip > $CIRCLE_ARTIFACTS/$CIRCLE_PROJECT_REPONAME.$CIRCLE_BUILD_NUM.tar.gz
+
+  production:
+    branch: master
+    owner: FloTechnologies
+    commands:
+      - docker login -e ${DOCKER_EMAIL} -u ${DOCKER_USER} -p ${DOCKER_PASS}
+      - docker push ${DOCKER_USERNAME}/${CIRCLE_PROJECT_REPONAME}:$CIRCLE_BUILD_NUM
+      - docker push ${DOCKER_USERNAME}/${CIRCLE_PROJECT_REPONAME}:latest
+
+      # change docker credentials S3 bucket name to production bucket for EB to login to Flo Private Docker Repo
+      # To learn more about Dockerrun.aws.json, see https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_docker_image.html#docker-singlecontainer-dockerrun-privaterepo
+      - sed -i "s/flocloud-config/flosecurecloud-config/g" Dockerrun.aws.json
+
+       # Since we did a sed replacement earlier we need to commit it in order EB to deploy the changes
+      - git config --global user.email "circleci@flocloud.co"
+      - git config --global user.name "Circle CI"
+      - git commit -am "eb commit"
+
+      # change the default profile to production.
+      - echo -e "[$AWS_CREDENTIALS_PROFILE_PROD]\naws_access_key_id=$AWS_ACCESS_KEY_ID_PROD\naws_secret_access_key=$AWS_SECRET_ACCESS_KEY_PROD\n" > ~/.aws/credentials
+
+      - eb init ${CIRCLE_PROJECT_REPONAME} --profile ${AWS_CREDENTIALS_PROFILE_PROD} --region ${AWS_REGION_PROD} --platform docker
+      - eb deploy ${CIRCLE_PROJECT_REPONAME}-prod --profile ${AWS_CREDENTIALS_PROFILE_PROD} --message "$CIRCLE_PROJECT_REPONAME.$BUILD_TIMESTAMP.$CIRCLE_BUILD_NUM" --label "$BUILD_TIMESTAMP.$CIRCLE_BUILD_NUM" | tee /dev/tty | grep "update completed successfully"
+
+      # create a backup of the container in EB. See https://docs.docker.com/engine/reference/commandline/save/
+      - docker save ${DOCKER_USERNAME}/${CIRCLE_PROJECT_REPONAME} | gzip > $CIRCLE_ARTIFACTS/$CIRCLE_PROJECT_REPONAME.$CIRCLE_BUILD_NUM.tar.gz

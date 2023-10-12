@@ -1,0 +1,50 @@
+#
+# Android build configuration for CircleCI.com
+# ref. https://circleci.com/docs/android/
+# ref. https://circleci.com/docs/oom/
+#
+
+machine:
+    environment:
+        ANDROID_HOME: /usr/local/android-sdk-linux
+        JAVA6_HOME: /usr/lib/jvm/java-6-openjdk-amd64
+        GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
+
+    java:
+        version: openjdk8
+
+dependencies:
+    override:
+        - echo y | sudo apt-get update
+        - echo y | sudo apt-get install libpango-1.0-0
+        - echo y | sudo apt-get install openjdk-6-jre
+        - echo y | android update sdk --no-ui --all --filter tools,platform-tools,android-24,extra-google-m2repository,extra-google-google_play_services,extra-android-m2repository,extra-android-support
+        - ANDROID_HOME=/usr/local/android-sdk-linux
+        - mkdir "$ANDROID_HOME/licenses" || true
+        - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+        - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+        - echo -e "\nd975f751698a77b662f1254ddbeed3901e976f5a" > "$ANDROID_HOME/licenses/intel-android-extra-license"
+        - ./gradlew dependencies
+    cache_directories:
+        - "/opt/circleci/.rvm/gems"
+        - /usr/local/android-sdk-linux/build-tools/24.0.3
+    pre:
+        - if [ ! -d "/usr/local/android-sdk-linux/build-tools/24.0.3" ]; then echo y | android update sdk --no-ui --all --filter "build-tools-24.0.3"; fi
+        - gem install fastlane
+
+test:
+    override:
+        - ./gradlew assemble
+        - cp -r flo-sdk/build/libs flo-android-sdk/build/libs  $CIRCLE_ARTIFACTS
+    post:
+        - ./gradlew jacocoTestReport
+        - bash <(curl -s https://codecov.io/bash) -t 8b0a7414-12dd-4315-9277-1a702545aff1
+        - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+        - find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+
+deployment:
+  beta:
+    branch: dev
+    commands:
+      - fastlane beta
+

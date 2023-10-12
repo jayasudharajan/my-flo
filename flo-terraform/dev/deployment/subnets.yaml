@@ -1,0 +1,10 @@
+
+subnets:
+- {"name": "peering-us-west-2a", "zone": "us-west-2a", "cidr": 10.0.200.0/24, "type": "Private", "id":subnet-095108c660f0b2e65}
+- {"name": "private-us-west-2a", "zone": "us-west-2a", "cidr": "10.0.0.0/19", "type": "Private", "id":"subnet-07107f3cb4c7e23a0"}
+- {"name": "private-us-west-2b", "zone": "us-west-2b", "cidr": "10.0.32.0/19", "type": "Private", "id":"subnet-01b3a1b42ad1b0b22"}
+- {"name": "private-us-west-2c", "zone": "us-west-2c", "cidr": "10.0.64.0/19", "type": "Private", "id":"subnet-041a0b132a559d04c"}
+- {"name": "public-us-west-2a", "zone": "us-west-2a", "cidr": "10.0.96.0/19", "type": "Utility", "id":"subnet-061475aca2ddc5020"}
+- {"name": "public-us-west-2b", "zone": "us-west-2b", "cidr": "10.0.128.0/19", "type": "Utility", "id":"subnet-0188c04674991f00b"}
+- {"name": "public-us-west-2c", "zone": "us-west-2c", "cidr": "10.0.160.0/19", "type": "Utility", "id":"subnet-0e8ad285b261eb13b"}
+    

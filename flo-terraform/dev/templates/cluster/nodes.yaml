@@ -1,0 +1,41 @@
+{{- range $idx, $instanceGroup := .kubernetes.instanceGroups }}
+apiVersion: kops/v1alpha2
+kind: InstanceGroup
+metadata:
+  name: {{ $instanceGroup.name }}
+  labels:
+    kops.k8s.io/cluster: {{ $.kubernetes.clusterName | quote }}
+spec:
+  associatePublicIp: false
+  image: {{ $.aws.amiId | quote }}
+  maxSize: {{ $instanceGroup.countMax }}
+  minSize: {{ $instanceGroup.countMin }}
+  machineType: {{ $instanceGroup.instanceType | quote }}
+  name: {{ $instanceGroup.name | quote }}
+  kubernetesVersion: "1.12.8"
+  nodeLabels:
+    kops.k8s.io/instancegroup: {{ $instanceGroup.name | quote }}
+  additionalPolicies:
+    node: |
+      [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "autoscaling:DescribeAutoScalingGroups",
+            "autoscaling:DescribeAutoScalingInstances",
+            "autoscaling:SetDesiredCapacity",
+            "autoscaling:DescribeLaunchConfigurations",
+            "autoscaling:DescribeTags",
+            "autoscaling:TerminateInstanceInAutoScalingGroup"
+          ],
+          "Resource": ["arn:aws:autoscaling:us-west-2:098786959887:autoScalingGroup:efabd972-23c2-4807-be58-56d4e0b02f91:autoScalingGroupName/nodes.k8s.flocloud.co"]
+        }
+      ]
+  role: "Node"
+  subnets:
+  {{- range $subnet := $instanceGroup.subnets }}
+  - {{ $subnet }}
+  {{- end }}
+  rootVolumeSize: {{ $instanceGroup.rootVolumeSize }}
+---
+{{- end }}

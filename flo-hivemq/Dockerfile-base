@@ -1,0 +1,78 @@
+FROM 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-java-base:8-alpine-2018-05-17
+MAINTAINER Flo Technologies Engineering Team
+
+USER root
+
+ARG HIVEMQ_VERSION=3.4.0
+ENV HIVEMQ_HOME=/app
+ENV JAVA_OPTS="${JAVA_OPTS} -Djava.net.preferIPv4Stack=true -noverify -Dhivemq.home=${HIVEMQ_HOME}"
+
+################################################################################
+# Container Scripts
+################################################################################
+
+# Add app-env
+ADD .docker/bin/app-env /usr/local/bin/app-env
+RUN chmod a+x /usr/local/bin/app-env
+
+# Add start
+ADD .docker/bin/start /usr/local/bin/start
+RUN chmod a+x /usr/local/bin/start
+
+# Add configuration files
+ADD .docker/templates/ /etc/templates/
+
+ADD .docker/scripts/ /etc/telegraf/scripts/
+
+################################################################################
+# Add App
+################################################################################
+# Place flat HiveMQ jar and configs to /app
+################################################################################
+RUN apk add --no-cache --virtual=.build-deps wget ca-certificates && \
+    apk add --no-cache bash linux-headers && \
+    pip install psutil && \
+    cd /app/ && \
+    curl https://s3-us-west-2.amazonaws.com/flocloud-config/hivemq/release/hivemq-${HIVEMQ_VERSION}.zip | bsdtar  -s'|[^/]*/||' -xvf- && chmod +rx /app/bin/run.sh && \
+    ln -s /app/bin/hivemq.jar /app/app.jar && \
+    apk del .build-deps
+
+ADD ./flo-hivemq-plugin/build/ /app/build/
+RUN cp -dR /app/build/libs/flo-hivemq-plugin-standalone.jar /app/plugins/
+RUN cp -dR /app/build/resources/main/* /app/plugins/
+RUN mkdir -p /app/conf && ln -s /app/conf/kafka.properties /app/plugins/kafka.properties
+
+# Linking additional plugins that come from external source
+RUN mkdir -p /app/external-plugins && \
+ ln -s /app/conf/firebase.properties /app/plugins/firebase.properties && \
+ ln -s /app/conf/credentials.json /app/plugins/credentials.json && \
+ ln -s /app/external-plugins/status-plugin-1.0-SNAPSHOT.jar /app/plugins/status-plugin.jar && \
+ ln -s /app/external-plugins/s3-cluster-discovery-plugin-1.1.0.jar /app/plugins/s3-cluster-discovery-plugin.jar && \
+ ln -s /app/external-plugins/hivemq-jmx-metrics-plugin-3.1.0.jar /app/plugins/hivemq-jmx-metrics-plugin.jar && \
+ ln -s /app/external-plugins/hivemq-client-status-plugin-0.4.0.jar /app/plugins/hivemq-client-status-plugin.jar
+
+
+RUN rm -rf /app/build/
+
+WORKDIR /app
+
+
+################################################################################
+# Volumes
+################################################################################
+
+VOLUME ["/var/log/app","/app/plugins","/app/conf","/app/license"]
+
+
+################################################################################
+# Ports
+################################################################################
+
+EXPOSE 8000
+
+################################################################################
+# Entrypoint
+################################################################################
+
+WORKDIR /app
+ENTRYPOINT ["/usr/local/bin/start"]

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+twine generate-all-localization-files ../flo-strings/strings.txt res/values --format jquery
+bin/jquery2arb .
+
+for i in {0..10}; do
+    sed -i '' -e "s/%@/\\\${it${i}}/" res/values/*.arb
+done

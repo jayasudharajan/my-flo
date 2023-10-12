@@ -1,0 +1,68 @@
+global:
+  deployment: prod
+  deploymentCode: prod
+  organisation: flo
+  profile: flo-prod
+  project: k8s-prod
+  domain: com
+  create_main_dns: "true"
+  create_child_dns: "true"
+  child_dns: k8s
+  clusterName: "oceanus.flosecurecloud.com"
+  nginx_ingress_elb:
+  bucket_prefix: config
+  bucket_key_prefix: config
+  natgatewayId: "nat-05c080df93778696b"
+privilegedIps:
+- "0.0.0.0/0"
+aws:
+  accountId: "617288038711"
+  region: "us-west-2"
+  amiId: "kope.io/k8s-1.10-debian-jessie-amd64-hvm-ebs-2018-08-17"
+  cidrBlock: "10.11.0.0/16"
+  parentZoneId: "Z2BRWAKPLRZJOW"
+  childZoneId:
+  az_count: 3
+  vpcId: "vpc-0f0201f0bafb37270"
+
+vpc_peering:
+  accepter_vpc_id: "vpc-73351b17"
+
+kubernetes:
+  bastion:
+    instanceType: "t3.small"
+    minSize: 1
+    maxSize: 1
+    subnets:
+    - public-us-west-2a
+    - public-us-west-2b
+    - public-us-west-2c
+
+  allowedIps:
+  - "108.60.116.94/32"
+  stateStore: s3://flo-k8s-prod
+  clusterName: "oceanus.flosecurecloud.com"
+  sshKey: "id_rsa_kops.pub"
+  masters:
+  - { "name": "a", "instanceGroup": "master-us-west-2a", "subnet": "private-us-west-2a", "machineType": "t3.medium", "rootVolumeSize": 50}
+  - { "name": "b", "instanceGroup": "master-us-west-2b", "subnet": "private-us-west-2b", "machineType": "t3.medium", "rootVolumeSize": 50}
+  - { "name": "c", "instanceGroup": "master-us-west-2c", "subnet": "private-us-west-2c", "machineType": "t3.medium", "rootVolumeSize": 50}
+  instanceGroups:
+  - name: nodes
+    countMin: 3
+    countMax: 10
+    instanceType: "m5.large"
+    subnets:
+    - private-us-west-2a
+    - private-us-west-2b
+    - private-us-west-2c
+
+  - name: gitlabrunner
+    countMin: 1
+    countMax: 1
+    environment: "gitlabrunner"
+    instanceType: "m5.large"
+    subnets:
+    - private-us-west-2a
+    - private-us-west-2b
+    - private-us-west-2c

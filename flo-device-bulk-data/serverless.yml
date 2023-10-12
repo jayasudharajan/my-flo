@@ -1,0 +1,125 @@
+---
+service: flo-device-bulk-data
+
+frameworkVersion: ^3.15.2
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+  - serverless-dynamodb-local
+
+custom:
+  defaultRegion: us-west-2
+  defaultExt: .telemetry
+  region: ${opt:region, self:custom.defaultRegion}
+  tablePrefix: ${env:TABLE_PREFIX, opt:stage}_
+  accountId: ${env:ACCOUNT_ID}
+  telemetryS3Bucket: ${env:TELEMETRY_S3_BUCKET}
+  logsS3Bucket: ${env:LOGS_S3_BUCKET}
+  environment: ${opt:stage}
+  s3FileExtension: ${env:S3_FILE_EXTENSION, self:custom.defaultExt}
+  deviceTelemetryRejectDefault: '587a62320ffc|20220421T2005,606405c40262|20220327T1500'
+  deviceTelemetryReject: ${env:DEVICE_TELEMETRY_REJECT, self:custom.deviceTelemetryRejectDefault}
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ${self:custom.region}
+  environment:
+    TABLE_PREFIX: ${self:custom.tablePrefix}
+    ACCOUNT_ID: ${self:custom.accountId}
+    TELEMETRY_S3_BUCKET: ${self:custom.telemetryS3Bucket}
+    LOGS_S3_BUCKET: ${self:custom.logsS3Bucket}
+    ENVIRONMENT: ${self:custom.environment}
+    S3_FILE_EXTENSION: ${self:custom.s3FileExtension}
+    DEVICE_TELEMETRY_REJECT: ${self:custom.deviceTelemetryReject}
+    FORCE_BASE64_UPLOAD: ${env:FORCE_BASE64_UPLOAD, ''}
+    PAST_HR_DEDUPE_CHK: ${env:PAST_HR_DEDUPE_CHK, ''}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - "dynamodb:Get*"
+        - "dynamodb:Query"
+      Resource:
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}StockICD"
+    - Effect: Allow
+      Action:
+        - "dynamodb:Get*"
+        - "dynamodb:Query"
+      Resource:
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}StockICD/index/*"
+    - Effect: Allow
+      Action:
+        - "apigateway:GET"
+        - "apigateway:POST"
+        - "apigateway:HEAD"
+      Resource:
+        - "arn:aws:apigateway:${self:provider.region}::/restapis*"
+    - Effect: Allow
+      Action:
+        - "apigateway:GetResources"
+      Resource:
+        - "arn:aws:apigateway:${self:provider.region}::*"
+    - Effect: Allow
+      Action:
+        - "s3:ListBucket"
+      Resource:
+        - "arn:aws:s3:::${self:custom.telemetryS3Bucket}"
+    - Effect: Allow
+      Action:
+        - "s3:GetObject"
+      Resource:
+        - "arn:aws:s3:::${self:custom.telemetryS3Bucket}/*"
+    - Effect: Allow
+      Action:
+        - "s3:PutObject*"
+      Resource:
+        - "arn:aws:s3:::${self:custom.telemetryS3Bucket}/*"
+    - Effect: Allow
+      Action:
+        - "s3:ListBucket"
+      Resource:
+        - "arn:aws:s3:::${self:custom.logsS3Bucket}"
+    - Effect: Allow
+      Action:
+        - "s3:GetObject"
+      Resource:
+        - "arn:aws:s3:::${self:custom.logsS3Bucket}/*"
+    - Effect: Allow
+      Action:
+        - "s3:PutObject*"
+      Resource:
+        - "arn:aws:s3:::${self:custom.logsS3Bucket}/*"
+
+functions:
+  postTelemetryData:
+    handler: src/index.postTelemetryData
+    events:
+      - http:
+          path: /bulk/v1/telemetry
+          method: POST
+          integration: LAMBDA_PROXY
+
+  postLogsData:
+    handler: src/index.postLogsData
+    events:
+      - http:
+          path: /bulk/v1/logs
+          method: POST
+          integration: LAMBDA_PROXY
+
+  headFile:
+    handler: src/index.headFile
+    events:
+      - http:
+          path: /bulk/v1/{type}
+          method: HEAD
+          integration: LAMBDA_PROXY
+          request:
+            parameters:
+              querystrings:
+                macAddress: true
+                signature: true
+                createdAt: true
+              paths:
+                type: true

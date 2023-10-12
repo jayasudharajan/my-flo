@@ -1,0 +1,51 @@
+---
+image: node:8-alpine
+
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  paths:
+    - node_modules/
+
+before_script:
+  # https://github.com/npm/uid-number/issues/3#issuecomment-291362937
+  - npm config set unsafe-perm true
+  - npm install -g serverless
+  - npm audit
+
+dev:
+  environment:
+    name: dev
+  only:
+    - dev
+    - dev.OPS-1289
+  variables:
+    ACCOUNT_ID: 098786959887
+    API_ACCESS_TOKEN: "${API_ACCESS_TOKEN_DEV}"
+    API_V1_BASE_URL: "${API_V1_BASE_URL_DEV}"
+    API_V2_BASE_URL: "${API_V2_BASE_URL_DEV}"
+    AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID_DEV}"
+    AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY_DEV}"
+    KAFKA_BROKER_LIST: "${KAFKA_BROKER_LIST_DEV}"
+    DOCKER_HOST: tcp://localhost:2375
+  script:
+    - npm install
+    - serverless deploy --verbose --force --stage dev
+
+prod:
+  environment:
+    name: prod
+  only:
+    - master
+  variables:
+    ACCOUNT_ID: 617288038711
+    API_ACCESS_TOKEN: "${API_ACCESS_TOKEN_PROD}"
+    API_V1_BASE_URL: "${API_V1_BASE_URL_PROD}"
+    API_V2_BASE_URL: "${API_V2_BASE_URL_PROD}"
+    AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID_PROD}"
+    AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY_PROD}"
+    KAFKA_BROKER_LIST: "${KAFKA_BROKER_LIST_PROD}"
+    DOCKER_HOST: tcp://localhost:2375
+  script:
+    - npm install
+    - serverless deploy --verbose --force --stage prod

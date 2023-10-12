@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "notification-processor.fullname" . }}
+  labels:
+    app: {{ include "notification-processor.name" . }}
+    app.kubernetes.io/name: {{ include "notification-processor.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ include "notification-processor.chart" . }}
+spec:
+{{ if or (eq .Values.environment "prod") (eq .Values.environment "production") }}
+  replicas: {{ .Values.replicaCount }}
+{{ else  }}
+  replicas: 1
+{{ end }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "notification-processor.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      annotations:
+        checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+      labels:
+        app.kubernetes.io/name: {{ include "notification-processor.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        fsGroup: 999
+      volumes:
+      - name: certs
+        secret:
+          secretName: notification-processor-secrets
+          defaultMode: 256
+          items:
+            - key: MQTT_SSL_CONFIGURATION_BROKER_CA_CERTIFICATE
+              path: flo-ca-certificate.pem
+            - key: MQTT_SSL_CONFIGURATION_CLIENT_CERT
+              path: client-cert.pem
+            - key: MQTT_SSL_CONFIGURATION_CLIENT_KEY
+              path: client-key.pem
+      imagePullSecrets:
+        - name: {{ .Values.image.pullSecrets }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.service.livenessProbe.path }}
+              port: {{ .Values.service.livenessProbe.port }}
+              scheme: HTTP
+            initialDelaySeconds: {{ .Values.service.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.service.livenessProbe.periodSeconds }}
+            successThreshold: 1
+            timeoutSeconds: {{ .Values.service.livenessProbe.timeoutSeconds }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.service.readinessProbe.path }}
+              port: {{ .Values.service.readinessProbe.port }}
+              scheme: HTTP
+            initialDelaySeconds: {{ .Values.service.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.service.readinessProbe.periodSeconds }}
+            successThreshold: {{ .Values.service.readinessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.service.readinessProbe.timeoutSeconds }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 999
+            runAsGroup: 999
+          volumeMounts:
+            - name: certs
+              mountPath: "/app/certs"
+              readOnly: true
+          env:
+          - name: INSTANA_AGENT_HOST
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.hostIP
+          {{- range $key, $value := .Values.secrets.datas }}
+          - name: {{ $key | upper }}
+            valueFrom:
+              secretKeyRef:
+                  name:  notification-processor-secrets
+                  key: {{ $key |   quote }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

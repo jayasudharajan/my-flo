@@ -1,0 +1,51 @@
+machine:
+  pre:
+    - curl -ssl https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
+  services:
+    - docker
+  environment:
+    AWS_REGION: us-west-2
+    AWS_REGION_PROD: us-west-2
+    AWS_CREDENTIALS_PROFILE_PROD: flo-prod
+    BUILD_TIMESTAMP: "$(date '+%Y%m%d.%H%M')"
+    BUILD_ROOT: "${HOME}/${CIRCLE_PROJECT_REPONAME}"
+    APPLICATION_VARS:
+      - A
+      - B
+      - C
+
+checkout:
+  post:
+    - git submodule sync && git submodule update --init
+
+dependencies:
+  pre:
+    - ./.ci/install_dependencies.sh
+  cache_directories:
+      - "~/.ivy2"
+      - "~/.sbt"
+      - "~/.container-cache"
+      - "~/.npm"
+      - "~/.conda"
+
+  override:
+    - ./.ci/build.sh
+
+test:
+  override:
+    - ./.ci/test.sh
+
+deployment:
+  development:
+    branch: [dev, stg, pnt, rewrite]
+    owner: FloTechnologies
+    commands:
+      - ./.ci/deploy_development.sh:
+          timeout: 1200
+
+  production:
+    branch: master
+    owner: FloTechnologies
+    commands:
+      - ./.ci/deploy_production.sh:
+          timeout: 1200

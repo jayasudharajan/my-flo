@@ -1,0 +1,132 @@
+# ACTION	CONTENT	TIMEOUT	PROGRESS
+
+# Booting
+wait_for_str	'Starting kernel ...'	30	BOOTING
+
+# Log in
+wait_for_str	' login:'	90	LOGGING IN
+wait_for_second	5
+send	'unicorn\n'	5
+wait_for_second	10
+send	'$5$iCBBUel6L8yF$dz0KBnsv2dYEndH47QwpnS6kbM2KVNoK3gedGdb4v80\n'	5
+wait_for_second	15
+# Switch to root
+send	'su\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	10	LOGGED IN
+
+# Get device ID
+send	'cat /sys/class/net/wlan0/address\n'	5
+wait_for_regex	r'\b(([0-9A-Fa-f]{2}:){5}([0-9A-Fa-f]{2})|([0-9A-Fa-f]{2}-){5}([0-9A-Fa-f]{2}))\b'	5	MAC: \1
+
+# Detect button click
+send	'cat /dev/input/event0 | hexdump\n'	5	DETECTING BUTTON CLICK
+wait_for_regex	r'\b(([0-9A-Za-z]{7}\s){1}([0-9A-Za-z]{4}\s){7}([0-9A-Za-z]{4}){1})\b'	30
+send	'\x03'	5
+send	'\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5	DETECTED BUTTON CLICK
+
+# Detect hall effect sensor event
+send	'systemctl stop uni-sensord\n'	5	DETECTING HALL EFFECT SENSOR EVENT
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+send	'cat /dev/flow_pulse\n'	5
+wait_for_regex	r'(Period":\s[0-9]{2,})'	30
+send	'\x03'	5
+send	'\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5	DETECTED HALL EFFECT SENSOR EVENT
+
+# Configure Wi-Fi
+send	'systemctl stop wifiap wifista\n'	5	CONFIGURING WI-FI
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	5
+
+send	'calibrator wlan0 plt power_mode on\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt set_antenna_mode_24G 2 2 0 1 0 1\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt tune_channel 1 0 0\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt set_tx_power 20000 0 0 1 0 0 0 0 0 0 0 0\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt start_tx 200 3 1000 0 0 0 0 0 00:00:DE:DE:BE:BE 12:34:56:78:90:AB 0\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt stop_tx\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt set_antenna_mode_24G 2 2 0 1 0 1\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt tune_channel 11 0 0\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt set_tx_power 20000 0 0 11 0 0 0 0 0 0 0 0\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt start_tx 200 3 1000 0 0 0 0 0 00:00:DE:DE:BE:BE 12:34:56:78:90:AB 0\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt stop_tx\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt set_antenna_mode_24G 1 1 0 1 0 1\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt tune_channel 1 0 0\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt set_tx_power 20000 0 0 1 0 0 0 0 0 0 0 0\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt start_tx 200 3 1000 0 0 0 0 0 00:00:DE:DE:BE:BE 12:34:56:78:90:AB 0\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt stop_tx\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt set_antenna_mode_24G 1 1 0 1 0 1\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt tune_channel 11 0 0\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt set_tx_power 20000 0 0 11 0 0 0 0 0 0 0 0\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt start_tx 200 3 1000 0 0 0 0 0 00:00:DE:DE:BE:BE 12:34:56:78:90:AB 0\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 wl18xx_plt stop_tx\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5
+wait_for_second	1
+
+send	'calibrator wlan0 plt power_mode off\n'	5
+wait_for_regex	r'\b((flo\-[0-9A-Fa-f]{12}:)/.*#)'	5	CONFIGURED WI-FI
+wait_for_second	1
+
+# Done
+send	'exit\n'	5
+send	'exit\n'	5	DONE

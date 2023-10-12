@@ -1,0 +1,21 @@
+{{- $servicePorts := .Values.servicePorts -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "notification-processor.fullname" . }}
+  labels:
+    app: {{ include "notification-processor.name" . }}
+    app.kubernetes.io/name: {{ include "notification-processor.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ include "notification-processor.chart" . }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: {{ .Values.service.port }}
+  selector:
+    app.kubernetes.io/name: {{ include "notification-processor.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

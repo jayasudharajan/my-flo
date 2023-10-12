@@ -1,0 +1,25 @@
+[Application]
+name = icd-provisioner
+version = {version}
+entry_point = icd_provisioner_desktop.icd_provisioner_desktop:main
+icon = build\icon.ico
+
+[Build]
+installer_name = icd-provisioner-{version}{variant}.exe
+
+[Command icd-provisioner]
+entry_point = icd_provisioner.icd_provisioner:main
+
+[Command icd-provisioner-desktop]
+entry_point = icd_provisioner_desktop.icd_provisioner_desktop:main
+console = false
+
+[Command macross-serial]
+entry_point = macross_serial.macross_serial:main
+
+[Include]
+pypi_wheels = {pypi_wheels}
+extra_wheel_sources = build\wheels
+
+[Python]
+version = {python_version}

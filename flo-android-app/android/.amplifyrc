@@ -1,0 +1,14 @@
+{
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "floandroidapp-20181221112853-authRole",
+            "UnauthRoleArn": "arn:aws:iam::176666219354:role/floandroidapp-20181221112853-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::176666219354:role/floandroidapp-20181221112853-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "floandroidapp-20181221112853-deployment",
+            "UnauthRoleName": "floandroidapp-20181221112853-unauthRole",
+            "StackName": "floandroidapp-20181221112853",
+            "StackId": "arn:aws:cloudformation:us-west-2:176666219354:stack/floandroidapp-20181221112853/8b85c820-04d0-11e9-a63a-500c33711099"
+        }
+    }
+}

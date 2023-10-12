@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -x
+
+helm template \
+  mongodb \
+  --namespace mender \
+  --values values-dev.yaml | tee output.yaml \
+|| exit 1
+helm upgrade --install \
+  mongodb \
+  ./mongodb \
+  --recreate-pods \
+  --wait --debug \
+  --namespace mender \
+  --values values-dev.yaml

@@ -1,0 +1,35 @@
+[
+  {
+    "issuer": "https://cognito-idp.ca-central-1.amazonaws.com/ca-central-1_FAzAhMYEW",
+    "variables" :{
+      "region": "ca-central-1",
+      "uri": "https://smartwater-dev.auth.ca-central-1.amazoncognito.com",
+      "moenApi": "https://api.dev.iot.moen.com",
+      "cogClient": "3ddh0jban7h0ejo6p4hmko308d",
+      "cogSecret": "akuomcgrsvknn62n9ctj0b70426ikvn38m285sllm3t2e21hurr",
+      "cogJwkUrl": "https://cognito-idp.ca-central-1.amazonaws.com/ca-central-1_FAzAhMYEW/.well-known/jwks.json"
+    }
+  },
+  {
+    "issuer": "https://cognito-idp.us-west-2.amazonaws.com/us-west-2_9MuzgHBuh",
+    "variables" :{
+      "region": "us-west-2",
+      "uri": "https://smartwater-qa.auth.us-west-2.amazoncognito.com",
+      "moenApi": "https://api.qa.iot.moen.com",
+      "cogClient": "428nh1n1tfovcej8dtaomil3ou",
+      "cogSecret": "7u6njc2sk165aciubav4nv6c30a4e2p9a9qm1dhnn0533dq865d",
+      "cogJwkUrl": "https://cognito-idp.us-west-2.amazonaws.com/us-west-2_9MuzgHBuh/.well-known/jwks.json"
+    }
+  },
+  {
+    "issuer": "https://cognito-idp.us-east-2.amazonaws.com/us-east-2_9puIPVyv1",
+    "variables" :{
+      "region": "us-east-2",
+      "uri": "https://smartwater.auth.us-east-2.amazoncognito.com",
+      "moenApi": "https://api.prod.iot.moen.com",
+      "cogClient": "6qn9pep31dglq6ed4fvlq6rp5t",
+      "cogSecret": "lpthklgkgthtg77rblqbvc8qu894n6ugei8db9th350g4l3g8id",
+      "cogJwkUrl": "https://cognito-idp.us-east-2.amazonaws.com/us-east-2_9puIPVyv1/.well-known/jwks.json"
+    }
+  }
+]

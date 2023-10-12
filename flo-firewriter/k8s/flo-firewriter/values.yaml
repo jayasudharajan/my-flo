@@ -1,0 +1,77 @@
+---
+replicaCount: 6
+
+environment: dev
+
+image:
+  repository: registry.gitlab.com/flotechnologies/flo-firewriter
+  pullPolicy: IfNotPresent
+  tag:
+
+service:
+  type: ClusterIP
+  port: 3000
+  livenessProbe:
+    path: "/ping"
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    timeoutSeconds: 1
+  readinessProbe:
+    path: "/ping"
+    initialDelaySeconds: 30
+    periodSeconds: 3
+    successThreshold: 3
+    timeoutSeconds: 1
+
+cronJob:
+  backoffLimit: 2
+  activeDeadlineSeconds: 600
+  command:
+    - /bin/sh
+  args:
+    - -c
+    - >-
+      kubectl set env deployment ${APPLICATION_NAME} LAST_RESTART_DATE="$(date)"
+      && kubectl rollout status deployment/${APPLICATION_NAME}
+  concurrencyPolicy: Forbid
+  image:
+    repository: registry.gitlab.com/flotechnologies/devops/kubectl
+    tag: 1.12.10
+    pullPolicy: Always
+    pullSecrets: gitlab-registry
+  restartPolicy: Never
+  schedule: "00 2 * * *"
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
+  path: /
+  hosts:
+    - flo-firewriter.flocloud.co
+    - flo-firewriter-dev.flocloud.co
+    - flo-firewriter.flosecurecloud.com
+    - flo-firewriter-prod.flosecurecloud.com
+  tls:
+    - secretName: flo-firewriter
+      hosts:
+        - flo-firewriter.flocloud.co
+        - flo-firewriter-dev.flocloud.co
+        - flo-firewriter.flosecurecloud.com
+        - flo-firewriter-prod.flosecurecloud.com
+
+tolerations: []
+
+affinity: {}
+
+secrets:
+  name: flocloud-firewriter-service-secrets
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 256Mi
+  limits:
+    cpu: "2"
+    memory: 2.5Gi

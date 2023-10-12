@@ -1,0 +1,27 @@
+# Default values for flo-puck-archiver.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: registry.gitlab.com/flotechnologies/flo-puck-archiver
+  tag: stable
+  pullPolicy: IfNotPresent
+  pullSecrets: gitlab-registry
+
+nameOverride: ""
+fullnameOverride: ""
+
+cronJob:
+  args: []
+  schedule: "0 0 * * *"
+
+restartPolicy: OnFailure
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+secrets:
+  datas: {}

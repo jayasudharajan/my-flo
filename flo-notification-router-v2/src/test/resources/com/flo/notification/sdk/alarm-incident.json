@@ -1,0 +1,28 @@
+{
+  "id":"f6029a48-4f64-484d-b5e7-18355e00aacc",
+  "ts":1567537050888,
+  "did":"606405c0d2db",
+  "data":{
+    "alarm":{
+      "reason":11,
+      "ht":1567537050888,
+      "defer":0,
+      "acts":""
+    },
+    "health_test": null,
+    "snapshot":{
+      "wf":1.0,
+      "t":1.0,
+      "p":1.0,
+      "sw1":1,
+      "sw2":1,
+      "did":"606405c0d2db",
+      "ts":1567537050888,
+      "sm":2,
+      "f":1.0,
+      "v":1,
+      "rssi":1.0
+    }
+  },
+  "user_activity_event": null
+}

@@ -1,0 +1,133 @@
+{
+    "settings":{
+        "number_of_shards":3,
+        "number_of_replicas":1,
+        "analysis": {
+            "tokenizer": {
+                "ngram_tokenizer": {
+                    "type": "ngram",
+                    "min_gram": 1,
+                    "max_gram": 5
+                },
+                "edge_ngram_tokenizer": {
+                    "type": "edge_ngram",
+                    "min_gram": 1,
+                    "max_gram": 5,
+                    "token_chars": [
+                        "letter",
+                        "digit"
+                    ]
+                }
+            },
+            "analyzer": {
+                "trim_lowercase_ngram_analyzer": {
+                  "type": "custom",
+                  "filter": ["standard", "lowercase", "trim"],
+                  "tokenizer": "ngram_tokenizer"
+                },
+                "trim_lowercase_edge_ngram_analyzer": {
+                  "type": "custom",
+                  "filter": ["standard", "lowercase", "trim"],
+                  "tokenizer": "edge_ngram_tokenizer"
+                }
+            }
+        }
+    },
+     
+    "mappings":{
+        "user":{
+                "properties":{
+                "email": {
+                    "type": "text",
+                    "analyzer": "trim_lowercase_ngram_analyzer",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "id":{"type":"keyword"},
+                "is_active": {"type":"boolean"},
+                "is_system_user":{"type":"boolean"},
+             
+                "firstname": {
+                    "type": "text",
+                    "analyzer": "trim_lowercase_edge_ngram_analyzer"
+                },
+                "lastname": {
+                    "type": "text",
+                    "analyzer": "trim_lowercase_edge_ngram_analyzer"
+                },
+                "middlename": {
+                    "type": "text",
+                    "analyzer": "trim_lowercase_edge_ngram_analyzer"
+                },
+                "phone_mobile":{"type":"text"}, 
+                "prefixname":{"type":"text"},
+                "suffixname":{"type":"text"},
+                
+                "account": {
+                    "type":"object",
+                    "properties": {
+                        "account_id": { "type": "keyword" },
+                        "group_id": { "type": "keyword" },
+                        "subscription": {
+                            "type": "object",
+                            "properties": {
+                                "plan_id": { "type": "keyword" },
+                                "status": { "type": "keyword" },
+                                "stripe_customer_id": { "type": "keyword" },
+                                "source_id": { "type": "keyword" },
+                                "current_period_start": { "type": "date" },
+                                "current_period_end": { "type": "date" },
+                                "canceled_at": { "type": "date" },
+                                "ended_at": { "type": "date" }
+                            }
+                        }
+                    }
+                },
+ 
+                "geo_locations":{
+                    "type":"nested",
+                    "properties":{
+                        "country": {"type":"keyword"},
+                        "state_or_province": {"type":"keyword"},
+                        "city": {"type":"keyword"},
+                        "postal_code": {"type":"keyword"},
+                        "location_id": { "type": "keyword" },
+                        "timezone": {"type":"keyword"},
+                        "address": {
+                                "type": "text",
+                                "analyzer": "trim_lowercase_edge_ngram_analyzer",
+                                "fields": {
+                                    "keyword": {
+                                        "type": "keyword"
+                                    }
+                                }
+                            },
+                        "address2": {
+                                "type": "text",
+                                "analyzer": "trim_lowercase_edge_ngram_analyzer",
+                                "fields": {
+                                    "keyword": {
+                                        "type": "keyword"
+                                    }
+                                }
+                            }
+                    }
+                },
+
+                "devices": {
+                    "type": "nested",
+                    "properties": {
+                        "id": {"type": "keyword"},
+                        "device_id": {"type": "keyword"},
+                        "location_id": {"type": "keyword"},
+                        "is_paired": {"type": "boolean"},
+                        "is_test_device": {"type": "boolean"}
+                    }
+                }
+            }
+        }
+    }
+}

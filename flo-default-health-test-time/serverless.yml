@@ -1,0 +1,53 @@
+---
+service:
+  name: flo-default-health-test-times
+
+plugins:
+  - serverless-webpack
+
+custom:
+  defaultRegion: us-west-2
+  defaultBatchSize: 100
+  defaultStartingPosition: TRIM_HORIZON
+  region: ${opt:region, self:custom.defaultRegion}
+  tablePrefix: ${opt:stage}_
+  accountId: ${env:ACCOUNT_ID}
+  apiUrl: ${env:API_URL}
+  apiToken: ${env:API_TOKEN}
+  defaultHealthTestTimes: ${env:DEFAULT_HEALTH_TEST_TIMES}
+  streamBatchSize: ${env:STREAM_BATCH_SIZE, self:custom.defaultBatchSize}
+  streamStartingPosition: ${env:STREAM_STARTING_POSITION, self:custom.defaultStartingPosition}
+  dynamoDbStreamId: ${env:DYNAMODB_STREAM_ID}
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: ${self:custom.region}
+  environment:
+    TABLE_PREFIX: ${self:custom.tablePrefix}
+    API_URL: ${self:custom.apiUrl}
+    API_TOKEN: ${self:custom.apiToken}
+    DEFAULT_HEALTH_TEST_TIMES: ${self:custom.defaultHealthTestTimes}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - "dynamodb:Get*"
+        - "dynamodb:Query"
+      Resource:
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}ICD"
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}OnboardingLog"
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}Location"
+    - Effect: Allow
+      Action:
+        - "dynamodb:Get*"
+        - "dynamodb:Query"
+      Resource:
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}Location/index/*"
+
+functions:
+  deployDefaultHealthTestTimes:
+    handler: handler.deployDefaultHealthTestTimes
+    events:
+      - stream: arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}OnboardingLog/stream/${self:custom.dynamoDbStreamId}
+        batchSize: ${self:custom.streamBatchSize}
+        startingPosition: ${self:custom.streamStartingPosition}

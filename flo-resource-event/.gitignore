@@ -1,0 +1,12 @@
+.idea
+.vscode
+**/main
+#**/flo-resource-event
+**/_debug_bin
+**/.swp
+**/tmp
+**/*.log
+src/src
+src/main
+.vscode/
+flo-resource-event.code-workspace

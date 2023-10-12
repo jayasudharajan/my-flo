@@ -1,0 +1,68 @@
+---
+service:
+  name: flo-out-of-learning-notifications
+
+plugins:
+  - serverless-webpack
+
+custom:
+  defaultRegion: us-west-2
+  defaultBatchSize: 100
+  defaultStartingPosition: LATEST
+  defaultPinpointApiVersion: "2016-12-01"
+  region: ${opt:region, self:custom.defaultRegion}
+  tablePrefix: ${env:TABLE_PREFIX, opt:stage}_
+  accountId: ${env:ACCOUNT_ID}
+  streamBatchSize: ${env:STREAM_BATCH_SIZE, self:custom.defaultBatchSize}
+  streamStartingPosition: ${env:STREAM_STARTING_POSITION, self:custom.defaultStartingPosition}
+  dynamoDbStreamId: ${env:DYNAMODB_STREAM_ID}
+  pinpointAppId: ${env:PINPOINT_APP_ID}
+  pinpointApiVersion: ${env:PINPOINT_API_VERSION, self:custom.defaultPinpointApiVersion}
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: ${self:custom.region}
+  environment:
+    TABLE_PREFIX: ${self:custom.tablePrefix}
+    ACCOUNT_ID: ${self:custom.accountId}
+    PINPOINT_APP_ID: ${self:custom.pinpointAppId}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - "dynamodb:Get*"
+        - "dynamodb:Query"
+      Resource:
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}Account"
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}AccountSubscription"
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}ICD"
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}OnboardingLog"
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}User"
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}UserDetail"
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}PushNotificationToken"
+    - Effect: Allow
+      Action:
+        - "dynamodb:Get*"
+        - "dynamodb:Query"
+      Resource:
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}Location/index/*"
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}PushNotificationToken/index/*"
+    - Effect: Allow
+      Action:
+        - "mobiletargeting:Put*"
+        - "mobiletargeting:Update*"
+        - "mobiletargeting:Get*"
+        - "mobiletargeting:Create*"
+        - "mobiletargeting:Delete*"
+      Resource:
+        - "arn:aws:mobiletargeting:${self:provider.region}:${self:custom.accountId}:apps/${self:custom.pinpointAppId}"
+        - "arn:aws:mobiletargeting:${self:provider.region}:${self:custom.accountId}:apps/${self:custom.pinpointAppId}/*"
+        - "arn:aws:mobiletargeting:${self:provider.region}:${self:custom.accountId}:reports"
+
+functions:
+  sendEventsToPinpoint:
+    handler: handler.sendEventsToPinpoint
+    events:
+      - stream: arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}OnboardingLog/stream/${self:custom.dynamoDbStreamId}
+        batchSize: ${self:custom.streamBatchSize}
+        startingPosition: ${self:custom.streamStartingPosition}

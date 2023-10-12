@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -x
+
+helm template \
+  consul \
+  --namespace consul \
+  --values values.yaml | tee output.yaml \
+|| exit 1
+helm upgrade --install \
+  consul \
+  ./consul \
+  --recreate-pods \
+  --wait --debug \
+  --namespace consul \
+  --values values.yaml

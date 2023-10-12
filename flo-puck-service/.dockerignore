@@ -1,0 +1,33 @@
+# Logs
+kafka-logs/
+logs/
+*.log
+
+# sbt specific
+.cache
+.history
+.lib/
+.ivy2
+.sbt
+app/
+dist/*
+target
+lib_managed/
+src_managed/
+project/target/
+project/project/
+!project/project/plugins.sbt
+!target/scala-*
+
+# Scala-IDE specific
+.idea
+.scala_dependencies
+.sc
+.worksheet
+*.iml
+*.ipr
+*.iws
+*.jks
+out
+
+*.class

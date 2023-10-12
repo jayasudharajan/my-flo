@@ -1,0 +1,23 @@
+apply plugin: 'com.novoda.bintray-release'
+
+def getRepositoryUsername() {
+    return hasProperty('BINTRAY_USER') ? BINTRAY_USER : ""
+}
+
+def getRepositoryPassword() {
+    return hasProperty('BINTRAY_KEY') ? BINTRAY_KEY : ""
+}
+
+apply from: 'git-version.gradle'
+
+publish {
+    userOrg = 'flo'
+    groupId = 'com.flotechnologies'
+    artifactId = 'flo-sdk'
+    publishVersion = gitVersionName
+    desc = 'Flo SDK for Java in Kotlin'
+    website = 'https://github.com/FloTechnologies/flo-sdk'
+    bintrayUser = getRepositoryUsername()
+    bintrayKey = getRepositoryPassword()
+    dryRun = false
+}

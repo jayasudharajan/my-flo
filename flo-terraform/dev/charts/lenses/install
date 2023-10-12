@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -x
+
+
+
+helm template \
+  lenses \
+  --namespace lenses \
+  --set-file lenses.license=./license.json \
+  --set lenses.security.defaultUser.username="${LENSES_DEFAULT_USER_USERNAME}" \
+  --set lenses.security.defaultUser.password="${LENSES_DEFAULT_USER_PASSWORD}" \
+  --set lenses.security.ldap.password="${LENSES_LDAP_USER_PASSWORD}" \
+  --values values.yaml | tee output.yaml \
+|| exit 1
+helm upgrade \
+  lenses \
+  ./lenses \
+  --install \
+  --wait --debug --recreate-pods\
+  --namespace lenses \
+  --set-file lenses.license=./license.json \
+  --set lenses.security.defaultUser.username="${LENSES_DEFAULT_USER_USERNAME}" \
+  --set lenses.security.defaultUser.password="${LENSES_DEFAULT_USER_PASSWORD}" \
+  --set lenses.security.ldap.password="${LENSES_LDAP_USER_PASSWORD}" \
+  --values values.yaml

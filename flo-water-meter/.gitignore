@@ -1,0 +1,11 @@
+.idea
+.vscode
+**/main
+src/src
+#flo-water-meter
+**/run.*.txt
+**/data.*.csv
+**/_debug_bin
+**/.swp
+.swp
+**/tmp

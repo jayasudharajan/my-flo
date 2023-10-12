@@ -1,0 +1,26 @@
+---
+image: registry.gitlab.com/flotechnologies/devops/docker-tools:latest
+
+stages:
+  - verify
+  - deploy
+
+verify-tools-installed:
+  stage: verify
+  script:
+    - kubectl version
+    - terraform --version
+
+deploy-chart-lenses:
+  stage: deploy
+  variables:
+    LENSES_DEFAULT_USER_USERNAME: "${LENSES_DEFAULT_USER_USERNAME_DEV}"
+    LENSES_DEFAULT_USER_PASSWORD: "${LENSES_DEFAULT_USER_PASSWORD_DEV}"
+  before_script:
+    - make bootstrap-helm
+  script:
+    - make deploy-lenses
+  tags:
+    - dev
+  only:
+    - nonexistant

@@ -1,0 +1,13 @@
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
+  paths:
+    - /
+  hosts:
+    - flo-batch-telemetry.flosecurecloud.com
+  tls:
+    - secretName: flo-batch-telemetry
+      hosts:
+        - flo-batch-telemetry.flosecurecloud.com

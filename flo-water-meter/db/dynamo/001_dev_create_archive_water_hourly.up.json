@@ -1,0 +1,12 @@
+{
+  "TableName": "dev_water_meter_archive",
+  "KeySchema": [
+    { "AttributeName": "device_id", "KeyType": "HASH" },
+    { "AttributeName": "time_bucket", "KeyType": "RANGE" }
+  ],
+  "AttributeDefinitions": [
+    { "AttributeName": "device_id", "AttributeType": "S" },
+    { "AttributeName": "time_bucket", "AttributeType": "S" }
+  ],
+  "BillingMode": "PAY_PER_REQUEST"
+}

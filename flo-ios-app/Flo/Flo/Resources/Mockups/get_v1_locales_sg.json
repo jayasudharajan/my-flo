@@ -1,0 +1,13 @@
+{
+  "name" : "Singapore",
+  "timezones" : [
+    {
+      "tz" : "Asia\/Singapore",
+      "display" : "UTC+08:00 +08 (Singapore)"
+    }
+  ],
+  "locale" : "sg",
+  "regions" : [
+
+  ]
+}

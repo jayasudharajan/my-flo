@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "flo-email-service.fullname" . }}-config
+  namespace: services
+data:
+  SPECIAL_LEVEL: very
+  SPECIAL_TYPE: charm
+  KILL_SWITCH_ENABLED: "false"
+  KAFKA_ENCRYPTION_ENABLED: "true"
+  ##
+  KAFKA_HOST: 10.30.21.81:9092,10.30.21.91:9092,10.30.21.185:9092
+  ##
+  KEY_PROVIDER_BUCKET_REGION: "us-west-2"
+  KEY_PROVIDER_BUCKET_NAME: "flocloud-config"
+  KEY_PROVIDER_KEY_PATH_TEMPLATE: "flo-apps/flo-encryption/dev/kafka/@KEY_ID/@KEY_TYPE_key.pem"
+  #
+  FLO_API_URL: "https://api-dev.flocloud.co/api/v1"
+  FLO_API_CLIENT_ID: "91e9bd35-b051-4f46-a047-da6f83a12ea4"
+  #
+  KAFKA_FILTER_TIME_IN_SECONDS: "300"
+  KAFKA_CONSUMER_MAX_POLL_RECORDS: "10"
+  KAFKA_CONSUMER_POLL_TIMEOUT: "3000"
+  #
+  EMAIL_TEMPLATE_ALARM_SEVERITY_MEDIUM: tem_AJG944YjS6o2zt9Yd4gNbT
+
+  EMAIL_TEMPLATE_ALARM_SEVERITY_HIGH: tem_pGmzqhkBVjpattazC8yjxb
+
+  KAFKA_TOPIC_V2: emails-v3
+
+  SEND_WITH_US_REPLY_TO_EMAIL_ADDRESS: support@meetflo.com
+
+  SEND_WITH_US_DEFAULT_EMAIL_ADDRESS: support@meetflo.com
+  KAFKA_GROUP_ID: "flo-email-service-dev"
+
+  KAFKA_TOPIC: emails-v2
+  KAFKA_TOPIC_V3: emails-v4
+  EMAIL_TEMPLATE_ALARM_SEVERITY_LOW: tem_wg9tY7Gr7GXrjgVpMYMTfR8c
+
+{{ tpl (.Files.Get "secrets.yaml") . | nindent 2 }}

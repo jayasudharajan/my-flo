@@ -1,0 +1,158 @@
+---
+version: "3.8"
+
+networks:
+  moen-auth:
+    driver: bridge
+
+services:
+  app:
+    image: flo-moen-auth:local
+    platform: linux/amd64
+    ports:
+      - "8080:8080"
+    networks:
+      - moen-auth
+    environment:
+      APPLICATION_NAME: "flo-moen-auth"
+      ENV: local
+      FLO_HTTP_PORT: 8080
+      FLO_PGDB_CN: "postgres://postgres:pwd@postgres:5432?sslmode=disable"
+      FLO_REDIS_CN: "redis:6379"
+      PG_USER: "postgres"
+      PG_PASS: "pwd"
+      FLO_API_URL: "https://api-gw-dev.flocloud.co"
+      FLO_API_JWT: "${FLO_API_JWT:-'dummy1111.jwt222222.key3333333'}"
+      #FLO_KAFKA_CN: "kafka-cherry-broker-1.dev.flocloud.co:9092,kafka-cherry-broker-2.dev.flocloud.co:9092,kafka-cherry-broker-3.dev.flocloud.co:9092"
+      FLO_KAFKA_CN: "kafka:9092"
+      FLO_LOCAL_DEBUG: "true"
+      FLO_LOG_MIN_LEVEL: 1
+      FLO_HTTP_LOG_PATH_IGNORES: "/|/ping"
+    volumes:
+      - "./src:/src"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+      kafka_bootstrap:
+        condition: service_started
+    build:
+      context: .
+      dockerfile: ./Dockerfile.build
+      args:
+        CI_COMMIT_SHA: "${CI_COMMIT_SHA:-none}"
+    links:
+      - postgres
+      - redis
+      - kafka
+    healthcheck:
+      test: [
+          "CMD-SHELL",
+          "curl -s --fail -XPOST localhost:8080/ping"
+      ]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+
+  redis:
+    image: bitnami/redis:latest
+    platform: linux/amd64
+    #CONNECT w/ local client: redis-cli -u redis://localhost:6379
+    ports:
+      - "6379:6379"
+    networks:
+      - moen-auth
+    environment:
+      - "ALLOW_EMPTY_PASSWORD=yes"
+      #- "REDIS_PASSWORD=pwd"
+    restart: on-failure
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli ping" ]
+      interval: 3s
+      timeout: 1s
+      retries: 10
+    logging:
+      driver: none
+
+  postgres:
+    image: postgres:latest
+    platform: linux/amd64
+    #CONNECT w/ local client (psql can be used instead of pgcli also): pgcli -h localhost -U postgres
+    networks:
+      - moen-auth
+    ports:
+      - "5432:5432"
+    #NOTE: schema bootstrap only happens if ./db/tmp/postgres is missing!
+    volumes:
+      - "./db/schema:/docker-entrypoint-initdb.d"
+      - "./db/tmp/postgres:/var/lib/postgresql/data"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 3s
+      timeout: 1s
+      retries: 10
+    environment:
+      POSTGRES_PASSWORD: "pwd"
+      PGPASSWORD: "pwd"
+    logging:
+      driver: none
+
+  zookeeper:
+    image: "bitnami/zookeeper:3"
+    platform: linux/amd64
+    networks:
+      - moen-auth
+    ports:
+      - "2181:2181"
+    restart: on-failure
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    logging:
+      driver: none
+
+  #NOTE: both zookeeper & kafka username & pwd are: user & bitnami
+  kafka:
+    image: "bitnami/kafka:2"
+    platform: linux/amd64
+    #CONNECT tail w/ local client (run 2x, 1st run will mk topic): kafkacat -C -b localhost:29092 -t 'entity-activity-v1' -q
+    #push dummy data w/ local client: echo '{"client_app_name":"kafcat"}' | kafkacat -P -b localhost:29092 -t 'entity-activity-v1'
+    networks:
+      - moen-auth
+    ports:
+      #- "9092:9092"
+      - "29092:29092"
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
+      - KAFKA_DELETE_TOPIC_ENABLE=true
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:29092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://localhost:29092
+      - KAFKA_INTER_BROKER_LISTENER_NAME=CLIENT
+    depends_on:
+      zookeeper:
+        condition: service_started
+    links:
+      - zookeeper
+    logging:
+      driver: none
+
+  #NOTE: this service will push a single message to topic 'entity-activity-v1' and will stop if successful
+  kafka_bootstrap:
+    image: confluentinc/cp-kafkacat
+    platform: linux/amd64
+    restart: on-failure
+    command: "kafkacat -P -b kafka:9092 -t 'entity-activity-v1' -l /test/entity-activity-v1.test.msg.json"
+    volumes:
+      - "./test:/test"
+    networks:
+      - moen-auth
+    depends_on:
+      kafka:
+        condition: service_started
+    links:
+      - kafka

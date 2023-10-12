@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -x
+
+helm upgrade --install \
+  mongodb \
+  ./mongodb \
+  --recreate-pods \
+  --wait --debug \
+  --namespace mender \
+  --values values-prod.yaml

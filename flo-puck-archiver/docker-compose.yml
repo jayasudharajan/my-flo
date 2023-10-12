@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  app:
+    image: flo-puck-archiver:local
+    environment:
+      APPLICATION_NAME: "flo-puck-archiver"
+      AWS_REGION: us-west-2
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+      FLO_ARCHIVE_PG_CN: host=dev-rds-cherry.dev.flocloud.co port=5432 user=$PG_USER password=$PG_PASS dbname=device-service sslmode=disable
+      FLO_ARCHIVE_S3_BUCKET: flo-testdr
+    volumes:
+      - "./src:/src"
+    build:
+      context: .
+      dockerfile: ./Dockerfile.build
+      args:
+        CI_COMMIT_SHA: "${CI_COMMIT_SHA:-none}"

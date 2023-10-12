@@ -1,0 +1,1 @@
+CREATE INDEX IF NOT EXISTS ix_delivery_event_alarm_event_id ON public.delivery_event USING btree (alarm_event_id);

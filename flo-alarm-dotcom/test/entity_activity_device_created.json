@@ -1,0 +1,16 @@
+{
+  "date": "2020-06-03T07:09:20.223Z",
+  "type": "device",
+  "action": "created",
+  "id": "bf2d4210-c1f3-4414-a6b3-94c88a9b61bb",
+  "item": {
+    "macAddress": "03e182694641",
+    "id": "bf2d4210-c1f3-4414-a6b3-94c88a9b61bb",
+    "deviceModel": "puck_v1",
+    "deviceType": "puck_oem",
+    "nickname": "Puck Jr",
+    "location": {
+      "id": "2181e548-6bf9-49b0-ac6c-26a9c92477b6"
+    }
+  }
+}

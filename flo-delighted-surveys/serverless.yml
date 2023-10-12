@@ -1,0 +1,62 @@
+---
+service:
+  name: flo-delighted-surveys
+
+plugins:
+  - serverless-webpack
+
+custom:
+  defaultRegion: us-west-2
+  defaultBatchSize: 100
+  defaultStartingPosition: TRIM_HORIZON
+  defaultSurveyInitialDelay: 2592000 # 30 days
+  defaultDelightedApiBaseUrl: https://api.delighted.com/v1
+  region: ${opt:region, self:custom.defaultRegion}
+  tablePrefix: ${opt:stage}_
+  accountId: ${env:ACCOUNT_ID}
+  delightedApiBaseUrl: ${env:DELIGHTED_API_BASE_URL, self:custom.defaultDelightedApiBaseUrl}
+  delightedApiKey: ${env:DELIGHTED_API_KEY}
+  streamBatchSize: ${env:STREAM_BATCH_SIZE, self:custom.defaultBatchSize}
+  streamStartingPosition: ${env:STREAM_STARTING_POSITION, self:custom.defaultStartingPosition}
+  surveyInitialDelay: ${env:SURVEY_INITIAL_DELAY, self:custom.defaultSurveyInitialDelay}
+  onboardingLogStreamId: ${env:ONBOARDING_LOG_STREAM_ID}
+  accountSubscriptionStreamId: ${env:ACCOUNT_SUBSCRIPTION_STREAM_ID}
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: ${self:custom.region}
+  environment:
+    TABLE_PREFIX: ${self:custom.tablePrefix}
+    DELIGHTED_API_BASE_URL: ${self:custom.delightedApiBaseUrl}
+    DELIGHTED_API_KEY: ${self:custom.delightedApiKey}
+    SURVEY_INITIAL_DELAY: ${self:custom.surveyInitialDelay}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - "dynamodb:Get*"
+        - "dynamodb:Query"
+      Resource:
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}Account"
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}AccountSubscription"
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}ICD"
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}OnboardingLog"
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}User"
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}UserDetail"
+    - Effect: Allow
+      Action:
+        - "dynamodb:Get*"
+        - "dynamodb:Query"
+      Resource:
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}Location/index/*"
+
+functions:
+  sendToDelighted:
+    handler: handler.sendToDelighted
+    events:
+      - stream: arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}OnboardingLog/stream/${self:custom.onboardingLogStreamId}
+        batchSize: ${self:custom.streamBatchSize}
+        startingPosition: ${self:custom.streamStartingPosition}
+      - stream: arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}AccountSubscription/stream/${self:custom.accountSubscriptionStreamId}
+        batchSize: ${self:custom.streamBatchSize}
+        startingPosition: ${self:custom.streamStartingPosition}

@@ -1,0 +1,9 @@
+.idea
+.vscode
+**/main
+#src/src
+**/flo-detect-v2
+**/_debug_bin
+**/.swp
+**/tmp
+.creds

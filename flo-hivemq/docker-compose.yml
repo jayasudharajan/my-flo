@@ -1,0 +1,126 @@
+version: '2.1'
+
+services:
+  ######################################################
+  # Runtime Services
+  ######################################################
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-base
+      args:
+        HIVEMQ_VERSION: "${HIVEMQ_VERSION:-3.4.1}"
+    ports:
+      - "1883:1883"
+      - "8883:8883"
+      - "8000:8000"
+      - "9001:9001"
+      - "8778:8778"
+    container_name: flo-app
+    image: "098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-hivemq:${HIVEMQ_VERSION:-3.4.1}"
+    volumes:
+      - ./logs:/var/log/app
+      - ./config/opt/hivemq/conf:/app/conf
+      - ./config/opt/hivemq/cert:/app/cert
+      - ./.docker/templates/:/etc/templates/
+
+    environment:
+      ENVIRONMENT: local
+      APPLICATION_NAME: flo-hivemq
+      LOG_STDOUT: "true"
+      APP_DEBUG: "true"
+      APPLICATION_COMMAND: java -Djava.net.preferIPv4Stack=true -XX:-UseSplitVerifier -noverify -Dhivemq.home=/app -Djava.security.egd=file:/dev/./urandom -javaagent:/app/jolokia-jvm-agent.jar=host=0.0.0.0,port=8778 -jar /app/bin/hivemq.jar
+      JAVA_OPTS: -Djava.net.preferIPv4Stack=true -XX:-UseSplitVerifier -noverify -Dhivemq.home=/app -Djava.security.egd=file:/dev/./urandom -javaagent:/app/jolokia-jvm-agent.jar=host=0.0.0.0,port=8778 -jar /app/bin/hivemq.jar
+
+  local:
+    extends: app
+    depends_on:
+      - kafka
+      - flo-api
+
+  kafka:
+    image: 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-kafka:2.12-0.10.2.1-alpine
+    container_name: kafka
+    environment:
+      ADVERTISED_HOST: kafka
+      ADVERTISED_PORT: 9092
+      LOG_RETENTION_HOURS: 336
+
+  flo-api:
+    image: 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-api
+    environment:
+      NODE_ENV: circleci
+      APPLICATION_NAME: flo-api
+      ENVIRONMENT: local
+      FLO_API_AWS_DYNAMODB_REGION: us-west-2
+      FLO_API_AWS_DYNAMODB_ENDPOINT: http://dynamodb:4567
+      FLO_API_AWS_DYNAMODB_PREFIX: local
+      FLO_API_PORT: 8000
+      FLO_API_MQTT_BROKER_HOST: hivemq
+      FLO_API_MQTT_BROKER_PORT: 8883
+      FLO_API_KAFKA_HOST: kafka
+      FLO_API_KAFKA_KEY_ID: "${FLO_API_KAFKA_KEY_ID}"
+      FLO_API_KAFKA_ENCRYPTION_ENABLED: "false"
+    depends_on:
+      - kafka
+      - dynamodb
+
+  dynamodb:
+    image: cnadiminti/dynamodb-local
+    container_name: dynamodb
+    entrypoint: "/usr/bin/java -Xms256m -Xmx256m -Djava.library.path=. -jar DynamoDBLocal.jar --inMemory -sharedDb -port 4567"
+
+    ports:
+      - "4567:4567"
+
+
+  ######################################################
+  # Build Services
+  ######################################################
+  # This is used to build jar
+  build:
+    image: openjdk:8-jdk
+    command: /bin/sh -c "cd /app/build && ./gradlew shadowJar --no-daemon"
+    environment:
+      BINTRAY_USER: "${BINTRAY_USER}"
+      BINTRAY_KEY: "${BINTRAY_KEY}"
+      APPLICATION_NAME: app
+    volumes:
+      - ./:/app/build
+      - "./.gradle:/root/.gradle"
+
+  dev:
+    image: openjdk:8-jdk
+    command: /bin/sh -c "./gradlew assemble"
+    environment:
+      BINTRAY_USER: "${BINTRAY_USER}"
+      BINTRAY_KEY: "${BINTRAY_KEY}"
+      APPLICATION_NAME: app
+    volumes:
+      - ./:/app/build
+      - "${HOME}/.gradle:/root/.gradle"
+    depends_on:
+      - kafka
+
+
+  test:
+    image: 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-java-base:8-alpine
+    container_name: test
+    links:
+      - local
+    depends_on:
+      - local
+
+    environment:
+      APPLICATION_NAME: flo-hivemq
+      ENVIRONMENT: local
+    volumes:
+      - ./tests:/app/tests
+      - "./test-results:/app/test-results"
+    command: |
+      /bin/bash -c " \
+        echo \"Running tests: $$APPLICATION_NAME\" && \
+        echo 'SLEEP' && sleep 30 && \
+        printf 'PING: ' && curl -s local:9001 > /dev/null && echo 'OK' || (printf 'FAIL' && exit 1) \
+      "
+

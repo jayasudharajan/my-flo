@@ -1,0 +1,162 @@
+{
+    "settings":{
+        "number_of_shards":3,
+        "number_of_replicas":1,
+        "analysis": {
+            "tokenizer": {
+                "ngram_tokenizer": {
+                    "type": "ngram",
+                    "min_gram": 1,
+                    "max_gram": 5
+                },
+                "edge_ngram_tokenizer": {
+                    "type": "edge_ngram",
+                    "min_gram": 1,
+                    "max_gram": 5,
+                    "token_chars": [
+                        "letter",
+                        "digit"
+                    ]
+                }
+            },
+            "analyzer": {
+                "trim_lowercase_ngram_analyzer": {
+                  "type": "custom",
+                  "filter": ["standard", "lowercase", "trim"],
+                  "tokenizer": "ngram_tokenizer"
+                },
+                "trim_lowercase_edge_ngram_analyzer": {
+                  "type": "custom",
+                  "filter": ["standard", "lowercase", "trim"],
+                  "tokenizer": "edge_ngram_tokenizer"
+                }
+            }
+        }
+    },
+     
+    "mappings":{
+        "icd":{
+            "properties":{
+                "device_id":{
+                    "type":"keyword",
+                    "fields": {
+                        "analyzed": {
+                            "type": "text",
+                            "analyzer": "trim_lowercase_ngram_analyzer"
+                        }
+                    }
+                },
+                "id":{"type":"keyword"},
+                "is_paired":{"type":"boolean"},
+                "is_test_device": {"type":"boolean"},
+                "owner_user_id":{"type":"keyword"},
+
+                "users": {
+                    "type": "nested",
+                    "properties": {
+                        "user_id": {"type":"keyword"},
+                        "email": {
+                            "type": "text",
+                            "analyzer": "trim_lowercase_ngram_analyzer"
+                        },
+                        "firstname": {
+                            "type": "text",
+                            "analyzer": "trim_lowercase_edge_ngram_analyzer"
+                        },
+                        "lastname": {
+                            "type": "text",
+                            "analyzer": "trim_lowercase_edge_ngram_analyzer"
+                        }
+                    }
+                },
+ 
+                "account":{
+                    "type":"object",
+                    "properties":{
+                        "account_id": {"type":"keyword"},
+                        "group_id": {"type":"keyword"},
+                        "subscription": {
+                            "type": "object",
+                            "properties": {
+                                "plan_id": { "type": "keyword" },
+                                "status": { "type": "keyword" },
+                                "stripe_customer_id": { "type": "keyword" },
+                                "source_id": { "type": "keyword" },
+                                "current_period_start": { "type": "date" },
+                                "current_period_end": { "type": "date" },
+                                "canceled_at": { "type": "date" },
+                                "ended_at": { "type": "date" }
+                            }
+                        }
+                    }
+                },
+                 
+                "geo_location":{
+                    "type":"object",
+                    "properties":{
+                        "location_id": {"type":"keyword"},
+                        "country": {
+                            "type":"keyword"
+                        },
+                        "state_or_province": {
+                            "type":"keyword"
+                        },
+                        "city": {
+                            "type": "text",
+                            "analyzer": "trim_lowercase_ngram_analyzer",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword"
+                                }
+                            }
+                        },
+                        "postal_code": {"type":"keyword"},
+                        "timezone": {"type":"keyword"},
+                        "address": {
+                            "type": "text",
+                            "analyzer": "trim_lowercase_ngram_analyzer",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword"
+                                }
+                            }
+                        },
+                        "address2": {
+                            "type": "text",
+                            "analyzer": "trim_lowercase_ngram_analyzer",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword"
+                                }
+                            }
+                        }
+                    }
+                },
+                "onboarding": {
+                    "type": "nested",
+                    "properties": {
+                        "created_at": {"type":"date"},
+                        "event": {"type":"float"}
+                    }
+                }
+            }
+        },
+        "alert": {
+            "_parent": {
+                "type": "icd"
+            },
+            "properties": {
+                "alarm_id_system_mode": { "type": "keyword" },
+                "alarm_id": { "type": "integer" },
+                "system_mode": { "type": "integer" },
+                "severity": { "type": "integer" },
+                "status": { "type": "integer" },
+                "created_at": { "type": "date" },
+                "expires_at": { "type": "date" },
+                "updated_at": { "type": "date" },
+                "incident_time": { "type": "date" },
+                "last_icd_alarm_incident_registry_id": { "type": "keyword" }
+            }
+        }
+    }
+}

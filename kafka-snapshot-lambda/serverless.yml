@@ -1,0 +1,46 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: kafka-snapshot-lambda
+
+
+provider:
+  name: aws
+  runtime: python3.8
+  region: ${self:custom.region}
+  memory: 128
+  environment:
+    BASE_REGION: ${self:custom.region}
+    BACKUP_REGION: ${self:custom.backupRegion}
+  iamManagedPolicies:
+    - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "ec2:*"
+      Resource:
+        - "*"
+
+functions:
+  hello:
+    handler: handler.kafka_snapshot
+    timeout: 60
+    events:
+      - schedule: cron(0 0 * * ? *)
+
+
+custom:
+  defaultRegion: us-west-2
+  defaultBackupRegion: us-east-2
+  region: ${opt:region, self:custom.defaultRegion}
+  backupRegion: ${opt:backuoRegion, self:custom.defaultBackupRegion}

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -x
+
+helm template \
+  elasticsearch \
+  --namespace mender \
+|| exit 1
+helm upgrade --install \
+  elasticsearch \
+  ./elasticsearch \
+  --recreate-pods \
+  --wait --debug \
+  --namespace mender

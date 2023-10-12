@@ -1,0 +1,10 @@
+.idea
+.vscode
+**/main
+#**/flo-moen-auth
+**/_debug_bin
+**/.swp
+**/tmp
+**/*.log
+src/src
+src/main

@@ -1,0 +1,1 @@
+CREATE INDEX ix_incident_location_id_icd_id ON public.incident USING btree (location_id, icd_id);

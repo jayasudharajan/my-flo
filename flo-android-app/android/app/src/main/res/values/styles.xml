@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0a537f</color>
+    <color name="colorPrimaryDark">#0a537f</color>
+    <color name="colorAccent">#073f62</color>
+    <!--
+    <style name="Theme.Black.NoTitleBar">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    -->
+    <!--
+        <item name="windowBackground">@color/black</item>
+        <item name="colorBackground">@color/black</item>
+        <item name="windowNoTitle">true</item>
+    -->
+    <!--
+    <style name="LaunchTheme" parent="@android:style/Theme.Black.NoTitleBar">
+    <style name="LaunchTheme" parent="Theme.MaterialComponents.DayNight">
+    -->
+    <style name="LaunchTheme" parent="Theme.AppCompat.DayNight">
+        <!-- Show a splash screen on the activity. Automatically removed when
+             Flutter draws its first frame -->
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/launch_background</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    </style>
+    <style name="LaunchAppCompatTheme" parent="Theme.AppCompat.NoTitleBar">
+        <item name="android:windowBackground">@drawable/launch_background</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    </style>
+    <!--<style name="FloZopimChatTheme.Light" parent="ZopimChatTheme.Light">-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+    <!--</style>-->
+    <style name="ZopimChatTheme" parent="ZopimChatTheme.Light">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="zopim_toolbar">
+        <item name="android:background">?attr/colorPrimary</item>
+
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    </style>
+
+    <style name="Theme.AppCompat.NoTitleBar" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+        <item name="android:windowFullscreen">true</item>
+        <!--
+        -->
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="HelpCenterTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="RequestsTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+</resources>

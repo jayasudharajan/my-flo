@@ -1,0 +1,91 @@
+---
+image: registry.gitlab.com/flotechnologies/devops/docker-tools:latest
+
+services:
+  - docker:18.09-dind
+
+stages:
+  - build
+  - prepare
+  - deploy
+  - deploy-flo-cloud-eks
+
+before_script:
+  - mkdir -pv "${HOME}/.docker/"
+  - echo "${DOCKER_AUTH_CONFIG}" > "${HOME}/.docker/config.json"
+  - export DOCKER_HOST=tcp://localhost:2375
+  - apk add --no-cache make bash jq gettext # TODO: this should be part of the compose image
+  - mkdir -p ~/.aws /root/.aws ${HOME}/.sbt
+  - export COMMIT_TIME=$(git show -s --format=%ct $CI_COMMIT_SHA)
+  - export BASE_PATH=$(eval "pwd")
+
+
+Compile:
+  stage: build
+  image: 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-scala-docker:SCALA_2.12.6-SBT_1.1.4-alpine-build
+  except:
+    - tags
+  script:
+    #- export sbt_version=1.2.8 && export sbt_home=/usr/local/sbt && export PATH=$PATH:/usr/local/sbt/bin
+    #- wget -qO - --no-check-certificate "https://github.com/sbt/sbt/releases/download/v$sbt_version/sbt-$sbt_version.tgz" | tar xz -C $sbt_home --strip-components=1
+    - bash build.sh
+  artifacts:
+    paths:
+      - target/scala-*/app.jar
+    untracked: true
+
+  tags:
+    - build
+
+DockerImageBuild:
+  stage: prepare
+  except:
+    - tags
+  script:
+    - docker login
+    - docker login --username "${CI_REGISTRY_USER}" --password "${CI_REGISTRY_PASSWORD}" "${CI_REGISTRY}"
+    - make prepare-build-image
+  tags:
+    - build
+
+K8sDev:
+  variables:
+    VAULT_URL: ${VAULT_URL_DEV}
+    VAULT_TOKEN: ${VAULT_TOKEN_DEV}
+  image: registry.gitlab.com/flotechnologies/devops/docker-tools:helm-v3-5-4
+  stage: deploy
+  dependencies:
+    - Compile
+  only:
+    - dev
+    - eks
+  environment:
+    name: dev-flo-cloud-eks
+    url: https://kibana.flotech.co
+  script:
+    - make environment
+    - make deploy
+  tags:
+    - dev-flo-cloud-eks
+
+
+K8sProd:
+  variables:
+    VAULT_URL: ${VAULT_URL_PROD}
+    VAULT_TOKEN: ${VAULT_TOKEN_PROD}
+    ENV: production
+  image: registry.gitlab.com/flotechnologies/devops/docker-tools:helm-v3-5-4
+  stage: deploy
+  dependencies:
+    - Compile
+  only:
+    - master
+  environment:
+    name: prod-eks
+    url: https://kibana.flotech.co
+  script:
+    - make environment
+    - make deploy
+  tags:
+    - eks-prod
+

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -x
+
+helm template \
+  redis \
+  --namespace mender \
+|| exit 1
+helm upgrade --install \
+  redis \
+  ./redis \
+  --recreate-pods \
+  --wait --debug \
+  --namespace mender

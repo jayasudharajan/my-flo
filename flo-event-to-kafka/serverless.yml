@@ -1,0 +1,36 @@
+---
+service:
+  name: flo-event-to-kafka
+frameworkVersion: ">=1.2.0 <2.0.0"
+
+provider:
+  name: aws
+  runtime: java8
+  region: ${self:custom.region}
+  environment:
+    KAFKA_HOST: ${self:custom.kafkaBrokerList}
+    KAFKA_TOPIC_NAME: ${self:custom.kafkaTopic}
+  vpc: ${file(vpc.${opt:stage}.yml):vpc}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - "logs:CreateLogGroup"
+        - "logs:CreateLogStream"
+        - "logs:PutLogEvents"
+      Resource: "*"
+    - Effect: Allow
+      Action:
+        - "ec2:CreateNetworkInterface"
+        - "ec2:DescribeNetworkInterfaces"
+        - "ec2:DeleteNetworkInterface"
+      Resource: "*"
+
+
+package:
+  artifact: build/distributions/s3-event-to-kafka-1.0-SNAPSHOT.zip
+
+custom:
+  defaultRegion: us-west-2
+  region: ${opt:region, self:custom.defaultRegion}
+  kafkaHost: ${env.KAFKA_BROKER_LIST}
+  kafkaTopic: ${env:KAFKA_TOPIC}

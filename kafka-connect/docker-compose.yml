@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  build-kafka-connect-s3:
+    image: 'maven:3.5-jdk-8-alpine'
+    command: /bin/bash -c 'cd /app/build && mvn package -Dmaven.repo.local=/.m2/repository -Djava.awt.headless=true -DskipTests'
+    volumes:
+      - ./flo-kafka-connect-s3-connector:/app/build
+      - ./.m2:/.m2

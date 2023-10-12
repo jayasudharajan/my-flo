@@ -1,0 +1,61 @@
+---
+replicaCount: 3
+
+environment: dev
+
+image:
+  repository: registry.gitlab.com/flotechnologies/flo-task-scheduler-v2
+  tag:
+  pullPolicy: IfNotPresent
+  pullSecrets: gitlab-registry
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 8080
+  livenessProbe:
+    path: "/ping"
+    port: 8080
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    timeoutSeconds: 1
+  readinessProbe:
+    path: "/ping"
+    port: 8080
+    initialDelaySeconds: 30
+    periodSeconds: 3
+    successThreshold: 3
+    timeoutSeconds: 1
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
+    kubernetes.io/tls-acme: "true"
+  paths:
+    - /
+  hosts:
+    - flo-task-scheduler-v2.flocloud.co
+    - flo-task-scheduler-v2.flosecurecloud.com
+  tls: []
+
+secrets:
+  name: flo-task-scheduler-v2-secrets
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  requests:
+    cpu: 500m
+    memory: 64Mi
+  limits:
+    memory: 1024Mi
+
+
+tolerations: []
+
+affinity: {}

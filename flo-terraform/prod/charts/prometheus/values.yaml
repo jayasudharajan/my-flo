@@ -1,0 +1,127 @@
+---
+alertmanager:
+  enabled: false
+server:
+  ingress:
+    enabled: true
+    annotations:
+#      kubernetes.io/tls-acme: "true"
+#      cert-manager.io/cluster-issuer: letsencrypt-issuer
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/whitelist-source-range: >
+        10.0.0.0/8,104.154.215.108/32,104.154.73.15/32,104.196.187.103/32,104.196.187.103/32,
+        34.66.135.187/32,34.66.82.105/32,34.67.32.253/32,34.67.61.75/32,34.68.229.79/32,
+        34.68.244.46/32,34.68.83.43/32,34.69.111.215/32,34.69.65.175/32,34.70.247.232/32,
+        34.71.145.245/32,34.71.152.20/32,34.71.159.145/32,34.71.215.109/32,34.71.38.173/32,
+        34.72.163.126/32,34.72.224.67/32,35.184.112.179/32,35.184.203.1/32,35.184.82.156/32,
+        35.192.14.84/32,35.202.126.57/32,35.202.76.74/32,35.222.158.165/32,35.222.83.115/32,
+        35.223.156.39/32,35.223.253.104/32,35.224.156.39/32,35.224.241.132/32,35.224.62.148/32,
+        35.224.87.190/32,35.225.196.236/32,35.225.91.170/32,35.226.227.166/32,35.226.44.6/32,
+        35.226.77.201/32,35.232.163.40/32,35.232.165.163/32,35.232.31.131/32,35.232.72.188/32,
+        35.233.198.143/32,35.239.141.38/32,35.239.183.253/32,35.239.213.115/32,35.239.228.168/32,
+        35.239.233.2/32,35.239.94.5/32,35.246.7.173/32,52.189.69.217/32,66.215.231.234/32,
+        82.208.114.0/23,79.126.1.22/32,35.238.91.227,35.225.46.237,34.122.25.189,35.188.211.52,
+        35.188.35.239,34.69.204.106,107.178.208.235,34.121.249.58,35.194.53.190,34.71.146.82,
+        34.72.240.165,35.232.101.234,104.197.203.224,35.202.43.115,35.224.152.225,35.193.153.9,
+        35.188.111.61,35.222.253.67,35.188.223.159,34.70.10.78,34.69.227.129,104.154.179.160,
+        104.197.149.206,35.232.52.64,23.236.55.100,34.72.94.67,35.239.61.132,35.224.49.153,
+        104.154.18.168,35.192.9.186,34.70.19.238,34.75.233.178,35.223.104.30,104.154.148.31,
+        35.184.23.28,35.223.234.104,34.134.236.18,34.122.201.10,34.71.21.236,34.134.222.119,
+        34.71.98.16,34.121.8.98,34.69.89.218,35.192.170.84,34.68.98.63,34.145.95.68,35.195.32.148,
+        146.148.114.193,35.240.3.33,35.205.153.2,52.189.69.217
+
+    hosts:
+      - prometheus.flosecurecloud.com
+#    tls:
+#      - secretName: prometheus
+#        hosts:
+#          - prometheus.flocloud.co
+
+
+kubeStateMetrics:
+  ## If false, kube-state-metrics sub-chart will not be installed
+  ##
+  enabled: false
+
+configmapReload:
+  prometheus:
+    ## If false, the configmap-reload container will not be deployed
+    ##
+    enabled: false
+
+## Prometheus server ConfigMap entries
+##
+serverFiles:
+  prometheus.yml:
+    rule_files:
+      - /etc/config/recording_rules.yml
+      - /etc/config/alerting_rules.yml
+    ## Below two files are DEPRECATED will be removed from this default values file
+      - /etc/config/rules
+      - /etc/config/alerts
+
+    scrape_configs:
+      - job_name: prometheus
+        static_configs:
+          - targets: ['localhost:9090']
+
+      - job_name: 'nexus-exporter'
+        scrape_interval: 1m
+        scrape_timeout: 30s
+        static_configs:
+          - targets: ['nexus-exporter.prometheus.svc.cluster.local']
+
+      - job_name: 'kafka-minion'
+        scrape_interval: 1m
+        scrape_timeout: 30s
+        static_configs:
+          - targets: ['kafka-minion.prometheus.svc.cluster.local:8080']
+
+      - job_name: 'sql-exporter'
+        scrape_interval: 1m
+        scrape_timeout: 30s
+        static_configs:
+          - targets: ['prometheus-sql-exporter.prometheus.svc.cluster.local']
+
+      - job_name: 'mender-exporter'
+        metrics_path: /probe
+        scrape_interval: 2m
+        scrape_timeout: 60s
+        params:
+          module: [http_2xx]
+        static_configs:
+          - targets:
+              - https://mender.flotech.co/api/management/v1/deployments/deployments
+        relabel_configs:
+          - source_labels: [__address__]
+            target_label: __param_target
+          - source_labels: [__param_target]
+            target_label: instance
+          - target_label: __address__
+            replacement: blackbox-exporter.prometheus.svc.cluster.local
+
+      - job_name: "ssl"
+        metrics_path: /probe
+        params:
+          module: ["https"]
+        static_configs:
+          - targets:
+              - api.meetflo.com:443
+              - api-bulk.meetflo.com
+              - api-gw.meetflo.com
+              - api.prod.iot.moen.com
+              - link.prod.iot.moen.com
+              - mqtt.prod.iot.moen.com
+              - api.qa.iot.moen.com
+              - link.qa.iot.moen.com
+              - mqtt.qa.iot.moen.com
+              - mender.flotech.co:443
+              - mqtt.flosecurecloud.com:8883
+              - mqtt.flosecurecloud.com:8884
+        relabel_configs:
+          - source_labels: [__address__]
+            target_label: __param_target
+          - source_labels: [__param_target]
+            target_label: instance
+          - target_label: __address__
+            replacement: prometheus-ssl-exporter.prometheus.svc.cluster.local # SSL exporter.

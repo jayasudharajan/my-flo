@@ -1,0 +1,1 @@
+DELETE FROM alarm_system_mode_settings WHERE id IN(199, 200, 201);

@@ -1,0 +1,15 @@
+lang = "zh_CN"
+mfg_sn_count = 13
+
+[reg]
+print = true
+wait_for_printing = true
+
+[cloud]
+proxy = "http://10.14.15.15:3128"
+
+[report]
+enabled_reporters = [ "BUILTIN", "VTECH", ]
+
+[report.vtech_reporter]
+path = "C:\\temp\\temp.txt"

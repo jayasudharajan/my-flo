@@ -1,0 +1,211 @@
+version: '2.1'
+
+services:
+  ######################################################
+  # Runtime Services
+  ######################################################
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-artifact
+    container_name: flo-notification-router
+    image: 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-notification-router
+
+  volume-container:
+    image: 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-notification-router
+    container_name: volume-container
+    volumes:
+      - "/app"
+    entrypoint:
+      - tail
+      - -f
+      - /dev/null
+      - "&"
+      - wait
+
+  local:
+    image: openjdk:10
+    ports:
+      - "8000:8000"
+      - "9001:9001"
+      - "8778:8778"
+    volumes_from:
+      - volume-container
+    volumes:
+      - ./logs:/var/log/app
+    working_dir: /app
+    entrypoint:
+      - java
+      - -jar
+      - app.jar
+    environment:
+      ENVIRONMENT: local
+      APPLICATION_NAME: flo-notification-router
+      LOG_STDOUT: "true"
+      APP_DEBUG: "true"
+      JMX_ENABLED: "false"
+      HEAP_PERCENTAGE: 50
+      KAFKA_HOST: kafka:9092
+      KAFKA_GROUP_ID: notification-consumer
+      KAFKA_TOPIC: notifications
+      KAFKA_EMAIL_PRODUCER_TOPIC: emails
+      KAFKA_SMS_PRODUCER_TOPIC: sms
+      FLO_API_URL: http://flo-api:8000/
+      STATSD_HOST: localhost
+      STATSD_PORT: 8125
+      FLO_ACTORS_NUMBER_OF_WORKERS_APPLE_PUSH_NOTIFICATIONS: 1
+      FLO_ACTORS_NUMBER_OF_WORKERS_DECISION_ENGINE: 1
+      FLO_ACTORS_NUMBER_OF_WORKERS_KAFKA_READER: 1
+      FLO_ACTORS_NUMBER_OF_WORKERS_KAFKA_PRODUCER: 1
+      FLO_ACTORS_NUMBER_OF_WORKERS_KAFKA_READER_EXTERNAL_ACTIONS: 1
+      FLO_ACTORS_NUMBER_OF_WORKERS_EXTERNAL_ACTIONS: 1
+      KAFKA_EXTERNAL_ACTIONS_VALVE_STATUS_TOPIC: "external-actions-valve-status-v2"
+      KAFKA_ENCRYPTION_ENABLED: "false"
+      KILL_SWITCH_ENABLED: "false"
+      KEY_PROVIDER_BUCKET_REGION: us-west-2
+      KAFKA_FILTER_TIME_IN_SECONDS: 300
+      KAFKA_CONSUMER_POLL_TIMEOUT: 3000
+      KAFKA_CONSUMER_MAX_POLL_RECORDS: 10
+
+      # These variables need to exist in your local environment:
+      FLO_API_USER: ${FLO_API_USER}
+      FLO_API_TOKEN: ${FLO_API_TOKEN}
+      FLO_SNS_APPLE_DEFAULT_APP_ARN: ${FLO_SNS_APPLE_DEFAULT_APP_ARN}
+      FLO_SNS_ANDROID_DEFAULT_APP_ARN: ${FLO_SNS_ANDROID_DEFAULT_APP_ARN}
+      BINTRAY_USER: "${BINTRAY_USER}"
+      BINTRAY_KEY: "${BINTRAY_KEY}"
+
+      KEY_PROVIDER_BUCKET_NAME: "${KEY_PROVIDER_BUCKET_NAME}"
+      KEY_PROVIDER_KEY_PATH_TEMPLATE: "${KEY_PROVIDER_KEY_PATH_TEMPLATE}"
+      KEY_ID: "${KEY_ID}"
+      CS_EMAIL: "${CS_EMAIL}"
+      FLO_ACTORS_NUMBER_OF_WORKERS_ANDROID_PUSH_NOTIFICATIONS: "${FLO_ACTORS_NUMBER_OF_WORKERS_ANDROID_PUSH_NOTIFICATIONS}"
+    depends_on:
+      - kafka
+
+
+  kafka:
+    image: 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-kafka:2.12-0.10.2.1-alpine
+    container_name: kafka
+    environment:
+      ADVERTISED_HOST: kafka
+      ADVERTISED_PORT: 9092
+      LOG_RETENTION_HOURS: 336
+
+
+  ######################################################
+  # Build Services
+  ######################################################
+  # This is used to build jar
+  build:
+      image: 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-scala-docker:SCALA_2.12.2-SBT_1.0.1-alpine-build
+      command: /bin/bash -c "sbt -ivy ./.ivy2 assembly"
+      environment:
+        BINTRAY_USER: "${BINTRAY_USER}"
+        BINTRAY_KEY: "${BINTRAY_KEY}"
+        APPLICATION_NAME: app
+      volumes:
+        - ./:/app/build
+        - ".ivy2:/app/build/.ivy2"
+        - ".sbt:/root/.sbt"
+
+  sbt:
+      image: 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-scala-docker:SCALA_2.12.2-SBT_1.0.1-alpine-build
+      entrypoint: "sbt -ivy ./.ivy2"
+      environment:
+        BINTRAY_USER: "${BINTRAY_USER}"
+        BINTRAY_KEY: "${BINTRAY_KEY}"
+        APPLICATION_NAME: app
+      volumes:
+        - ./:/app/build
+        - ".ivy2:/app/build/.ivy2"
+        - ".sbt:/root/.sbt"
+
+  mvn:
+    image: maven:3.6.0-jdk-11
+    entrypoint: mvn
+    working_dir: /app/build
+    environment:
+      BINTRAY_USER: "${BINTRAY_USER}"
+      BINTRAY_KEY: "${BINTRAY_KEY}"
+      APPLICATION_NAME: app
+      DEP_SCAN_DISABLE_REMOTE_CHECKS: 'false'
+      M2_HOME: /root/.m2
+    volumes:
+      - ./:/app/build
+      - ".ivy2:/app/build/.ivy2"
+      - ".m2:/root/.m2"
+      - ".sbt:/root/.sbt"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  gemnasium-maven:
+    image: registry.gitlab.com/gitlab-org/security-products/analyzers/gemnasium-maven
+    command: /analyzer run
+    environment:
+      BINTRAY_USER: "${BINTRAY_USER}"
+      BINTRAY_KEY: "${BINTRAY_KEY}"
+    volumes:
+      - ./:/code
+      - ".ivy2:/app/build/.ivy2"
+      - ".m2:/root/.m2"
+      - ".sbt:/root/.sbt"
+
+  gemnasium:
+    image: registry.gitlab.com/gitlab-org/security-products/analyzers/gemnasium
+    command: /analyzer run
+    environment:
+      BINTRAY_USER: "${BINTRAY_USER}"
+      BINTRAY_KEY: "${BINTRAY_KEY}"
+    volumes:
+      - ./:/code
+      - ".ivy2:/app/build/.ivy2"
+      - ".m2:/root/.m2"
+      - ".sbt:/root/.sbt"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  dependency-scanning:
+    image: registry.gitlab.com/gitlab-org/security-products/dependency-scanning:${SP_VERSION:-latest}
+    command: /code
+    environment:
+      BINTRAY_USER: "${BINTRAY_USER}"
+      BINTRAY_KEY: "${BINTRAY_KEY}"
+    volumes:
+      - ./:/code
+      - ".ivy2:/app/build/.ivy2"
+      - ".m2:/root/.m2"
+      - ".sbt:/root/.sbt"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  code-quality:
+    image: registry.gitlab.com/gitlab-org/security-products/codequality:${SP_VERSION:-latest}
+    command: /code
+    environment:
+      BINTRAY_USER: "${BINTRAY_USER}"
+      BINTRAY_KEY: "${BINTRAY_KEY}"
+      SOURCE_CODE: "${PWD}"
+    volumes:
+      - ./:/code
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  test:
+    image: 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-scala-docker:SCALA_2.12.2-SBT_1.0.1-alpine-build
+    container_name: test
+    links:
+      - local
+    depends_on:
+      - local
+#      - redis
+#      - kafka
+
+    environment:
+      APPLICATION_NAME: flo-notification-router
+      ENVIRONMENT: local
+    volumes:
+      - ./tests:/app/tests
+      - "./test-results:/app/test-results"
+    command: |
+      /bin/bash -c " \
+        echo \"Running tests: $$APPLICATION_NAME\" && \
+        echo 'SLEEP' && sleep 30 && \
+        printf 'PING: ' && curl -s local:8000 > /dev/null && echo 'OK' || (printf 'FAIL' && exit 1) \
+      "

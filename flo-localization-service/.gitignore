@@ -1,0 +1,6 @@
+.DS_Store
+*.iml
+.idea/
+.gradle
+docker-compose-local-prod.yml
+Dockerfile.local.run

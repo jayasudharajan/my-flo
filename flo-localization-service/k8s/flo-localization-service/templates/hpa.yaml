@@ -1,0 +1,23 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "flo-localization-service.fullname" . }}-hpa
+spec:
+{{ if eq .Values.environment "production" }}
+  minReplicas: {{ .Values.replicaCount }}
+  maxReplicas: {{ mul .Values.replicaCount 2 }}
+{{ else  }}
+  minReplicas: 1
+  maxReplicas: 3
+{{ end }}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ template "flo-localization-service.fullname" . }}

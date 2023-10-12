@@ -1,0 +1,16 @@
+---
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
+  paths:
+    - /
+  hosts:
+    - flo-localization-service.flosecurecloud.com
+    - flo-localization-service-prod.flosecurecloud.com
+  tls:
+    - secretName: flo-localization-service-tls
+      hosts:
+        - flo-localization-service.flosecurecloud.com
+        - flo-localization-service-prod.flosecurecloud.com

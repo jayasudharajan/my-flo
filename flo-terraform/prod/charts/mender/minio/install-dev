@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -x
+
+helm template \
+  minio \
+  --namespace mender \
+|| exit 1
+helm upgrade --install \
+  minio \
+  ./minio \
+  --recreate-pods \
+  --wait --debug \
+  --namespace mender

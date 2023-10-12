@@ -1,0 +1,2 @@
+mqtt-host = "mqtt-dev.flocloud.co"
+mqtt-port = 8884

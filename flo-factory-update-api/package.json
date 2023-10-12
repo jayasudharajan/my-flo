@@ -1,0 +1,40 @@
+{
+  "name": "flo-factory-update-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/helmutflo/flo-factory-update-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/helmutflo/flo-factory-update-api/issues"
+  },
+  "homepage": "https://gitlab.com/helmutflo/flo-factory-update-api#readme",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.51",
+    "@types/aws-sdk": "^2.7.0",
+    "@types/axios": "^0.14.0",
+    "@types/lodash": "^4.14.150",
+    "@types/node": "^13.13.4",
+    "fp-ts": "^2.5.4",
+    "io-ts": "^2.2.1",
+    "serverless-domain-manager": "^3.3.2",
+    "serverless-webpack": "^5.3.1",
+    "ts-loader": "^7.0.1",
+    "typescript": "^3.8.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "lodash": "^4.17.15",
+    "source-map-support": "^0.5.19"
+  }
+}

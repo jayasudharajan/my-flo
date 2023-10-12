@@ -1,0 +1,18 @@
+{
+   "id":"imperial_us",
+   "name":"Imperial",
+   "units":{
+      "volume":{
+         "name":"Gallon",
+         "abbrev":"gal"
+      },
+      "temperature":{
+         "name":"Fahrenheit",
+         "abbrev":"F"
+      },
+      "pressure":{
+         "name":"PSI",
+         "abbrev":"psi"
+      }
+   }
+}

@@ -1,0 +1,5455 @@
+{
+  "items": [
+    {
+      "id": 4,
+      "name": "health_test_skipped",
+      "displayName": "Health Test Skipped",
+      "description": "",
+      "severity": "info",
+      "isInternal": true,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [
+        {
+          "id": 32,
+          "alarmId": 4,
+          "actionPath": "user.meetflo.com/support/alarms/4",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 34,
+      "name": "health_test_successful",
+      "displayName": "Health Test Successful",
+      "description": "",
+      "severity": "info",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [
+        {
+          "id": 14,
+          "alarmId": 34,
+          "actionPath": "user.meetflo.com/support/alarms/34",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": true
+            },
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": true
+            },
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 10,
+      "name": "fast_water_flow",
+      "displayName": "Fast Water Flow",
+      "description": "",
+      "severity": "critical",
+      "isInternal": false,
+      "isShutoff": false,
+      "triggersAlarm": {
+        "id": 51
+      },
+      "actions": [
+        {
+          "id": 1,
+          "name": "Ignore For 2 hours",
+          "text": "Yes, for 2 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 7200,
+          "sort": 1
+        },
+        {
+          "id": 6,
+          "name": "Ignore For 24 hours",
+          "text": "Yes, for 24 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 86400,
+          "sort": 2
+        },
+        {
+          "id": 4,
+          "name": "Do not ignore this alert",
+          "text": "No, send me alerts",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 0,
+          "sort": 4
+        }
+      ],
+      "supportOptions": [
+        {
+          "id": 1,
+          "alarmId": 10,
+          "actionPath": "user.meetflo.com/support/alarms/10",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "call": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": [
+        {
+          "systemMode": "home",
+          "flow": {
+            "titleText": "In the future, should events like this send alerts?",
+            "type": "list",
+            "options": [
+              {
+                "property": "should_accept_as_normal",
+                "displayText": "No",
+                "sortOrder": 1,
+                "value": true,
+                "flow": {
+                  "titleText": "Please select the option that best describes the source of the issue",
+                  "type": "list",
+                  "options": [
+                    {
+                      "property": "cause",
+                      "displayText": "Irrigation",
+                      "sortOrder": 0,
+                      "value": 2,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Pool / Hot Tub",
+                      "sortOrder": 1,
+                      "value": 3,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Hose Bibb",
+                      "sortOrder": 2,
+                      "value": 4,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Other",
+                      "sortOrder": 3,
+                      "value": 1,
+                      "flow": {
+                        "titleText": "Please explain what caused this alert",
+                        "type": "text",
+                        "options": [
+                          {
+                            "property": "cause_other",
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "property": "should_accept_as_normal",
+                "displayText": "Yes",
+                "sortOrder": 0,
+                "value": false,
+                "flow": {
+                  "titleText": "Please select the option that best describes the source of the issue",
+                  "type": "list",
+                  "options": [
+                    {
+                      "property": "cause",
+                      "displayText": "Plumbing Failure",
+                      "sortOrder": 0,
+                      "value": 5,
+                      "flow": {
+                        "titleText": "Please describe the plumbing failure",
+                        "type": "list",
+                        "options": [
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Cracked / Burst Pipe",
+                            "sortOrder": 0,
+                            "value": 2,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Bad Connector / Supply Line",
+                            "sortOrder": 1,
+                            "value": 3,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Sprinkler Head",
+                            "sortOrder": 2,
+                            "value": 4,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Not Sure",
+                            "sortOrder": 3,
+                            "value": 0,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Other",
+                            "sortOrder": 4,
+                            "value": 1,
+                            "flow": {
+                              "titleText": "Please explain what caused this alert",
+                              "type": "text",
+                              "options": [
+                                {
+                                  "property": "plumbing_failure_other",
+                                  "flow": {
+                                    "tag": "sleep_flow"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Toilet Flapper",
+                      "sortOrder": 1,
+                      "value": 6,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Pool / Hot Tub",
+                      "sortOrder": 2,
+                      "value": 3,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Hose Bibb",
+                      "sortOrder": 3,
+                      "value": 4,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Not Sure",
+                      "sortOrder": 4,
+                      "value": 0,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Other",
+                      "sortOrder": 5,
+                      "value": 1,
+                      "flow": {
+                        "titleText": "Please explain what caused this alert",
+                        "type": "text",
+                        "options": [
+                          {
+                            "property": "cause_other",
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "flowTags": {
+            "sleep_flow": {
+              "titleText": "Would you like to put your Flo device in sleep mode temporarily to avoid being alerted? Please note your Flo device will not shut off your water while in Sleep mode.",
+              "type": "list",
+              "options": [
+                {
+                  "property": "action_taken",
+                  "displayText": "Yes, sleep for 2 hours",
+                  "sortOrder": 0,
+                  "action": "sleep_2h",
+                  "value": "sleep_2h"
+                },
+                {
+                  "property": "action_taken",
+                  "displayText": "Yes, sleep for 24 hours",
+                  "sortOrder": 1,
+                  "action": "sleep_24h",
+                  "value": "sleep_24h"
+                },
+                {
+                  "property": "action_taken",
+                  "displayText": "No, please alert me",
+                  "sortOrder": 2,
+                  "action": null,
+                  "value": "none"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "systemMode": "away",
+          "flow": {
+            "titleText": "In the future, should events like this send alerts?",
+            "type": "list",
+            "options": [
+              {
+                "property": "should_accept_as_normal",
+                "displayText": "No",
+                "sortOrder": 1,
+                "value": true,
+                "flow": {
+                  "titleText": "Please select the option that best describes the source of the issue",
+                  "type": "list",
+                  "options": [
+                    {
+                      "property": "cause",
+                      "displayText": "Irrigation",
+                      "sortOrder": 0,
+                      "value": 2,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Pool / Hot Tub",
+                      "sortOrder": 1,
+                      "value": 3,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Hose Bibb",
+                      "sortOrder": 2,
+                      "value": 4,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Other",
+                      "sortOrder": 3,
+                      "value": 1,
+                      "flow": {
+                        "titleText": "Please explain what caused this alert",
+                        "type": "text",
+                        "options": [
+                          {
+                            "property": "cause_other",
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "property": "should_accept_as_normal",
+                "displayText": "Yes",
+                "sortOrder": 0,
+                "value": false,
+                "flow": {
+                  "titleText": "Please select the option that best describes the source of the issue",
+                  "type": "list",
+                  "options": [
+                    {
+                      "property": "cause",
+                      "displayText": "Plumbing Failure",
+                      "sortOrder": 0,
+                      "value": 5,
+                      "flow": {
+                        "titleText": "Please describe the plumbing failure",
+                        "type": "list",
+                        "options": [
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Cracked / Burst Pipe",
+                            "sortOrder": 0,
+                            "value": 2,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Bad Connector / Supply Line",
+                            "sortOrder": 1,
+                            "value": 3,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Sprinkler Head",
+                            "sortOrder": 2,
+                            "value": 4,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Not Sure",
+                            "sortOrder": 3,
+                            "value": 0,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Other",
+                            "sortOrder": 4,
+                            "value": 1,
+                            "flow": {
+                              "titleText": "Please explain what caused this alert",
+                              "type": "text",
+                              "options": [
+                                {
+                                  "property": "plumbing_failure_other",
+                                  "flow": {
+                                    "tag": "sleep_flow"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Toilet Flapper",
+                      "sortOrder": 1,
+                      "value": 6,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Pool / Hot Tub",
+                      "sortOrder": 2,
+                      "value": 3,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Hose Bibb",
+                      "sortOrder": 3,
+                      "value": 4,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Not Sure",
+                      "sortOrder": 4,
+                      "value": 0,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Other",
+                      "sortOrder": 5,
+                      "value": 1,
+                      "flow": {
+                        "titleText": "Please explain what caused this alert",
+                        "type": "text",
+                        "options": [
+                          {
+                            "property": "cause_other",
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "flowTags": {
+            "sleep_flow": {
+              "titleText": "Would you like to put your Flo device in sleep mode temporarily to avoid being alerted? Please note your Flo device will not shut off your water while in Sleep mode.",
+              "type": "list",
+              "options": [
+                {
+                  "property": "action_taken",
+                  "displayText": "Yes, sleep for 2 hours",
+                  "sortOrder": 0,
+                  "action": "sleep_2h",
+                  "value": "sleep_2h"
+                },
+                {
+                  "property": "action_taken",
+                  "displayText": "Yes, sleep for 24 hours",
+                  "sortOrder": 1,
+                  "action": "sleep_24h",
+                  "value": "sleep_24h"
+                },
+                {
+                  "property": "action_taken",
+                  "displayText": "No, please alert me",
+                  "sortOrder": 2,
+                  "action": null,
+                  "value": "none"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "high_water_usage",
+      "displayName": "High Water Usage",
+      "description": "",
+      "severity": "critical",
+      "isInternal": false,
+      "isShutoff": false,
+      "triggersAlarm": {
+        "id": 52
+      },
+      "actions": [
+        {
+          "id": 1,
+          "name": "Ignore For 2 hours",
+          "text": "Yes, for 2 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 7200,
+          "sort": 1
+        },
+        {
+          "id": 6,
+          "name": "Ignore For 24 hours",
+          "text": "Yes, for 24 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 86400,
+          "sort": 2
+        },
+        {
+          "id": 4,
+          "name": "Do not ignore this alert",
+          "text": "No, send me alerts",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 0,
+          "sort": 4
+        }
+      ],
+      "supportOptions": [
+        {
+          "id": 24,
+          "alarmId": 11,
+          "actionPath": "user.meetflo.com/support/alarms/11",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "call": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": [
+        {
+          "systemMode": "home",
+          "flow": {
+            "titleText": "In the future, should events like this send alerts?",
+            "type": "list",
+            "options": [
+              {
+                "property": "should_accept_as_normal",
+                "displayText": "No",
+                "sortOrder": 1,
+                "value": true,
+                "flow": {
+                  "titleText": "Please select the option that best describes the source of the issue.",
+                  "type": "list",
+                  "options": [
+                    {
+                      "property": "cause",
+                      "displayText": "Long Shower",
+                      "sortOrder": 0,
+                      "value": 7,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Multiple Fixtures On at Once",
+                      "sortOrder": 1,
+                      "value": 8,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Water Softener / Filtration",
+                      "sortOrder": 2,
+                      "value": 9,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Drip Irrigation",
+                      "sortOrder": 3,
+                      "value": 10,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Other",
+                      "sortOrder": 4,
+                      "value": 1,
+                      "flow": {
+                        "titleText": "Please explain what caused this alert",
+                        "type": "text",
+                        "options": [
+                          {
+                            "property": "cause_other",
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "property": "should_accept_as_normal",
+                "displayText": "Yes",
+                "sortOrder": 0,
+                "value": false,
+                "flow": {
+                  "titleText": "Please select the option that best describes the source of the issue.",
+                  "type": "list",
+                  "options": [
+                    {
+                      "property": "cause",
+                      "displayText": "Plumbing Failure",
+                      "sortOrder": 0,
+                      "value": 5,
+                      "flow": {
+                        "titleText": "Please describe the plumbing failure",
+                        "type": "list",
+                        "options": [
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Cracked / Burst Pipe",
+                            "sortOrder": 0,
+                            "value": 2,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Bad Connector / Supply Line",
+                            "sortOrder": 1,
+                            "value": 3,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Sprinkler Head",
+                            "sortOrder": 2,
+                            "value": 4,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Running Toilet",
+                            "sortOrder": 3,
+                            "value": 5,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Pinhole Leak",
+                            "sortOrder": 4,
+                            "value": 6,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Reverse Osmosis",
+                            "sortOrder": 5,
+                            "value": 7,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Not Sure",
+                            "sortOrder": 6,
+                            "value": 0,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Other",
+                            "sortOrder": 7,
+                            "value": 1,
+                            "flow": {
+                              "titleText": "Please explain what caused this alert",
+                              "type": "text",
+                              "options": [
+                                {
+                                  "property": "plumbing_failure_other",
+                                  "flow": {
+                                    "tag": "sleep_flow"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Toilet Flapper",
+                      "sortOrder": 1,
+                      "value": 6,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Long Shower",
+                      "sortOrder": 2,
+                      "value": 7,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Multiple Fixtures On at Once",
+                      "sortOrder": 3,
+                      "value": 8,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Fixture Left On",
+                      "sortOrder": 4,
+                      "value": 11,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Drip Irrigation",
+                      "sortOrder": 5,
+                      "value": 10,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Not Sure",
+                      "sortOrder": 6,
+                      "value": 0,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Other",
+                      "sortOrder": 7,
+                      "value": 1,
+                      "flow": {
+                        "titleText": "Please explain what caused this alert",
+                        "type": "text",
+                        "options": [
+                          {
+                            "property": "cause_other",
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "flowTags": {
+            "sleep_flow": {
+              "titleText": "Would you like to put your Flo device in sleep mode temporarily to avoid being alerted? Please note your Flo device will not shut off your water while in Sleep mode.",
+              "type": "list",
+              "options": [
+                {
+                  "property": "action_taken",
+                  "displayText": "Yes, sleep for 2 hours",
+                  "sortOrder": 0,
+                  "action": "sleep_2h",
+                  "value": "sleep_2h"
+                },
+                {
+                  "property": "action_taken",
+                  "displayText": "Yes, sleep for 24 hours",
+                  "sortOrder": 1,
+                  "action": "sleep_24h",
+                  "value": "sleep_24h"
+                },
+                {
+                  "property": "action_taken",
+                  "displayText": "No, please alert me",
+                  "sortOrder": 2,
+                  "action": null,
+                  "value": "none"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "systemMode": "away",
+          "flow": {
+            "titleText": "In the future, should events like this send alerts?",
+            "type": "list",
+            "options": [
+              {
+                "property": "should_accept_as_normal",
+                "displayText": "No",
+                "sortOrder": 1,
+                "value": true,
+                "flow": {
+                  "titleText": "Please select the option that best describes the source of the issue.",
+                  "type": "list",
+                  "options": [
+                    {
+                      "property": "cause",
+                      "displayText": "Long Shower",
+                      "sortOrder": 0,
+                      "value": 7,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Multiple Fixtures On at Once",
+                      "sortOrder": 1,
+                      "value": 8,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Water Softener / Filtration",
+                      "sortOrder": 2,
+                      "value": 9,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Drip Irrigation",
+                      "sortOrder": 3,
+                      "value": 10,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Other",
+                      "sortOrder": 4,
+                      "value": 1,
+                      "flow": {
+                        "titleText": "Please explain what caused this alert",
+                        "type": "text",
+                        "options": [
+                          {
+                            "property": "cause_other",
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "property": "should_accept_as_normal",
+                "displayText": "Yes",
+                "sortOrder": 0,
+                "value": false,
+                "flow": {
+                  "titleText": "Please select the option that best describes the source of the issue.",
+                  "type": "list",
+                  "options": [
+                    {
+                      "property": "cause",
+                      "displayText": "Plumbing Failure",
+                      "sortOrder": 0,
+                      "value": 5,
+                      "flow": {
+                        "titleText": "Please describe the plumbing failure",
+                        "type": "list",
+                        "options": [
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Cracked / Burst Pipe",
+                            "sortOrder": 0,
+                            "value": 2,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Bad Connector / Supply Line",
+                            "sortOrder": 1,
+                            "value": 3,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Sprinkler Head",
+                            "sortOrder": 2,
+                            "value": 4,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Running Toilet",
+                            "sortOrder": 3,
+                            "value": 5,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Pinhole Leak",
+                            "sortOrder": 4,
+                            "value": 6,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Reverse Osmosis",
+                            "sortOrder": 5,
+                            "value": 7,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Not Sure",
+                            "sortOrder": 6,
+                            "value": 0,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Other",
+                            "sortOrder": 7,
+                            "value": 1,
+                            "flow": {
+                              "titleText": "Please explain what caused this alert",
+                              "type": "text",
+                              "options": [
+                                {
+                                  "property": "plumbing_failure_other",
+                                  "flow": {
+                                    "tag": "sleep_flow"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Toilet Flapper",
+                      "sortOrder": 1,
+                      "value": 6,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Long Shower",
+                      "sortOrder": 2,
+                      "value": 7,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Multiple Fixtures On at Once",
+                      "sortOrder": 3,
+                      "value": 8,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Fixture Left On",
+                      "sortOrder": 4,
+                      "value": 11,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Drip Irrigation",
+                      "sortOrder": 5,
+                      "value": 10,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Not Sure",
+                      "sortOrder": 6,
+                      "value": 0,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Other",
+                      "sortOrder": 7,
+                      "value": 1,
+                      "flow": {
+                        "titleText": "Please explain what caused this alert",
+                        "type": "text",
+                        "options": [
+                          {
+                            "property": "cause_other",
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "flowTags": {
+            "sleep_flow": {
+              "titleText": "Would you like to put your Flo device in sleep mode temporarily to avoid being alerted? Please note your Flo device will not shut off your water while in Sleep mode.",
+              "type": "list",
+              "options": [
+                {
+                  "property": "action_taken",
+                  "displayText": "Yes, sleep for 2 hours",
+                  "sortOrder": 0,
+                  "action": "sleep_2h",
+                  "value": "sleep_2h"
+                },
+                {
+                  "property": "action_taken",
+                  "displayText": "Yes, sleep for 24 hours",
+                  "sortOrder": 1,
+                  "action": "sleep_24h",
+                  "value": "sleep_24h"
+                },
+                {
+                  "property": "action_taken",
+                  "displayText": "No, please alert me",
+                  "sortOrder": 2,
+                  "action": null,
+                  "value": "none"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "name": "hot_water",
+      "displayName": "Hot Water",
+      "description": "",
+      "severity": "warning",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [
+        {
+          "id": 1,
+          "name": "Ignore For 2 hours",
+          "text": "Yes, for 2 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 7200,
+          "sort": 1
+        },
+        {
+          "id": 6,
+          "name": "Ignore For 24 hours",
+          "text": "Yes, for 24 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 86400,
+          "sort": 2
+        },
+        {
+          "id": 4,
+          "name": "Do not ignore this alert",
+          "text": "No, send me alerts",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 0,
+          "sort": 4
+        }
+      ],
+      "supportOptions": [
+        {
+          "id": 4,
+          "alarmId": 14,
+          "actionPath": "user.meetflo.com/support/alarms/14",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 13,
+      "name": "freeze_warning",
+      "displayName": "Freeze Warning",
+      "description": "",
+      "severity": "warning",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [
+        {
+          "id": 1,
+          "name": "Ignore For 2 hours",
+          "text": "Yes, for 2 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 7200,
+          "sort": 1
+        },
+        {
+          "id": 6,
+          "name": "Ignore For 24 hours",
+          "text": "Yes, for 24 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 86400,
+          "sort": 2
+        },
+        {
+          "id": 4,
+          "name": "Do not ignore this alert",
+          "text": "No, send me alerts",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 0,
+          "sort": 4
+        }
+      ],
+      "supportOptions": [
+        {
+          "id": 11,
+          "alarmId": 13,
+          "actionPath": "user.meetflo.com/support/alarms/13",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 16,
+      "name": "high_water_pressure",
+      "displayName": "High Water Pressure",
+      "description": "",
+      "severity": "warning",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [
+        {
+          "id": 1,
+          "name": "Ignore For 2 hours",
+          "text": "Yes, for 2 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 7200,
+          "sort": 1
+        },
+        {
+          "id": 6,
+          "name": "Ignore For 24 hours",
+          "text": "Yes, for 24 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 86400,
+          "sort": 2
+        },
+        {
+          "id": 4,
+          "name": "Do not ignore this alert",
+          "text": "No, send me alerts",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 0,
+          "sort": 4
+        }
+      ],
+      "supportOptions": [
+        {
+          "id": 21,
+          "alarmId": 16,
+          "actionPath": "user.meetflo.com/support/alarms/16",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 15,
+      "name": "low_water_pressure",
+      "displayName": "Low Water Pressure",
+      "description": "",
+      "severity": "warning",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [
+        {
+          "id": 1,
+          "name": "Ignore For 2 hours",
+          "text": "Yes, for 2 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 7200,
+          "sort": 1
+        },
+        {
+          "id": 6,
+          "name": "Ignore For 24 hours",
+          "text": "Yes, for 24 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 86400,
+          "sort": 2
+        },
+        {
+          "id": 4,
+          "name": "Do not ignore this alert",
+          "text": "No, send me alerts",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 0,
+          "sort": 4
+        }
+      ],
+      "supportOptions": [
+        {
+          "id": 34,
+          "alarmId": 15,
+          "actionPath": "user.meetflo.com/support/alarms/15",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 18,
+      "name": "valve_error",
+      "displayName": "Valve Error",
+      "description": "",
+      "severity": "warning",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [
+        {
+          "id": 1,
+          "name": "Ignore For 2 hours",
+          "text": "Yes, for 2 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 7200,
+          "sort": 1
+        },
+        {
+          "id": 6,
+          "name": "Ignore For 24 hours",
+          "text": "Yes, for 24 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 86400,
+          "sort": 2
+        },
+        {
+          "id": 4,
+          "name": "Do not ignore this alert",
+          "text": "No, send me alerts",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 0,
+          "sort": 4
+        }
+      ],
+      "supportOptions": [
+        {
+          "id": 19,
+          "alarmId": 18,
+          "actionPath": "user.meetflo.com/support/alarms/18",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 22,
+      "name": "general_system_error",
+      "displayName": "General System Error",
+      "description": "",
+      "severity": "warning",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [
+        {
+          "id": 1,
+          "name": "Ignore For 2 hours",
+          "text": "Yes, for 2 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 7200,
+          "sort": 1
+        },
+        {
+          "id": 6,
+          "name": "Ignore For 24 hours",
+          "text": "Yes, for 24 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 86400,
+          "sort": 2
+        },
+        {
+          "id": 4,
+          "name": "Do not ignore this alert",
+          "text": "No, send me alerts",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 0,
+          "sort": 4
+        }
+      ],
+      "supportOptions": [
+        {
+          "id": 16,
+          "alarmId": 22,
+          "actionPath": "user.meetflo.com/support/alarms/22",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 23,
+      "name": "device_memory_error",
+      "displayName": "Device Memory Error",
+      "description": "",
+      "severity": "warning",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [
+        {
+          "id": 1,
+          "name": "Ignore For 2 hours",
+          "text": "Yes, for 2 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 7200,
+          "sort": 1
+        },
+        {
+          "id": 6,
+          "name": "Ignore For 24 hours",
+          "text": "Yes, for 24 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 86400,
+          "sort": 2
+        },
+        {
+          "id": 4,
+          "name": "Do not ignore this alert",
+          "text": "No, send me alerts",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 0,
+          "sort": 4
+        }
+      ],
+      "supportOptions": [
+        {
+          "id": 28,
+          "alarmId": 23,
+          "actionPath": "user.meetflo.com/support/alarms/23",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": true
+            },
+            {
+              "systemMode": "home",
+              "enabled": true
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": true
+            },
+            {
+              "systemMode": "home",
+              "enabled": true
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 26,
+      "name": "extended_water_use",
+      "displayName": "Extended Water Use",
+      "description": "",
+      "severity": "critical",
+      "isInternal": false,
+      "isShutoff": false,
+      "triggersAlarm": {
+        "id": 53
+      },
+      "actions": [
+        {
+          "id": 1,
+          "name": "Ignore For 2 hours",
+          "text": "Yes, for 2 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 7200,
+          "sort": 1
+        },
+        {
+          "id": 6,
+          "name": "Ignore For 24 hours",
+          "text": "Yes, for 24 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 86400,
+          "sort": 2
+        },
+        {
+          "id": 4,
+          "name": "Do not ignore this alert",
+          "text": "No, send me alerts",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 0,
+          "sort": 4
+        }
+      ],
+      "supportOptions": [
+        {
+          "id": 27,
+          "alarmId": 26,
+          "actionPath": "user.meetflo.com/support/alarms/26",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "call": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": [
+        {
+          "systemMode": "home",
+          "flow": {
+            "titleText": "In the future, should events like this send alerts?",
+            "type": "list",
+            "options": [
+              {
+                "property": "should_accept_as_normal",
+                "displayText": "No",
+                "sortOrder": 1,
+                "value": true,
+                "flow": {
+                  "titleText": "Please select the option that best describes the source of the issue.",
+                  "type": "list",
+                  "options": [
+                    {
+                      "property": "cause",
+                      "displayText": "Long Shower",
+                      "sortOrder": 0,
+                      "value": 7,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Multiple Fixtures On at Once",
+                      "sortOrder": 1,
+                      "value": 8,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Water Softener / Filtration",
+                      "sortOrder": 2,
+                      "value": 9,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Drip Irrigation",
+                      "sortOrder": 3,
+                      "value": 10,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Other",
+                      "sortOrder": 4,
+                      "value": 1,
+                      "flow": {
+                        "titleText": "Please explain what caused this alert",
+                        "type": "text",
+                        "options": [
+                          {
+                            "property": "cause_other",
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "property": "should_accept_as_normal",
+                "displayText": "Yes",
+                "sortOrder": 0,
+                "value": false,
+                "flow": {
+                  "titleText": "Please select the option that best describes the source of the issue.",
+                  "type": "list",
+                  "options": [
+                    {
+                      "property": "cause",
+                      "displayText": "Plumbing Failure",
+                      "sortOrder": 0,
+                      "value": 5,
+                      "flow": {
+                        "titleText": "Please describe the plumbing failure",
+                        "type": "list",
+                        "options": [
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Cracked / Burst Pipe",
+                            "sortOrder": 0,
+                            "value": 2,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Bad Connector / Supply Line",
+                            "sortOrder": 1,
+                            "value": 3,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Sprinkler Head",
+                            "sortOrder": 2,
+                            "value": 4,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Running Toilet",
+                            "sortOrder": 3,
+                            "value": 5,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Pinhole Leak",
+                            "sortOrder": 4,
+                            "value": 6,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Reverse Osmosis",
+                            "sortOrder": 5,
+                            "value": 7,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Not Sure",
+                            "sortOrder": 6,
+                            "value": 0,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Other",
+                            "sortOrder": 7,
+                            "value": 1,
+                            "flow": {
+                              "titleText": "Please explain what caused this alert",
+                              "type": "text",
+                              "options": [
+                                {
+                                  "property": "plumbing_failure_other",
+                                  "flow": {
+                                    "tag": "sleep_flow"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Toilet Flapper",
+                      "sortOrder": 1,
+                      "value": 6,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Long Shower",
+                      "sortOrder": 2,
+                      "value": 7,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Multiple Fixtures On at Once",
+                      "sortOrder": 3,
+                      "value": 8,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Fixture Left On",
+                      "sortOrder": 4,
+                      "value": 11,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Drip Irrigation",
+                      "sortOrder": 5,
+                      "value": 10,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Not Sure",
+                      "sortOrder": 6,
+                      "value": 0,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Other",
+                      "sortOrder": 7,
+                      "value": 1,
+                      "flow": {
+                        "titleText": "Please explain what caused this alert",
+                        "type": "text",
+                        "options": [
+                          {
+                            "property": "cause_other",
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "flowTags": {
+            "sleep_flow": {
+              "titleText": "Would you like to put your Flo device in sleep mode temporarily to avoid being alerted? Please note your Flo device will not shut off your water while in Sleep mode.",
+              "type": "list",
+              "options": [
+                {
+                  "property": "action_taken",
+                  "displayText": "Yes, sleep for 2 hours",
+                  "sortOrder": 0,
+                  "action": "sleep_2h",
+                  "value": "sleep_2h"
+                },
+                {
+                  "property": "action_taken",
+                  "displayText": "Yes, sleep for 24 hours",
+                  "sortOrder": 1,
+                  "action": "sleep_24h",
+                  "value": "sleep_24h"
+                },
+                {
+                  "property": "action_taken",
+                  "displayText": "No, please alert me",
+                  "sortOrder": 2,
+                  "action": null,
+                  "value": "none"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "systemMode": "away",
+          "flow": {
+            "titleText": "In the future, should events like this send alerts?",
+            "type": "list",
+            "options": [
+              {
+                "property": "should_accept_as_normal",
+                "displayText": "No",
+                "sortOrder": 1,
+                "value": true,
+                "flow": {
+                  "titleText": "Please select the option that best describes the source of the issue.",
+                  "type": "list",
+                  "options": [
+                    {
+                      "property": "cause",
+                      "displayText": "Long Shower",
+                      "sortOrder": 0,
+                      "value": 7,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Multiple Fixtures On at Once",
+                      "sortOrder": 1,
+                      "value": 8,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Water Softener / Filtration",
+                      "sortOrder": 2,
+                      "value": 9,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Drip Irrigation",
+                      "sortOrder": 3,
+                      "value": 10,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Other",
+                      "sortOrder": 4,
+                      "value": 1,
+                      "flow": {
+                        "titleText": "Please explain what caused this alert",
+                        "type": "text",
+                        "options": [
+                          {
+                            "property": "cause_other",
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "property": "should_accept_as_normal",
+                "displayText": "Yes",
+                "sortOrder": 0,
+                "value": false,
+                "flow": {
+                  "titleText": "Please select the option that best describes the source of the issue.",
+                  "type": "list",
+                  "options": [
+                    {
+                      "property": "cause",
+                      "displayText": "Plumbing Failure",
+                      "sortOrder": 0,
+                      "value": 5,
+                      "flow": {
+                        "titleText": "Please describe the plumbing failure",
+                        "type": "list",
+                        "options": [
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Cracked / Burst Pipe",
+                            "sortOrder": 0,
+                            "value": 2,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Bad Connector / Supply Line",
+                            "sortOrder": 1,
+                            "value": 3,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Sprinkler Head",
+                            "sortOrder": 2,
+                            "value": 4,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Running Toilet",
+                            "sortOrder": 3,
+                            "value": 5,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Pinhole Leak",
+                            "sortOrder": 4,
+                            "value": 6,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Reverse Osmosis",
+                            "sortOrder": 5,
+                            "value": 7,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Not Sure",
+                            "sortOrder": 6,
+                            "value": 0,
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          },
+                          {
+                            "property": "plumbing_failure",
+                            "displayText": "Other",
+                            "sortOrder": 7,
+                            "value": 1,
+                            "flow": {
+                              "titleText": "Please explain what caused this alert",
+                              "type": "text",
+                              "options": [
+                                {
+                                  "property": "plumbing_failure_other",
+                                  "flow": {
+                                    "tag": "sleep_flow"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Toilet Flapper",
+                      "sortOrder": 1,
+                      "value": 6,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Long Shower",
+                      "sortOrder": 2,
+                      "value": 7,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Multiple Fixtures On at Once",
+                      "sortOrder": 3,
+                      "value": 8,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Fixture Left On",
+                      "sortOrder": 4,
+                      "value": 11,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Drip Irrigation",
+                      "sortOrder": 5,
+                      "value": 10,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Not Sure",
+                      "sortOrder": 6,
+                      "value": 0,
+                      "flow": {
+                        "tag": "sleep_flow"
+                      }
+                    },
+                    {
+                      "property": "cause",
+                      "displayText": "Other",
+                      "sortOrder": 7,
+                      "value": 1,
+                      "flow": {
+                        "titleText": "Please explain what caused this alert",
+                        "type": "text",
+                        "options": [
+                          {
+                            "property": "cause_other",
+                            "flow": {
+                              "tag": "sleep_flow"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "flowTags": {
+            "sleep_flow": {
+              "titleText": "Would you like to put your Flo device in sleep mode temporarily to avoid being alerted? Please note your Flo device will not shut off your water while in Sleep mode.",
+              "type": "list",
+              "options": [
+                {
+                  "property": "action_taken",
+                  "displayText": "Yes, sleep for 2 hours",
+                  "sortOrder": 0,
+                  "action": "sleep_2h",
+                  "value": "sleep_2h"
+                },
+                {
+                  "property": "action_taken",
+                  "displayText": "Yes, sleep for 24 hours",
+                  "sortOrder": 1,
+                  "action": "sleep_24h",
+                  "value": "sleep_24h"
+                },
+                {
+                  "property": "action_taken",
+                  "displayText": "No, please alert me",
+                  "sortOrder": 2,
+                  "action": null,
+                  "value": "none"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "name": "small_drip_detected",
+      "displayName": "Small Drip Detected",
+      "description": "",
+      "severity": "warning",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [
+        {
+          "id": 16,
+          "name": "Ignore For 1 week",
+          "text": "Yes, for 1 week",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 604800,
+          "sort": 3
+        },
+        {
+          "id": 18,
+          "name": "Ignore For 30 days",
+          "text": "Yes, for 30 days",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 2592000,
+          "sort": 1
+        },
+        {
+          "id": 4,
+          "name": "Do not ignore this alert",
+          "text": "No, send me alerts",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 0,
+          "sort": 4
+        }
+      ],
+      "supportOptions": [
+        {
+          "id": 7,
+          "alarmId": 28,
+          "actionPath": "user.meetflo.com/support/alarms/28",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [
+        {
+          "id": 29
+        },
+        {
+          "id": 30
+        },
+        {
+          "id": 31
+        }
+      ],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 29,
+      "name": "small_drip_detected",
+      "displayName": "Small Drip Detected",
+      "description": "",
+      "severity": "warning",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [
+        {
+          "id": 16,
+          "name": "Ignore For 1 week",
+          "text": "Yes, for 1 week",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 604800,
+          "sort": 3
+        },
+        {
+          "id": 18,
+          "name": "Ignore For 30 days",
+          "text": "Yes, for 30 days",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 2592000,
+          "sort": 1
+        },
+        {
+          "id": 4,
+          "name": "Do not ignore this alert",
+          "text": "No, send me alerts",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 0,
+          "sort": 4
+        }
+      ],
+      "supportOptions": [
+        {
+          "id": 6,
+          "alarmId": 29,
+          "actionPath": "user.meetflo.com/support/alarms/29",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "parent": {
+        "id": 28
+      },
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 30,
+      "name": "small_drip_detected",
+      "displayName": "Small Drip Detected",
+      "description": "",
+      "severity": "warning",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [
+        {
+          "id": 16,
+          "name": "Ignore For 1 week",
+          "text": "Yes, for 1 week",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 604800,
+          "sort": 3
+        },
+        {
+          "id": 18,
+          "name": "Ignore For 30 days",
+          "text": "Yes, for 30 days",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 2592000,
+          "sort": 1
+        },
+        {
+          "id": 4,
+          "name": "Do not ignore this alert",
+          "text": "No, send me alerts",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 0,
+          "sort": 4
+        }
+      ],
+      "supportOptions": [
+        {
+          "id": 30,
+          "alarmId": 30,
+          "actionPath": "user.meetflo.com/support/alarms/30",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "parent": {
+        "id": 28
+      },
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 31,
+      "name": "small_drip_detected",
+      "displayName": "Small Drip Detected",
+      "description": "",
+      "severity": "warning",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [
+        {
+          "id": 16,
+          "name": "Ignore For 1 week",
+          "text": "Yes, for 1 week",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 604800,
+          "sort": 3
+        },
+        {
+          "id": 18,
+          "name": "Ignore For 30 days",
+          "text": "Yes, for 30 days",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 2592000,
+          "sort": 1
+        },
+        {
+          "id": 4,
+          "name": "Do not ignore this alert",
+          "text": "No, send me alerts",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 0,
+          "sort": 4
+        }
+      ],
+      "supportOptions": [
+        {
+          "id": 23,
+          "alarmId": 31,
+          "actionPath": "user.meetflo.com/support/alarms/31",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "parent": {
+        "id": 28
+      },
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 32,
+      "name": "health_test_interrupted",
+      "displayName": "Health Test Interrupted",
+      "description": "",
+      "severity": "info",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [
+        {
+          "id": 13,
+          "alarmId": 32,
+          "actionPath": "user.meetflo.com/support/alarms/32",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            },
+            {
+              "systemMode": "home",
+              "enabled": true
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            },
+            {
+              "systemMode": "home",
+              "enabled": true
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 40,
+      "name": "health_test_interrupted",
+      "displayName": "Health Test Interrupted",
+      "description": "",
+      "severity": "info",
+      "isInternal": true,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [
+        {
+          "id": 26,
+          "alarmId": 40,
+          "actionPath": "user.meetflo.com/support/alarms/39",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 33,
+      "name": "device_offline",
+      "displayName": "Device Offline",
+      "description": "",
+      "severity": "warning",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [
+        {
+          "id": 1,
+          "name": "Ignore For 2 hours",
+          "text": "Yes, for 2 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 7200,
+          "sort": 1
+        },
+        {
+          "id": 6,
+          "name": "Ignore For 24 hours",
+          "text": "Yes, for 24 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 86400,
+          "sort": 2
+        },
+        {
+          "id": 4,
+          "name": "Do not ignore this alert",
+          "text": "No, send me alerts",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 0,
+          "sort": 4
+        }
+      ],
+      "supportOptions": [
+        {
+          "id": 9,
+          "alarmId": 33,
+          "actionPath": "user.meetflo.com/support/alarms/33",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": true
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": true
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 5,
+      "name": "health_test_successful",
+      "displayName": "Health Test Successful",
+      "description": "",
+      "severity": "info",
+      "isInternal": true,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [
+        {
+          "id": 0,
+          "alarmId": 5,
+          "actionPath": "user.meetflo.com/support/alarms/5",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 41,
+      "name": "health_test_interrupted",
+      "displayName": "Health Test Interrupted",
+      "description": "",
+      "severity": "info",
+      "isInternal": true,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [
+        {
+          "id": 12,
+          "alarmId": 41,
+          "actionPath": "user.meetflo.com/support/alarms/39",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 35,
+      "name": "valve_open",
+      "displayName": "Valve Open",
+      "description": "",
+      "severity": "info",
+      "isInternal": true,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [
+        {
+          "id": 18,
+          "alarmId": 35,
+          "actionPath": "user.meetflo.com/support/alarms/35",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 36,
+      "name": "valve_close",
+      "displayName": "Valve Close",
+      "description": "",
+      "severity": "info",
+      "isInternal": true,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [
+        {
+          "id": 29,
+          "alarmId": 36,
+          "actionPath": "user.meetflo.com/support/alarms/36",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 38,
+      "name": "health_test_started",
+      "displayName": "Health Test Started",
+      "description": "",
+      "severity": "info",
+      "isInternal": true,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [
+        {
+          "id": 8,
+          "alarmId": 38,
+          "actionPath": "user.meetflo.com/support/alarms/38",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 42,
+      "name": "health_test_delayed",
+      "displayName": "Health Test Delayed",
+      "description": "",
+      "severity": "info",
+      "isInternal": true,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [
+        {
+          "id": 2,
+          "alarmId": 42,
+          "actionPath": "user.meetflo.com/support/alarms/42",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 43,
+      "name": "mode_change",
+      "displayName": "Mode Change",
+      "description": "",
+      "severity": "info",
+      "isInternal": true,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [
+        {
+          "id": 25,
+          "alarmId": 43,
+          "actionPath": "user.meetflo.com/support/alarms/43",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 45,
+      "name": "alert_resolved",
+      "displayName": "Alert Resolved",
+      "description": "",
+      "severity": "info",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [
+        {
+          "id": 15,
+          "alarmId": 45,
+          "actionPath": "user.meetflo.com/support/alarms/45",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": true
+            },
+            {
+              "systemMode": "home",
+              "enabled": true
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": true
+            },
+            {
+              "systemMode": "home",
+              "enabled": true
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 50,
+      "name": "device_still_offline",
+      "displayName": "Device Still Offline",
+      "description": "",
+      "severity": "info",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [
+        {
+          "id": 20,
+          "alarmId": 50,
+          "actionPath": "user.meetflo.com/support/alarms/50",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": true
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": true
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 51,
+      "name": "water_system_shutoff",
+      "displayName": "Water System Shutoff",
+      "description": "",
+      "severity": "critical",
+      "isInternal": false,
+      "isShutoff": true,
+      "actions": [
+        {
+          "id": 4,
+          "name": "Do not ignore this alert",
+          "text": "No, send me alerts",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 0,
+          "sort": 4
+        }
+      ],
+      "supportOptions": [
+        {
+          "id": 31,
+          "alarmId": 51,
+          "actionPath": "user.meetflo.com/support/alarms/51",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "call": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 52,
+      "name": "water_system_shutoff",
+      "displayName": "Water System Shutoff",
+      "description": "",
+      "severity": "critical",
+      "isInternal": false,
+      "isShutoff": true,
+      "actions": [
+        {
+          "id": 4,
+          "name": "Do not ignore this alert",
+          "text": "No, send me alerts",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 0,
+          "sort": 4
+        }
+      ],
+      "supportOptions": [
+        {
+          "id": 3,
+          "alarmId": 52,
+          "actionPath": "user.meetflo.com/support/alarms/52",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": true
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": true
+            }
+          ]
+        },
+        "call": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 53,
+      "name": "water_system_shutoff",
+      "displayName": "Water System Shutoff",
+      "description": "",
+      "severity": "critical",
+      "isInternal": false,
+      "isShutoff": true,
+      "actions": [
+        {
+          "id": 4,
+          "name": "Do not ignore this alert",
+          "text": "No, send me alerts",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 0,
+          "sort": 4
+        }
+      ],
+      "supportOptions": [
+        {
+          "id": 10,
+          "alarmId": 53,
+          "actionPath": "user.meetflo.com/support/alarms/53",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "call": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 54,
+      "name": "low_gpm_fluctuating_water_pattern_detected",
+      "displayName": "Low GPM Fluctuating Water Pattern Detected",
+      "description": "",
+      "severity": "info",
+      "isInternal": true,
+      "isShutoff": false,
+      "actions": [
+        {
+          "id": 1,
+          "name": "Ignore For 2 hours",
+          "text": "Yes, for 2 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 7200,
+          "sort": 1
+        },
+        {
+          "id": 6,
+          "name": "Ignore For 24 hours",
+          "text": "Yes, for 24 hours",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 86400,
+          "sort": 2
+        },
+        {
+          "id": 4,
+          "name": "Do not ignore this alert",
+          "text": "No, send me alerts",
+          "displayOnStatus": 3,
+          "snoozeSeconds": 0,
+          "sort": 4
+        }
+      ],
+      "supportOptions": [
+        {
+          "id": 17,
+          "alarmId": 54,
+          "actionPath": "user.meetflo.com/support/alarms/54",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 5001,
+      "name": "device_installed",
+      "displayName": "Device Installed",
+      "description": "",
+      "severity": "info",
+      "isInternal": true,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [
+        {
+          "id": 22,
+          "alarmId": 5001,
+          "actionPath": "user.meetflo.com/support/alarms/5000",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": true
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": true
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            },
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 39,
+      "name": "Health Test Cancelled",
+      "displayName": "Health Test Cancelled",
+      "description": "Interrupted Test",
+      "severity": "info",
+      "isInternal": true,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": []
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 3,
+      "name": "health_test_skipped",
+      "displayName": "Health Test Skipped",
+      "description": "Health Test Skipped Description",
+      "severity": "info",
+      "isInternal": true,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [],
+      "active": false,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": []
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 48,
+      "name": "valve_close",
+      "displayName": "Valve Close",
+      "description": "",
+      "severity": "info",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [],
+      "active": false,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": []
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 46,
+      "name": "device_online",
+      "displayName": "Device Online",
+      "description": "",
+      "severity": "info",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [
+        {
+          "id": 5,
+          "alarmId": 46,
+          "actionPath": "user.meetflo.com/support/alarms/46",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": true
+            },
+            {
+              "systemMode": "away",
+              "enabled": true
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 47,
+      "name": "valve_open",
+      "displayName": "Valve Open",
+      "description": "",
+      "severity": "info",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [
+        {
+          "id": 33,
+          "alarmId": 47,
+          "actionPath": "user.meetflo.com/support/alarms/35",
+          "actionType": 0,
+          "sort": 1,
+          "text": "Learn More"
+        }
+      ],
+      "active": true,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": [
+            {
+              "systemMode": "sleep",
+              "enabled": false
+            },
+            {
+              "systemMode": "home",
+              "enabled": false
+            },
+            {
+              "systemMode": "away",
+              "enabled": false
+            }
+          ]
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 55,
+      "name": "water_use_in_away_mode",
+      "displayName": "Water Use in Away Mode",
+      "description": "",
+      "severity": "critical",
+      "isInternal": false,
+      "isShutoff": true,
+      "actions": [],
+      "supportOptions": [],
+      "active": false,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": []
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 56,
+      "name": "health_test_skipped",
+      "displayName": "Health Test Skipped",
+      "description": "",
+      "severity": "info",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [],
+      "active": false,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": []
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 57,
+      "name": "water_pressure_over_recommended_max",
+      "displayName": "Water Pressure Over Recommended Max",
+      "description": "",
+      "severity": "warning",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [],
+      "active": false,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": []
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 58,
+      "name": "device_rebooted",
+      "displayName": "Device Rebooted",
+      "description": "",
+      "severity": "info",
+      "isInternal": true,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [],
+      "active": false,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": []
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 59,
+      "name": "zit_interrupted",
+      "displayName": "ZIT interrupted due to pressure fluctuating",
+      "description": "",
+      "severity": "info",
+      "isInternal": true,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [],
+      "active": false,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": []
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 60,
+      "name": "zit_skipped",
+      "displayName": "Automatic ZIT skipped due to recent flow event",
+      "description": "",
+      "severity": "info",
+      "isInternal": true,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [],
+      "active": false,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": []
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 61,
+      "name": "zip_interrupted",
+      "displayName": "ZIT interrupted due to thermal expansion",
+      "description": "",
+      "severity": "info",
+      "isInternal": true,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [],
+      "active": false,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": []
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 62,
+      "name": "zip_interrupted",
+      "displayName": "ZIT interrupted due to unknown error",
+      "description": "",
+      "severity": "info",
+      "isInternal": true,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [],
+      "active": false,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": []
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 63,
+      "name": "unusual_water_usage",
+      "displayName": "Unusual water usage",
+      "description": "",
+      "severity": "critical",
+      "isInternal": false,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [],
+      "active": false,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": []
+        }
+      },
+      "userFeedbackFlow": []
+    },
+    {
+      "id": 5004,
+      "name": "frequent_low_flow_event",
+      "displayName": "Frequent low flow event",
+      "description": "",
+      "severity": "warning",
+      "isInternal": true,
+      "isShutoff": false,
+      "actions": [],
+      "supportOptions": [],
+      "active": false,
+      "children": [],
+      "deliveryMedium": {
+        "sms": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "email": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "push": {
+          "supported": true,
+          "defaultSettings": []
+        },
+        "call": {
+          "supported": false,
+          "defaultSettings": []
+        }
+      },
+      "userFeedbackFlow": []
+    }
+  ]
+}

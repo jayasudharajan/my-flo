@@ -1,0 +1,13 @@
+version: '3'
+
+# Usually we will keep this simple but we may need to use something like a local DynamoDb or S3 to run the tests
+
+services:
+  application:
+    environment:
+      ENV: development
+    ports:
+      - 3000:3000
+      - 9229:9229
+      - 5005:5005
+    command: sbt -Dsbt.io.jdktimestamps=true -jvm-debug 5005 "~ testQuick"

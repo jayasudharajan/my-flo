@@ -1,0 +1,260 @@
+kind: Cluster
+apiVersion: kops/v1alpha2
+metadata:
+  name: {{ .kubernetes.clusterName }}
+spec:
+  encryptionConfig: true
+  channel: "stable"
+  configBase: {{ .kubernetes.stateStore }}/{{ .kubernetes.clusterName }}
+  cloudProvider: "aws"
+  kubernetesVersion: "1.12.8"
+  kubelet:
+    kubeletCgroups: "/systemd/system.slice"
+    runtimeCgroups: "/systemd/system.slice"
+  masterKubelet:
+    kubeletCgroups: "/systemd/system.slice"
+    runtimeCgroups: "/systemd/system.slice"
+  subnets:
+  {{- range $idx, $subnet := .subnets }}
+  - name: {{ $subnet.name }}
+    zone: {{ $subnet.zone }}
+    cidr: {{ $subnet.cidr }}
+    type: {{ $subnet.type }}
+    id:   {{ $subnet.id }}
+  {{- end }}
+  masterPublicName: api.{{ .kubernetes.clusterName }}
+  masterInternalName: api.internal.{{ .kubernetes.clusterName }}
+  networkCIDR: {{ .aws.cidrBlock }}
+  networkID: {{ .aws.vpcId }}
+  additionalPolicies:
+    node: |
+      [
+        {
+            "Effect": "Allow",
+            "Action": "route53:GetChange",
+            "Resource": "arn:aws:route53:::change/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "route53:ChangeResourceRecordSets",
+                "route53:ListResourceRecordSets"
+            ],
+            "Resource": [
+                "arn:aws:route53:::hostedzone/Z3UXYMQBRBDL6J"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": "route53:ListHostedZonesByName",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "lambda:InvokeFunction"
+            ],
+            "Resource": "arn:aws:lambda:us-west-2:617288038711:function:*"
+        },
+        {
+          "Action": [
+            "ecs:CreateCluster",
+            "ecs:DeregisterContainerInstance",
+            "ecs:DiscoverPollEndpoint",
+            "ecs:DescribeContainerInstances",
+            "ecs:Poll",
+            "ecs:RegisterContainerInstance",
+            "ecs:StartTelemetrySession",
+            "ecs:Submit*",
+            "ecs:StartTask",
+            "ecs:StopTask"
+          ],
+          "Resource": "*",
+          "Effect": "Allow"
+        },
+        {
+          "Action": [
+            "s3:Get*",
+            "s3:List*"
+          ],
+          "Resource": [
+            "arn:aws:s3:::flocloud-config/docker/*",
+            "arn:aws:s3:::flocloud-config/filebeat/*"
+          ],
+          "Effect": "Allow"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "sns:*",
+            "sqs:*"
+          ],
+          "Resource": "*"
+        },
+        {
+          "Action": [
+            "s3:*"
+          ],
+          "Effect": "Allow",
+          "Resource": "*"
+        },
+        {
+          "Action": [
+            "s3:*"
+          ],
+          "Effect": "Allow",
+          "Resource": [
+            "arn:aws:s3:::flosecurecloud-config",
+            "arn:aws:s3:::flosecurecloud-config/*",
+            "arn:aws:s3:::flosecurecloud-devices",
+            "arn:aws:s3:::flosecurecloud-devices/*",
+            "arn:aws:s3:::flosecurecloud-vault",
+            "arn:aws:s3:::flosecurecloud-vault/*"
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:Get*",
+            "s3:List*"
+          ],
+          "Resource": [
+            "arn:aws:s3:::flosecurecloud-config/docker/*",
+            "arn:aws:s3:::flosecurecloud-config/filebeat/*"
+          ]
+        },
+        {
+            "Action": [
+                "s3:DeleteObject*",
+                "s3:GetObject*",
+                "s3:PutObject*",
+                "s3:ListMultipartUploadParts"
+            ],
+            "Resource": [
+                "arn:aws:s3:::flosecurecloud-flosense-models",
+                "arn:aws:s3:::flosecurecloud-flosense-models/*"
+            ],
+            "Effect": "Allow"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:GetObject"
+          ],
+          "Resource": [
+            "arn:aws:s3:::flosecurecloud-config/docker/*",
+            "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-api/*",
+            "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-api/mqtt-client-certs/*",
+            "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-ca/flo-ca-certificate.pem",
+            "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-ca/*",
+            "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-ca/prod/*",
+            "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-directive-response/prod/*",
+            "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-directive-router/prod/*",
+            "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-directive-router/mqtt-client-certs/*",
+            "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-email-reports-generator/*",
+            "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-encryption/kafka/*",
+            "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-encryption/dynamodb/*",
+            "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-encryption/prod/kafka/*",
+            "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-kafka-tls/*",
+            "arn:aws:s3:::flosecurecloud-config/filebeat/*",
+            "arn:aws:s3:::flosecurecloud-devices/devices/device-*/qrcode/*.svg",
+            "arn:aws:s3:::flosecurecloud-devices/devices/device-*/qrcode/*.png",
+            "arn:aws:s3:::flosecurecloud-letters/*.pdf"
+          ]
+        },
+        {
+          "Action": [
+            "dynamodb:GetItem",
+            "dynamodb:BatchGetItem",
+            "dynamodb:BatchWriteItem",
+            "dynamodb:PutItem",
+            "dynamodb:UpdateItem",
+            "dynamodb:DeleteItem",
+            "dynamodb:Query",
+            "dynamodb:Scan"
+          ],
+          "Resource": "arn:aws:dynamodb:us-west-2:617288038711:table/*",
+          "Effect": "Allow"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "ecr:*"
+          ],
+          "Resource": ["arn:aws:ecr:us-west-2:098786959887:repository/*"]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "kms:Decrypt",
+                "secretsmanager:GetSecretValue"
+            ],
+            "Resource": [
+                "arn:aws:secretsmanager:us-west-2:617288038711:secret:/prod/apps/flo-email-reports-generator/docker-auth",
+                "arn:aws:kms:us-west-2:617288038711:alias/aws/secretsmanager"
+            ]
+        }
+      ]
+  topology:
+    masters: private
+    nodes: private
+    bastion:
+      bastionPublicName: bastion.{{ .kubernetes.clusterName }}
+    dns:
+      type: Public
+  nonMasqueradeCIDR: "100.64.0.0/10"
+  sshAccess:
+  {{- range $idx, $ip := .kubernetes.allowedIps }}
+  - {{ $ip | quote }}
+  {{- end }}
+  kubernetesApiAccess:
+  {{- range $idx, $ip := .kubernetes.allowedIps }}
+  - {{ $ip | quote }}
+  {{- end }}
+  etcdClusters:
+  - name: main
+    version: "3.2.18"
+    etcdMembers:
+    {{- range $idx, $master := .kubernetes.masters }}
+    - name: {{ $master.name }}
+      instanceGroup: {{ $master.instanceGroup }}
+      encryptedVolume: true
+    {{- end }}
+  - name: events
+    version: "3.2.18"
+    etcdMembers:
+    {{- range $idx, $master := .kubernetes.masters }}
+    - name: {{ $master.name }}
+      instanceGroup: {{ $master.instanceGroup }}
+      encryptedVolume: true
+    {{- end }}
+  kubeAPIServer:
+    admissionControl:
+    - "NamespaceLifecycle"
+    - "LimitRanger"
+    - "ServiceAccount"
+    - "PersistentVolumeLabel"
+    - "DefaultStorageClass"
+    - "DefaultTolerationSeconds"
+    - "MutatingAdmissionWebhook"
+    - "ValidatingAdmissionWebhook"
+    - "ResourceQuota"
+    - "NodeRestriction"
+    - "Priority"
+  networking:
+    calico: {}
+  api:
+    loadBalancer:
+      type: Public
+  authorization:
+    rbac: {}
+  cloudLabels:
+    Deployment: {{ .global.deployment | quote }}
+    DeploymentCode: {{ .global.deploymentCode | quote }}
+    Project: {{ .global.project | quote }}
+    KubernetesCluster: {{ .kubernetes.clusterName | quote }}
+    k8s.io/cluster-autoscaler/enabled: "true"
+    kubernetes.io/cluster/{{ .kubernetes.clusterName }}: "owned"
+  iam:
+    legacy: false
+    allowContainerRegistry: true

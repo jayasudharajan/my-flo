@@ -1,0 +1,909 @@
+{
+    "schemes": [
+        "https",
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "FloDetect Api Documentation",
+        "title": "FloDetect v2 Api",
+        "contact": {},
+        "license": {},
+        "version": "2.0"
+    },
+    "paths": {
+        "/events": {
+            "get": {
+                "description": "Retrieve FloDetect events for one or more devices based on date range. Max of 1000 events per device is returned.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Retrieve FloDetect events for one or more devices based on date range",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "one or more device mac addresses in csv format",
+                        "name": "deviceId",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "utc date to start from, inclusive, in USO format. Default to 31 days ago.",
+                        "name": "from",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "utc date to, exclusive, in USO format. Defaults to now.",
+                        "name": "to",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter events to have min gallons used, default 0",
+                        "name": "minGallons",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter events to have min duration in seconds, default 3.0",
+                        "name": "minDuration",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "how many record to skip, default 0",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "maximum records to return, default 100",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "language to use for the title properties. Default/fallback to 'en'.",
+                        "name": "lang",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.EventsReport"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/main.HttpErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{id}": {
+            "get": {
+                "description": "Retrieve specific FloDetect event by ID (uuid)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Retrieve specific FloDetect event by ID (uuid)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "uuid of event",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.EventsEntry"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/main.HttpErrorResponse"
+                        }
+                    },
+                    "404": {},
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/main.HttpErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Provide user feedback to the event",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Provide user feedback to the event",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "uuid of event",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "if set to true, will override previous feedback (override response 409)",
+                        "name": "force",
+                        "in": "query"
+                    },
+                    {
+                        "description": "User feedback values",
+                        "name": "item",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.EventsFeedbackRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {},
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/main.HttpErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/main.HttpErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/main.HttpErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete specific FloDetect event by ID (uuid)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Delete specific FloDetect event by ID (uuid)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "uuid of event",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {},
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/main.HttpErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/main.HttpErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/fixtures": {
+            "get": {
+                "description": "Retrieve FloDetect fixtures for one or more devices based on date range. Max of 1000 events per device is returned.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Fixtures"
+                ],
+                "summary": "Retrieve FloDetect fixtures for one or more devices based on date range",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "one or more device mac addresses in csv format",
+                        "name": "deviceId",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "utc date to start from, inclusive, in USO format. Default to 31 days ago.",
+                        "name": "from",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "utc date to, exclusive, in USO format. Defaults to now.",
+                        "name": "to",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter events to have min gallons used, default 0",
+                        "name": "minGallons",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter events to have min duration in seconds, default 3.0",
+                        "name": "minDuration",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "language to use for the title properties. Default/fallback to 'en'.",
+                        "name": "lang",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.FixtureReport"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/main.HttpErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/irrigation/{mac}": {
+            "get": {
+                "description": "Retrieve irrigation schedule for a specific device",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Irrigation"
+                ],
+                "summary": "Retrieve irrigation schedule for a specific device",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "mac address of the device",
+                        "name": "mac",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.IrrigationView"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/main.HttpErrorResponse"
+                        }
+                    },
+                    "404": {},
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/main.HttpErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Provide user irrigation schedule",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Irrigation"
+                ],
+                "summary": "Provide user irrigation schedule",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "uuid of event",
+                        "name": "mac",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "User irrigation schedule",
+                        "name": "item",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.IrrigationView"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {},
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/main.HttpErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/main.HttpErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete irrigation schedule for a specific device",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Irrigation"
+                ],
+                "summary": "Delete irrigation schedule for a specific device",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "mac address of the device",
+                        "name": "mac",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {},
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/main.HttpErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/main.HttpErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/kafka/event": {
+            "post": {
+                "description": "Produce kafka message for a FloDetect event",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Kafka"
+                ],
+                "summary": "Produce kafka message for a FloDetect event",
+                "parameters": [
+                    {
+                        "description": "Event object, this will be sent to Kafka topic and ingested",
+                        "name": "item",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.FloDetectEnvelope"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/main.FloDetectEnvelope"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/main.HttpErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/main.HttpErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/kafka/irrigation": {
+            "post": {
+                "description": "Produce kafka message for a FloDetect irrigation schedule",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Kafka"
+                ],
+                "summary": "Produce kafka message for a FloDetect irrigation schedule",
+                "parameters": [
+                    {
+                        "description": "Irrigation schedule object, this will be sent to Kafka topic and ingested",
+                        "name": "item",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.FloDetectEnvelope"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/main.FloDetectEnvelope"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/main.HttpErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/main.HttpErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/ping": {
+            "get": {
+                "description": "returns status of the service",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "System"
+                ],
+                "summary": "check the health status of the service and list its config data",
+                "responses": {
+                    "200": {}
+                }
+            }
+        }
+    },
+    "definitions": {
+        "main.DeviceEventsReport": {
+            "type": "object",
+            "properties": {
+                "deviceId": {
+                    "type": "string"
+                },
+                "error": {
+                    "type": "string"
+                },
+                "events": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/main.EventsEntry"
+                    }
+                }
+            }
+        },
+        "main.DeviceFixtureReport": {
+            "type": "object",
+            "properties": {
+                "deviceId": {
+                    "type": "string"
+                },
+                "error": {
+                    "type": "string"
+                },
+                "fixtures": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/main.FixtureEntry"
+                    }
+                }
+            }
+        },
+        "main.EventsEntry": {
+            "type": "object",
+            "properties": {
+                "deviceId": {
+                    "type": "string"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "endAt": {
+                    "type": "string"
+                },
+                "feedbackDisplayText": {
+                    "type": "string"
+                },
+                "feedbackId": {
+                    "type": "integer"
+                },
+                "feedbackUserId": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "incidentId": {
+                    "type": "string"
+                },
+                "predictedDisplayText": {
+                    "type": "string"
+                },
+                "predictedId": {
+                    "type": "integer"
+                },
+                "startAt": {
+                    "type": "string"
+                },
+                "totalGal": {
+                    "type": "number"
+                }
+            }
+        },
+        "main.EventsFeedbackRequest": {
+            "type": "object",
+            "properties": {
+                "feedbackId": {
+                    "type": "integer",
+                    "maximum": 1000000,
+                    "minimum": 0
+                },
+                "feedbackUserId": {
+                    "type": "string",
+                    "maxLength": 38,
+                    "minLength": 24,
+                    "example": "c65baa35-0266-4cd4-91af-1803a44a4d22"
+                }
+            }
+        },
+        "main.EventsReport": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/main.DeviceEventsReport"
+                    }
+                },
+                "params": {
+                    "type": "object",
+                    "$ref": "#/definitions/main.EventsReportRequest"
+                }
+            }
+        },
+        "main.EventsReportRequest": {
+            "type": "object",
+            "properties": {
+                "deviceId": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "from": {
+                    "type": "string"
+                },
+                "minDuration": {
+                    "type": "number"
+                },
+                "minGallons": {
+                    "type": "number"
+                },
+                "to": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.FixtureEntry": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "displayText": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "totalGallons": {
+                    "type": "number"
+                },
+                "totalSeconds": {
+                    "type": "number"
+                }
+            }
+        },
+        "main.FixtureReport": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/main.DeviceFixtureReport"
+                    }
+                },
+                "params": {
+                    "type": "object",
+                    "$ref": "#/definitions/main.EventsReportRequest"
+                }
+            }
+        },
+        "main.FloDetectEnvelope": {
+            "type": "object",
+            "properties": {
+                "did": {
+                    "type": "string",
+                    "maxLength": 12,
+                    "minLength": 12,
+                    "example": "ff00aa11bb99"
+                },
+                "evt": {
+                    "type": "string",
+                    "enum": [
+                        "fixture",
+                        "irrigation"
+                    ]
+                },
+                "fixture": {
+                    "type": "object",
+                    "$ref": "#/definitions/main.FloDetectFixtureData"
+                },
+                "id": {
+                    "type": "string",
+                    "maxLength": 38,
+                    "minLength": 24
+                },
+                "irrigation": {
+                    "type": "object",
+                    "$ref": "#/definitions/main.FloDetectIrrigationData"
+                },
+                "src": {
+                    "type": "string",
+                    "example": "api"
+                },
+                "ts": {
+                    "type": "number",
+                    "example": 1584495760
+                }
+            }
+        },
+        "main.FloDetectFixtureData": {
+            "type": "object",
+            "properties": {
+                "detected": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/main.FloDetectPredictedEvent"
+                    }
+                }
+            }
+        },
+        "main.FloDetectIrrigationData": {
+            "type": "object",
+            "properties": {
+                "proposal": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/main.FloDetectIrrigationScheduleItem"
+                    }
+                },
+                "user": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/main.FloDetectIrrigationScheduleItem"
+                    }
+                }
+            }
+        },
+        "main.FloDetectIrrigationScheduleItem": {
+            "type": "object",
+            "properties": {
+                "d": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "e": {
+                    "type": "string",
+                    "example": "14:30"
+                },
+                "s": {
+                    "type": "string",
+                    "example": "02:15"
+                }
+            }
+        },
+        "main.FloDetectPredictedEvent": {
+            "type": "object",
+            "properties": {
+                "alert_id": {
+                    "type": "string",
+                    "maxLength": 38,
+                    "minLength": 24,
+                    "example": "c65baa35-0266-4cd4-91af-1803a44a4d22"
+                },
+                "et": {
+                    "type": "number",
+                    "example": 1584495760
+                },
+                "fix": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/main.FloDetectPredictedFixture"
+                    }
+                },
+                "gal": {
+                    "type": "number",
+                    "example": 2.83
+                },
+                "sec": {
+                    "type": "number",
+                    "example": 10.23
+                },
+                "st": {
+                    "type": "number",
+                    "example": 1584495760
+                }
+            }
+        },
+        "main.FloDetectPredictedFixture": {
+            "type": "object",
+            "properties": {
+                "conf": {
+                    "type": "number",
+                    "maximum": 100,
+                    "minimum": 0
+                },
+                "id": {
+                    "type": "integer",
+                    "maximum": 1000000,
+                    "minimum": 0
+                }
+            }
+        },
+        "main.HttpErrorResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "developer": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.IrrigationScheduleView": {
+            "type": "object",
+            "properties": {
+                "schedule": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/main.IrrigationTimeView"
+                    }
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.IrrigationTimeView": {
+            "type": "object",
+            "properties": {
+                "dayOfWeek": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "SU",
+                            "MO",
+                            "TU",
+                            "WE",
+                            "TH",
+                            "FR",
+                            "SA"
+                        ]
+                    }
+                },
+                "endTime": {
+                    "type": "string",
+                    "example": "13:45"
+                },
+                "startTime": {
+                    "type": "string",
+                    "example": "02:15"
+                }
+            }
+        },
+        "main.IrrigationView": {
+            "type": "object",
+            "properties": {
+                "deviceId": {
+                    "type": "string",
+                    "example": "ff00aa11bb22"
+                },
+                "floDetect": {
+                    "type": "object",
+                    "$ref": "#/definitions/main.IrrigationScheduleView"
+                },
+                "user": {
+                    "type": "object",
+                    "$ref": "#/definitions/main.IrrigationScheduleView"
+                }
+            }
+        }
+    }
+}

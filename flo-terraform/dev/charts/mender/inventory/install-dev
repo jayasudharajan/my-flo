@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -x
+
+helm template \
+  inventory \
+  --namespace mender \
+|| exit 1
+helm upgrade --install \
+  inventory \
+  ./inventory \
+  --recreate-pods \
+  --wait --debug \
+  --namespace mender

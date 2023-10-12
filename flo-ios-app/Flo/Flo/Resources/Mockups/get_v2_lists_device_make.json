@@ -1,0 +1,14 @@
+{
+  "items" : [
+    {
+      "shortDisplay" : "Flo Device",
+      "key" : "flo_device_v2",
+      "longDisplay" : "Flo Device"
+    },
+    {
+      "shortDisplay" : "Puck",
+      "key" : "puck_oem",
+      "longDisplay" : "Puck"
+    }
+  ]
+}

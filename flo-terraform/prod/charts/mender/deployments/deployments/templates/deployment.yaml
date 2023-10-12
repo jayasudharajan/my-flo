@@ -1,0 +1,55 @@
+{{- $dot := . }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "fullname" . | quote }}
+  labels:
+    app: {{ include "fullname" . | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    component: "mender"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "fullname" . | quote }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "fullname" . | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      volumes:
+        - name: "config"
+          secret:
+            secretName: {{ include "fullname" . }}
+            defaultMode: 256
+
+      containers:
+      - name: deployments
+        image: "{{ .Values.image.repository }}:{{if .Values.image.tag }}{{ .Values.image.tag }}{{else}}{{ .Chart.AppVersion }}{{end}}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+          - containerPort: {{ .Values.servicePort }}
+        livenessProbe:
+          tcpSocket:
+            port: {{ .Values.servicePort }}
+        volumeMounts:
+          - name: "config"
+            mountPath: "/etc/ssl/certs/storage-proxy.crt"
+            subPath: storageproxy.crt
+            readOnly: true
+#          - name: "config"
+#            mountPath: "/etc/deployments/config.yaml"
+#            subPath: "config.yaml"
+#        command: ["tail"]
+#        args: ["-f", "/dev/null"]
+        env:
+        {{- range $key, $value := .Values.secrets.datas }}
+          - name: {{ $key | upper }}
+            valueFrom:
+              secretKeyRef:
+                name:  {{ include "fullname" $dot | quote }}
+                key: {{ $key |   quote }}
+        {{- end }}

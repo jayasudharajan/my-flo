@@ -1,0 +1,21 @@
+ARG CI_REGISTRY_IMAGE=registry.gitlab.com/flotechnologies/app
+ARG TAG=deps-latest
+FROM $CI_REGISTRY_IMAGE:$TAG
+
+WORKDIR /app
+
+ADD target/scala-2.12/app-assembly.jar .
+################################################################################
+# Ports
+################################################################################
+
+EXPOSE 9999
+EXPOSE 9990
+
+################################################################################
+# Entrypoint
+################################################################################
+
+
+#CMD ["java", "-jar", "app-assembly.jar"]
+CMD ["java", "-cp", "app-assembly.jar:dependencies/*", "com.flo.notification.router.NotificationRouterApp"]

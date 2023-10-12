@@ -1,0 +1,179 @@
+---
+image: kloiadocker/docker-compose:v1
+
+services:
+  - name: docker:18.09-dind
+    command: ["--mtu=1300"]
+
+stages:
+#  - build
+  - push
+  - deploy
+
+variables:
+  AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID_DEV}"
+  AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY_DEV}"
+  BUILD_ROOT: "${CI_PROJECT_DIR}"
+  BUILD_TAG: "${CI_PIPELINE_ID}"
+  CI_REGISTRY: 098786959887.dkr.ecr.us-west-2.amazonaws.com
+  CI_REGISTRY_IMAGE: "098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-hivemq"
+  DOCKER_DRIVER: overlay2
+  DOCKER_HOST: tcp://localhost:2375
+  HIVEMQ_VERSION: "3.4.5"
+
+before_script:
+  - |
+    # Export Vars
+    export BUILD_TIMESTAMP="$(date '+%Y%m%d.%H%M')"
+
+    # Create directories
+
+    mkdir -p ~/.ssh
+    chmod 700 ~/.ssh
+
+    # AWS Cli
+    mkdir -p ~/.aws
+
+    # Configure AWS credentials
+    echo -e "[flo-dev]\naws_access_key_id=$AWS_ACCESS_KEY_ID\naws_secret_access_key=$AWS_SECRET_ACCESS_KEY\nregion=us-west-2" > ~/.aws/credentials
+    # Login to ECR for docker images
+    eval "$(aws ecr get-login --profile=flo-dev --no-include-email)"
+
+
+    ##
+    ## Run ssh-agent (inside the build environment)
+    ##
+    eval "$(ssh-agent -s)"
+
+    ##
+    ## Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+    ## We're using tr to fix line endings which makes ed25519 keys work
+    ## without extra base64 encoding.
+    ## https://gitlab.com/gitlab-examples/ssh-private-key/issues/1#note_48526556
+    ##
+
+    if [[ ! -z "${SSH_PRIVATE_KEY:-}" ]]
+    then
+     echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+     mkdir -p /root/.ssh
+     echo "$SSH_PRIVATE_KEY" > /root/.ssh/id_rsa && chmod 400 /root/.ssh/id_rsa && echo "SSH Key is in ${HOME}/.ssh/id_rsa"
+    fi
+
+
+    # Add authorized ssh keys for the builder:
+    echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDcFXCVFXrhfomC3USHPTLJ8XMJuu0crigWXpFGh59Z3NCML2GR5NcUWhBChZrQ4PUfZeUzYIulOvacgDyBzVglnMOEe/u7SYxlj8+akbanH4yoWlHSaxld0POV/a9iz/+yGLH2yJeSFmkxFzARycM/x1f4XrBNXyBUMSIwwTf44o0KntnZ4gdHmCwFMF0wY7cpACbZVAwRGV6ffvfregCHyYKxDw8/pL1Opg92GhXNXh9219evPgF1tFTtlakUG/f8zBLTi8OjBW3JTKK6xCkVp0K6323QXBLUwGS78sIIpjvBpYB3vsLQoX+IsRJTelZI1826ygMpb6wG4DpDA0Kb dmitry@Dmitrys-MBP-Flo" >> ~/.ssh/authorized_keys
+
+    # Ensure github key is known
+    echo "github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==" >> ~/.ssh/known_hosts
+    echo "gitlab.com,35.231.145.151 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFSMqzJeV9rUzU4kWitGjeR4PWSa29SPqJ1fVkhtj3Hw9xjLVXVYrU9QlYWrOLXBpQ6KWjbjTDTdDkoohFzgbEY=" >> ~/.ssh/known_hosts
+
+    echo "Syncing Submodules"
+    cd ${CI_PROJECT_DIR}
+    git submodule sync --recursive
+    git submodule update --init --recursive
+
+#
+#Compile:
+#  stage: build
+#  except:
+#    - tags
+#  artifacts:
+#    paths:
+#      # Docker Image
+#      - image
+#
+#      # Scala
+#      - target/scala-*/app.jar
+#
+#      # Golang
+#      - bin/
+#
+#      # Gradle
+#      - build
+#      - "*/build"
+#      - logs/
+#      - .ebextensions
+#
+#
+#    expire_in: 1 week
+#    # Cache modules in between jobs
+#  cache:
+#    key: "$CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG"
+#    paths:
+#      - target
+#      - .ivy2
+#      - .sbt
+#      - .gradle
+#      - pkg
+#
+#
+#  variables:
+#    USER: ubuntu
+#
+#  script:
+#    - |
+#      source .ci/.env.rc
+#      set -euo pipefail
+#
+#      # In case we don't have .ebextensions
+#      mkdir -p $BUILD_ROOT/.ebextensions/
+#
+#      # Copy .ebextentions
+#      cp -R $BUILD_ROOT/.app/.ebextensions/* $BUILD_ROOT/.ebextensions/
+#
+#      ls -lah .app/
+#      ls -lah $BUILD_ROOT/.ebextensions/
+#
+#      # Logig to ECR
+#      eval $(aws ecr get-login --profile=flo-dev --no-include-email)
+#
+#      # Run app build
+#      docker-compose run build
+#
+#      docker-compose build app
+#
+#      # Ensure tags are set
+#      # docker tag ${AWS_ECR_REPOSITORY}/${CI_PROJECT_NAME}:${HIVEMQ_VERSION} ${AWS_ECR_REPOSITORY}/${CI_PROJECT_NAME}:${HIVEMQ_VERSION}
+#      docker tag ${AWS_ECR_REPOSITORY}/${CI_PROJECT_NAME}:${HIVEMQ_VERSION} ${AWS_ECR_REPOSITORY}/${CI_PROJECT_NAME}:${CI_PIPELINE_ID}
+#      mkdir -p image && docker save ${AWS_ECR_REPOSITORY}/${CI_PROJECT_NAME} > image/${CI_PROJECT_NAME}_${CI_PIPELINE_ID}.tar
+
+
+ECR:
+  stage: push
+#  dependencies:
+#    - Compile
+  script: |
+    source .ci/.env.rc
+    set -euo pipefail
+    docker pull 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-hivemq@sha256:02702a658941bef43b37223a6b41e042ff74080b44daa5d77716caf3bafdfd65
+    docker tag 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-hivemq@sha256:02702a658941bef43b37223a6b41e042ff74080b44daa5d77716caf3bafdfd65 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-hivemq:${CI_PIPELINE_ID}
+    docker push 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-hivemq:${CI_PIPELINE_ID}
+#    docker load < image/${CI_PROJECT_NAME}_${CI_PIPELINE_ID}.tar
+#    docker push ${AWS_ECR_REPOSITORY}/${CI_PROJECT_NAME}:${HIVEMQ_VERSION}
+#    docker push ${AWS_ECR_REPOSITORY}/${CI_PROJECT_NAME}:${CI_PIPELINE_ID}
+
+
+dev:
+  stage: deploy
+#  dependencies:
+#    - Compile
+  except:
+    - master
+  environment:
+    name: dev
+    url: https://kibana.flotech.co
+  script: |
+    ./.app/.ci/deploy.sh
+
+
+prod:
+  stage: deploy
+#  dependencies:
+#    - Compile
+  only:
+    - master
+  environment:
+    name: prod
+    url: https://kibana.flotech.co
+  script: |
+    ./.app/.ci/deploy.sh

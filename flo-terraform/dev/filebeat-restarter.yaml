@@ -1,0 +1,99 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels:
+    app: filebeat-restarter
+    k8s-app: filebeat-restarter
+  name: filebeat-restarter
+  namespace: kube-system
+rules:
+- apiGroups:
+  - apps
+  - extensions
+  resourceNames:
+  - filebeat
+  resources:
+  - daemonsets
+  verbs:
+  - get
+  - patch
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app: filebeat-restarter
+    k8s-app: filebeat-restarter
+  name: filebeat-restarter
+  namespace: kube-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: filebeat-restarter
+subjects:
+- kind: ServiceAccount
+  name: filebeat-restarter
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app: filebeat-restarter
+    k8s-app: filebeat-restarter
+  name: filebeat-restarter
+  namespace: kube-system
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  labels:
+    app: filebeat-restarter
+    k8s-app: filebeat-restarter
+  name: filebeat-restarter
+  namespace: kube-system
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/instance: filebeat
+            app.kubernetes.io/name: filebeat
+        spec:
+          containers:
+          - args:
+            - -c
+            - kubectl set env daemonset ${APPLICATION_NAME} LAST_RESTART_DATE="$(date)"
+              && kubectl rollout status ds/${APPLICATION_NAME}
+            command:
+            - /bin/sh
+            env:
+            - name: APPLICATION_NAME
+              value: "filebeat"
+            image: registry.gitlab.com/flotechnologies/devops/kubectl:1.12.10
+            imagePullPolicy: Always
+            name: filebeat-restarter
+            resources: {}
+            securityContext:
+              allowPrivilegeEscalation: false
+              procMount: Default
+              runAsUser: 999
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+          dnsPolicy: ClusterFirst
+          imagePullSecrets:
+          - name: gitlab-registry
+          restartPolicy: Never
+          schedulerName: default-scheduler
+          serviceAccount: filebeat-restarter
+          serviceAccountName: filebeat-restarter
+          terminationGracePeriodSeconds: 30
+  schedule: '*/45 * * * *'
+  startingDeadlineSeconds: 300
+  successfulJobsHistoryLimit: 3
+  suspend: false

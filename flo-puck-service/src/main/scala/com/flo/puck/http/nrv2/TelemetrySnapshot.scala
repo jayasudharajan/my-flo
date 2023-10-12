@@ -1,0 +1,30 @@
+package com.flo.puck.http.nrv2
+
+case class TelemetrySnapshot(
+  sm: Int,
+  tz: Option[String],
+  lt: Option[String],
+  f: Option[Double],
+  fr: Option[Double],
+  t: Option[Double],
+  p: Option[Double],
+  sw1: Option[Int],
+  sw2: Option[Int],
+  ef: Option[Double],
+  efd: Option[Double],
+  ft: Option[Double],
+  pmin: Option[Double],
+  pmax: Option[Double],
+  tmin: Option[Double],
+  tmax: Option[Double],
+  frl: Option[Double],
+  efl: Option[Double],
+  efdl: Option[Double],
+  ftl: Option[Double],
+  v: Option[Int],
+  humidity: Option[Double],
+  limitHumidityMin: Option[Double],
+  limitHumidityMax: Option[Double],
+  batteryPercent: Option[Int],
+  limitBatteryMin: Option[Int]
+)

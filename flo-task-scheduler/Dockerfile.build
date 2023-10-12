@@ -1,0 +1,36 @@
+FROM openjdk:8-jre-alpine
+
+ENV sbt_version 1.2.8
+ENV sbt_home /usr/local/sbt
+ENV PATH ${PATH}:${sbt_home}/bin
+
+RUN echo http://mirror.yandex.ru/mirrors/alpine/v3.9/main > /etc/apk/repositories
+RUN echo http://mirror.yandex.ru/mirrors/alpine/v3.9/community >> /etc/apk/repositories
+
+ARG PIP_MIRROR
+
+RUN echo https://sjc.edge.kernel.org/alpine/v3.4/main > /etc/apk/repositories
+RUN echo https://sjc.edge.kernel.org/alpine/v3.4/community >> /etc/apk/repositories
+#RUN echo -e "[global]\ntimeout = 60\nindex-url = https://nexus.flocloud.co/repository/pypi-proxy/simple" > /etc/pip.conf
+RUN echo -e "[global]\ntimeout = 60\nindex-url = $PIP_MIRROR" > /etc/pip.conf
+
+RUN apk add --no-cache \
+    git \
+    bash \
+    openssl-dev \
+    musl-dev \
+    build-base \
+    zlib-dev \
+    python \
+    py-pip \
+    wget && \
+    mkdir -p "$sbt_home" && \
+    wget -qO - --no-check-certificate "https://github.com/sbt/sbt/releases/download/v$sbt_version/sbt-$sbt_version.tgz" | tar xz -C $sbt_home --strip-components=1 && \
+    apk del wget && \
+    sbt sbtVersion && \
+    pip install \
+      awsebcli==3.14.8 \
+      direnv \
+      pipenv
+
+WORKDIR /app/build

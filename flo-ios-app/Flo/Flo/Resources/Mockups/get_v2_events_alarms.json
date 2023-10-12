@@ -1,0 +1,132 @@
+
+{
+    "items": [
+    {
+        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "alarm": {
+            "id": 26
+        },
+        "deviceId": "05009464-5560-4c31-9001-a26e15f605d6",
+        "status": "triggered",
+        "snoozeTo": "2019-08-14T18:04:20.830Z",
+        "locationId": "05009464-5560-4c31-9f8a-a26e15f605d4",
+        "systemMode": "home",
+        "updateAt": "2019-08-14T18:04:20.830Z",
+        "createAt": "2019-08-13T10:06:16",
+        "userFeedback": [
+            {
+                "cause": 0,
+                "shouldAcceptAsNormal": true,
+                "plumbingFailure": 0,
+                "fixture": "string",
+                "causeOther": "string",
+                "plumbingFailureOther": "string",
+                "userId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "createdAt": "2019-08-14T18:04:20.830Z"
+            }
+        ]
+    },
+    {
+        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "alarm": {
+            "id": 14
+        },
+        "deviceId": "05009464-5560-4c31-9001-a26e15f605d6",
+        "status": "triggered",
+        "snoozeTo": "2019-08-14T18:04:20.830Z",
+        "locationId": "05009464-5560-4c31-9f8a-a26e15f605d4",
+        "systemMode": "home",
+        "updateAt": "2019-08-14T18:04:20.830Z",
+        "createAt": "2019-08-13T10:06:16",
+        "userFeedback": [
+            {
+                "cause": 0,
+                "shouldAcceptAsNormal": true,
+                "plumbingFailure": 0,
+                "fixture": "string",
+                "causeOther": "string",
+                "plumbingFailureOther": "string",
+                "userId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "createdAt": "2019-08-14T18:04:20.830Z"
+            }
+        ]
+    },
+    {
+        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "alarm": {
+            "id": 40
+        },
+        "deviceId": "05009464-5560-4c31-9001-a26e15f605d6",
+        "status": "triggered",
+        "snoozeTo": "2019-08-14T18:04:20.830Z",
+        "locationId": "05009464-5560-4c31-9f8a-a26e15f605d4",
+        "systemMode": "home",
+        "updateAt": "2019-08-14T18:04:20.830Z",
+        "createAt": "2019-08-14T10:06:16",
+        "userFeedback": [
+            {
+                "cause": 0,
+                "shouldAcceptAsNormal": true,
+                "plumbingFailure": 0,
+                "fixture": "string",
+                "causeOther": "string",
+                "plumbingFailureOther": "string",
+                "userId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "createdAt": "2019-08-14T18:04:20.830Z"
+            }
+        ]
+    },
+    {
+        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "alarm": {
+            "id": 26
+        },
+        "deviceId": "05009464-5560-4c31-9001-a26e15f605d6",
+        "status": "triggered",
+        "snoozeTo": "2019-05-14T18:04:20.830Z",
+        "locationId": "05009464-5560-4c31-9f8a-a26e15f605d4",
+        "systemMode": "home",
+        "updateAt": "2019-08-14T18:04:20.830Z",
+        "createAt": "2019-05-13T10:06:16",
+        "userFeedback": [
+            {
+                "cause": 0,
+                "shouldAcceptAsNormal": true,
+                "plumbingFailure": 0,
+                "fixture": "string",
+                "causeOther": "string",
+                "plumbingFailureOther": "string",
+                "userId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "createdAt": "2019-08-14T18:04:20.830Z"
+            }
+        ]
+    },
+    {
+        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "alarm": {
+            "id": 14
+        },
+        "deviceId": "05009464-5560-4c31-9001-a26e15f605d6",
+        "status": "cleared",
+        "snoozeTo": "2019-08-16T10:04:20.830Z",
+        "locationId": "05009464-5560-4c31-9f8a-a26e15f605d4",
+        "systemMode": "home",
+        "updateAt": "2019-08-14T18:04:20.830Z",
+        "createAt": "2019-08-15T10:06:16",
+        "userFeedback": [
+            {
+                "cause": 0,
+                "shouldAcceptAsNormal": true,
+                "plumbingFailure": 0,
+                "fixture": "string",
+                "causeOther": "string",
+                "plumbingFailureOther": "string",
+                "userId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "createdAt": "2019-08-14T18:04:20.830Z"
+            }
+        ]
+    }
+],
+"page": 1,
+"total": 1
+}

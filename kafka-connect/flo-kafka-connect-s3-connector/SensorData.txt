@@ -1,0 +1,38 @@
+Schema:
+
+{
+   "name": "tlmbdl",
+   "type": "record",
+   "fields": [
+       {"name": "did", "type": "string"},
+       {"name": "ts1st", "type": "long"},
+       {
+           "name": "tlms",
+           "type": {
+               "type": "array",
+               "items": {
+                   "name": "tlm",
+                   "type": "record",
+                   "fields" : [
+                       {"name": "ts", "type": "long"},
+                       {"name": "fr", "type": "double"},
+                       {"name": "fv", "type": "double"},
+                       {"name": "p", "type": "double"},
+                       {"name": "t", "type": "double"},
+                       {"name": "v", "type": "int"},
+                       {"name": "rssi", "type": "double"},
+                       {"name": "sm", "type": "int"}
+                   ]
+               }
+           }
+       }
+   ]
+}
+
+Schema for Kafka console producer:
+
+{ "name": "tlmbdl", "type": "record", "fields": [ {"name": "did", "type": "string"}, {"name": "ts1st", "type": "long"}, { "name": "tlms", "type": { "type": "array", "items": { "name": "tlm", "type": "record", "fields" : [ {"name": "ts", "type": "long"}, {"name": "fr", "type": "double"}, {"name": "fv", "type": "double"}, {"name": "p", "type": "double"}, {"name": "t", "type": "double"}, {"name": "v", "type": "int"}, {"name": "rssi", "type": "double"}, {"name": "sm", "type": "int"} ] } } } ] }
+
+Example data for Kafka console producer:
+
+{"did" : "f87aef0100ce","ts1st" : 1530311958112,"tlms" : [{"ts" : 1530311958112,"fr" : 1.23,"fv" : 4.56,"p" : 7.89,"t" : 72.34,"v" : 0,"rssi" : 8.91,"sm" : 1},{"ts" : 1530311959112,"fr" : 2.34,"fv" : 5.67,"p" : 8.92,"t" : 75.67,"v" : 1,"rssi" : 9.01,"sm" : 0}]}

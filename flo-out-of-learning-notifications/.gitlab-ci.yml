@@ -1,0 +1,65 @@
+---
+image: node:8-alpine
+
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  paths:
+    - node_modules/
+
+before_script:
+  # https://github.com/npm/uid-number/issues/3#issuecomment-291362937
+  - npm config set unsafe-perm true
+  - npm install -g serverless
+
+dev:
+  environment:
+    name: dev
+  only:
+    - dev
+  variables:
+    ACCOUNT_ID: 098786959887
+    AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID_DEV}"
+    AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY_DEV}"
+    DOCKER_HOST: tcp://localhost:2375
+    DYNAMODB_STREAM_ID: "2017-11-08T20:00:15.288"
+    PINPOINT_APP_ID: bdc4ae298ef0400ea1087955eed07be3
+  script:
+    - npm install -g serverless
+    - npm install
+    - serverless deploy --verbose --force --stage dev
+
+pre-prod:
+  environment:
+    name: pre-prod
+  only:
+    - master
+  variables:
+    ACCOUNT_ID: 617288038711
+    AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID_PREPROD}"
+    AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY_PREPROD}"
+    DOCKER_HOST: tcp://localhost:2375
+    DYNAMODB_STREAM_ID: "2017-12-05T02:39:49.477"
+    PINPOINT_APP_ID: 895d5e5521f14b6b9f001b12d0b8149d
+  script:
+    - npm install -g serverless
+    - npm install
+    # Had to shorten pre-prod to preprd because otherwise AWS will complain on the length of the generated Lambda Role names
+    - serverless deploy --verbose --force --stage preprd
+
+prod:
+  environment:
+    name: prod
+  only:
+    - master
+  variables:
+    ACCOUNT_ID: 617288038711
+    AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID_PROD}"
+    AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY_PROD}"
+    DOCKER_HOST: tcp://localhost:2375
+    DYNAMODB_STREAM_ID: "2017-12-05T02:39:49.477"
+    PINPOINT_APP_ID: 59c2231ffb974f798c21ce6b17c5180b
+  script:
+    - npm install -g serverless
+    - npm install
+    - serverless deploy --verbose --force --stage prod

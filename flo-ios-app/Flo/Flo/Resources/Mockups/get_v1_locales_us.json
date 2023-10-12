@@ -1,0 +1,622 @@
+{
+  "regions" : [
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Aleutian",
+          "display" : "UTC-09:00 HDT (Aleutian)"
+        },
+        {
+          "tz" : "US\/Alaska",
+          "display" : "UTC-08:00 AKDT (Alaska)"
+        }
+      ],
+      "name" : "Alaska",
+      "abbrev" : "AK"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-05:00 CDT (Central)",
+          "tz" : "US\/Central"
+        }
+      ],
+      "name" : "Alabama",
+      "abbrev" : "AL"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Central",
+          "display" : "UTC-05:00 CDT (Central)"
+        }
+      ],
+      "name" : "Arkansas",
+      "abbrev" : "AR"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Arizona",
+          "display" : "UTC-07:00 MST (Arizona)"
+        },
+        {
+          "tz" : "US\/Mountain",
+          "display" : "UTC-06:00 MDT (Mountain)"
+        }
+      ],
+      "name" : "Arizona",
+      "abbrev" : "AZ"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Pacific",
+          "display" : "UTC-07:00 PDT (Pacific)"
+        }
+      ],
+      "name" : "California",
+      "abbrev" : "CA"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-06:00 MDT (Mountain)",
+          "tz" : "US\/Mountain"
+        }
+      ],
+      "name" : "Colorado",
+      "abbrev" : "CO"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Eastern",
+          "display" : "UTC-04:00 EDT (Eastern)"
+        }
+      ],
+      "name" : "Connecticut",
+      "abbrev" : "CT"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Eastern",
+          "display" : "UTC-04:00 EDT (Eastern)"
+        }
+      ],
+      "name" : "Washington DC",
+      "abbrev" : "DC"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Eastern",
+          "display" : "UTC-04:00 EDT (Eastern)"
+        }
+      ],
+      "name" : "Delaware",
+      "abbrev" : "DE"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-05:00 CDT (Central)",
+          "tz" : "US\/Central"
+        },
+        {
+          "display" : "UTC-04:00 EDT (Eastern)",
+          "tz" : "US\/Eastern"
+        }
+      ],
+      "name" : "Florida",
+      "abbrev" : "FL"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-04:00 EDT (Eastern)",
+          "tz" : "US\/Eastern"
+        }
+      ],
+      "name" : "Georgia",
+      "abbrev" : "GA"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Hawaii",
+          "display" : "UTC-10:00 HST (Hawaii)"
+        }
+      ],
+      "name" : "Hawaii",
+      "abbrev" : "HI"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Eastern",
+          "display" : "UTC-04:00 EDT (Eastern)"
+        }
+      ],
+      "name" : "Iowa",
+      "abbrev" : "IA"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Pacific",
+          "display" : "UTC-07:00 PDT (Pacific)"
+        },
+        {
+          "tz" : "US\/Mountain",
+          "display" : "UTC-06:00 MDT (Mountain)"
+        }
+      ],
+      "name" : "Idaho",
+      "abbrev" : "ID"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Central",
+          "display" : "UTC-05:00 CDT (Central)"
+        }
+      ],
+      "name" : "Illinois",
+      "abbrev" : "IL"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Central",
+          "display" : "UTC-05:00 CDT (Central)"
+        },
+        {
+          "tz" : "US\/Eastern",
+          "display" : "UTC-04:00 EDT (Eastern)"
+        }
+      ],
+      "name" : "Indiana",
+      "abbrev" : "IN"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Mountain",
+          "display" : "UTC-06:00 MDT (Mountain)"
+        },
+        {
+          "tz" : "US\/Central",
+          "display" : "UTC-05:00 CDT (Central)"
+        }
+      ],
+      "name" : "Kansas",
+      "abbrev" : "KS"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Central",
+          "display" : "UTC-05:00 CDT (Central)"
+        },
+        {
+          "tz" : "US\/Eastern",
+          "display" : "UTC-04:00 EDT (Eastern)"
+        }
+      ],
+      "name" : "Kentucky",
+      "abbrev" : "KY"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Central",
+          "display" : "UTC-05:00 CDT (Central)"
+        }
+      ],
+      "name" : "Louisiana",
+      "abbrev" : "LA"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-04:00 EDT (Eastern)",
+          "tz" : "US\/Eastern"
+        }
+      ],
+      "name" : "Massachusetts",
+      "abbrev" : "MA"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-04:00 EDT (Eastern)",
+          "tz" : "US\/Eastern"
+        }
+      ],
+      "name" : "Maryland",
+      "abbrev" : "MD"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Eastern",
+          "display" : "UTC-04:00 EDT (Eastern)"
+        }
+      ],
+      "name" : "Maine",
+      "abbrev" : "ME"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Central",
+          "display" : "UTC-05:00 CDT (Central)"
+        },
+        {
+          "tz" : "US\/Eastern",
+          "display" : "UTC-04:00 EDT (Eastern)"
+        }
+      ],
+      "name" : "Michigan",
+      "abbrev" : "MI"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-05:00 CDT (Central)",
+          "tz" : "US\/Central"
+        }
+      ],
+      "name" : "Minnesota",
+      "abbrev" : "MN"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-05:00 CDT (Central)",
+          "tz" : "US\/Central"
+        }
+      ],
+      "name" : "Missouri",
+      "abbrev" : "MO"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Central",
+          "display" : "UTC-05:00 CDT (Central)"
+        }
+      ],
+      "name" : "Mississippi",
+      "abbrev" : "MS"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-06:00 MDT (Mountain)",
+          "tz" : "US\/Mountain"
+        }
+      ],
+      "name" : "Montana",
+      "abbrev" : "MT"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-04:00 EDT (Eastern)",
+          "tz" : "US\/Eastern"
+        }
+      ],
+      "name" : "North Carolina",
+      "abbrev" : "NC"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-05:00 CDT (Central)",
+          "tz" : "US\/Central"
+        },
+        {
+          "display" : "UTC-06:00 MDT (Mountain)",
+          "tz" : "US\/Mountain"
+        }
+      ],
+      "name" : "North Dakota",
+      "abbrev" : "ND"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-06:00 MDT (Mountain)",
+          "tz" : "US\/Mountain"
+        },
+        {
+          "display" : "UTC-05:00 CDT (Central)",
+          "tz" : "US\/Central"
+        }
+      ],
+      "name" : "Nebraska",
+      "abbrev" : "NE"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-04:00 EDT (Eastern)",
+          "tz" : "US\/Eastern"
+        }
+      ],
+      "name" : "New Hampshire",
+      "abbrev" : "NH"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-04:00 EDT (Eastern)",
+          "tz" : "US\/Eastern"
+        }
+      ],
+      "name" : "New Jersey",
+      "abbrev" : "NJ"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Mountain",
+          "display" : "UTC-06:00 MDT (Mountain)"
+        }
+      ],
+      "name" : "New Mexico",
+      "abbrev" : "NM"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-07:00 PDT (Pacific)",
+          "tz" : "US\/Pacific"
+        },
+        {
+          "display" : "UTC-06:00 MDT (Mountain)",
+          "tz" : "US\/Mountain"
+        }
+      ],
+      "name" : "Nevada",
+      "abbrev" : "NV"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-04:00 EDT (Eastern)",
+          "tz" : "US\/Eastern"
+        }
+      ],
+      "name" : "New York",
+      "abbrev" : "NY"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Eastern",
+          "display" : "UTC-04:00 EDT (Eastern)"
+        }
+      ],
+      "name" : "Ohio",
+      "abbrev" : "OH"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-05:00 CDT (Central)",
+          "tz" : "US\/Central"
+        }
+      ],
+      "name" : "Oklahoma",
+      "abbrev" : "OK"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Mountain",
+          "display" : "UTC-06:00 MDT (Mountain)"
+        },
+        {
+          "tz" : "US\/Pacific",
+          "display" : "UTC-07:00 PDT (Pacific)"
+        }
+      ],
+      "name" : "Oregon",
+      "abbrev" : "OR"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Eastern",
+          "display" : "UTC-04:00 EDT (Eastern)"
+        }
+      ],
+      "name" : "Pennsylvania",
+      "abbrev" : "PA"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Eastern",
+          "display" : "UTC-04:00 EDT (Eastern)"
+        }
+      ],
+      "name" : "Rhode Island",
+      "abbrev" : "RI"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Eastern",
+          "display" : "UTC-04:00 EDT (Eastern)"
+        }
+      ],
+      "name" : "South Carolina",
+      "abbrev" : "SC"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Central",
+          "display" : "UTC-05:00 CDT (Central)"
+        },
+        {
+          "tz" : "US\/Mountain",
+          "display" : "UTC-06:00 MDT (Mountain)"
+        }
+      ],
+      "name" : "South Dakota",
+      "abbrev" : "SD"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-05:00 CDT (Central)",
+          "tz" : "US\/Central"
+        },
+        {
+          "display" : "UTC-04:00 EDT (Eastern)",
+          "tz" : "US\/Eastern"
+        }
+      ],
+      "name" : "Tennessee",
+      "abbrev" : "TN"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-06:00 MDT (Mountain)",
+          "tz" : "US\/Mountain"
+        },
+        {
+          "display" : "UTC-05:00 CDT (Central)",
+          "tz" : "US\/Central"
+        }
+      ],
+      "name" : "Texas",
+      "abbrev" : "TX"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-06:00 MDT (Mountain)",
+          "tz" : "US\/Mountain"
+        }
+      ],
+      "name" : "Utah",
+      "abbrev" : "UT"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Eastern",
+          "display" : "UTC-04:00 EDT (Eastern)"
+        }
+      ],
+      "name" : "Virginia",
+      "abbrev" : "VA"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-04:00 EDT (Eastern)",
+          "tz" : "US\/Eastern"
+        }
+      ],
+      "name" : "Vermont",
+      "abbrev" : "VT"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-07:00 PDT (Pacific)",
+          "tz" : "US\/Pacific"
+        }
+      ],
+      "name" : "Washington",
+      "abbrev" : "WA"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-05:00 CDT (Central)",
+          "tz" : "US\/Central"
+        }
+      ],
+      "name" : "Wisconsin",
+      "abbrev" : "WI"
+    },
+    {
+      "timezones" : [
+        {
+          "tz" : "US\/Eastern",
+          "display" : "UTC-04:00 EDT (Eastern)"
+        }
+      ],
+      "name" : "West Virginia",
+      "abbrev" : "WV"
+    },
+    {
+      "timezones" : [
+        {
+          "display" : "UTC-06:00 MDT (Mountain)",
+          "tz" : "US\/Mountain"
+        }
+      ],
+      "name" : "Wyoming",
+      "abbrev" : "WY"
+    }
+  ],
+  "locale" : "us",
+  "name" : "United States",
+  "timezones" : [
+    {
+      "display" : "UTC-04:00 EDT (Eastern)",
+      "tz" : "US\/Eastern"
+    },
+    {
+      "display" : "UTC-09:00 HDT (Aleutian)",
+      "tz" : "US\/Aleutian"
+    },
+    {
+      "display" : "UTC-05:00 CDT (Central)",
+      "tz" : "US\/Central"
+    },
+    {
+      "display" : "UTC-06:00 MDT (Mountain)",
+      "tz" : "US\/Mountain"
+    },
+    {
+      "display" : "UTC-07:00 PDT (Pacific)",
+      "tz" : "US\/Pacific"
+    },
+    {
+      "display" : "UTC-08:00 AKDT (Alaska)",
+      "tz" : "US\/Alaska"
+    },
+    {
+      "display" : "UTC-07:00 MST (Arizona)",
+      "tz" : "US\/Arizona"
+    },
+    {
+      "display" : "UTC-10:00 HST (Hawaii)",
+      "tz" : "US\/Hawaii"
+    },
+    {
+      "display" : "UTC-11:00 SST (Samoa)",
+      "tz" : "US\/Samoa"
+    },
+    {
+      "display" : "UTC-04:00 AST (Puerto Rico)",
+      "tz" : "America\/Puerto_Rico"
+    },
+    {
+      "display" : "UTC+10:00 ChST (Guam)",
+      "tz" : "Pacific\/Guam"
+    }
+  ]
+}

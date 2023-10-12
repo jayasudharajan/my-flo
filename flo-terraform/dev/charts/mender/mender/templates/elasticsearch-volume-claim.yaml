@@ -1,0 +1,16 @@
+apiVersion: "v1"
+kind: "PersistentVolumeClaim"
+metadata:
+  name: {{ include "elasticsearch-storage-claim-name" . | quote }}
+  labels:
+    app: "elasticsearch"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: "{{ .Release.Service }}"
+    release: "{{ .Release.Name }}"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: "{{ .Values.elasticsearch.persistence.storageClassName }}"
+  resources:
+    requests:
+      storage: "{{ .Values.elasticsearch.persistence.size }}"

@@ -1,0 +1,77 @@
+---
+## nginx configuration
+## Ref: https://github.com/kubernetes/ingress/blob/master/controllers/nginx/configuration.md
+##
+controller:
+  # Configures the ports the nginx-controller listens on
+  containerPort:
+    http: 80
+    https: 443
+
+  ## Annotations to be added to controller pods
+  ##
+  podAnnotations:
+    co.elastic.logs/module: nginx
+    co.elastic.logs/fileset.stdout: access
+    co.elastic.logs/fileset.stderr: error
+
+  replicaCount: 3
+
+  minAvailable: 1
+
+  autoscaling:
+    enabled: false
+    minReplicas: 3
+    maxReplicas: 9
+    targetCPUUtilizationPercentage: 50
+    targetMemoryUtilizationPercentage: 50
+
+  config:
+    http-snippet: |
+      server {
+        listen 18080;
+
+        location /nginx_status {
+          stub_status on;
+          access_log  off;
+        }
+
+        location / {
+          return 404;
+        }
+      }
+      limit_req_zone $http_authorization zone=my-zone-1:20m rate=5r/s;
+      limit_req_zone $binary_remote_addr zone=my-zone-2:20m rate=20r/s;
+      limit_req_zone $http_x_forwarded_for zone=my-zone-3:20m rate=20r/s;
+    keepalive-timeout: "60"
+    proxy-next-upstream: "error timeout http_502"
+    upstream-keepalive-timeout: "60"
+    use-proxy-protocol: "false"
+  ingressClass: nginx
+  service:
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-west-2:617288038711:certificate/49f4de9f-74a3-41bc-8808-e2558c45999b
+      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
+      # Map port 443
+      service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
+      # Ensure the ELB idle timeout is less than nginx keep-alive timeout. By default,
+      # NGINX keep-alive is set to 75s. If using WebSockets, the value will need to be
+      # increased to '3600' to avoid any potential issues.
+      service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "60"
+
+    ports:
+      http: 80
+      https: 443
+
+    targetPorts:
+      http: http
+      https: http
+    externalTrafficPolicy: "Local"
+  extraEnvs:
+    - name: INSTANA_AGENT_HOST
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: status.hostIP
+  extraArgs:
+    v: 4

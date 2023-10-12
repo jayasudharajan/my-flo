@@ -1,0 +1,41 @@
+*.class
+*.log
+
+# sbt specific
+.cache
+.history
+.lib/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+*.iml
+*.ipr
+*.iws
+.idea
+out
+
+# Exclude Kafka
+kafka-logs/
+
+
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+.DS_Store
+app/
+
+logs/
+.iv.appy2
+.sbt
+.m2
+.gradle

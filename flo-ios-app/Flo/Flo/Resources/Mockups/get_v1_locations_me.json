@@ -1,0 +1,32 @@
+{
+   "gallons_per_day_goal":26.417217685798896,
+   "stories":1,
+   "expansion_tank":0,
+   "occupants":1,
+   "location_size_category":1,
+   "country":"us",
+   "location_type":"sfh",
+   "water_filtering_system":0,
+   "tankless":0,
+   "state":"AR",
+   "bathroom_amenities":[
+
+   ],
+   "outdoor_amenities":[
+
+   ],
+   "account_id":"eb840abe-1810-4e3c-b0db-80f1d8ddd36a",
+   "address":"Cordoba 951",
+   "location_id":"05009464-5560-4c31-9f8a-a26e15f605d4",
+   "timezone":"US\\/Central",
+   "city":"Rosario",
+   "kitchen_amenities":[
+      "Dishwasher",
+      "Fridge with Ice Maker"
+   ],
+   "galvanized_plumbing":1,
+   "is_profile_complete":true,
+   "water_shutoff_known":1,
+   "address2":"Office 3",
+   "postalcode":"2000"
+}

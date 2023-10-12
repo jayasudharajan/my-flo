@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  app: &app
+    image: "${CI_REGISTRY_IMAGE:-registry.gitlab.com/flotechnologies/app}:latest"
+    build:
+      context: .
+      dockerfile: Dockerfile.run
+
+      args:
+        BINTRAY_USER: "${BINTRAY_USER}"
+        BINTRAY_KEY: "${BINTRAY_KEY}"
+        MAVEN_MIRROR: "${MAVEN_MIRROR}"
+        CI_COMMIT_SHA: "${CI_COMMIT_SHA:-none}"
+        CI_COMMIT_MESSAGE: "${CI_COMMIT_MESSAGE:-none of foo bar}"
+        COMMIT_TIME: "${COMMIT_TIME:-none}"
+
+    volumes:
+      - ./creds:/app/creds
+      - "${HOME}/.sbt:/root/.sbt"
+  # This is used to automatically tag the image with CI_PIPELINE_ID
+  app-tag:
+    entrypoint: "true"
+    image: "${CI_REGISTRY_IMAGE:-registry.gitlab.com/flotechnologies/app}:${CI_PIPELINE_ID:-latest}"
+    ports: []
+    <<: *app
+
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 1440

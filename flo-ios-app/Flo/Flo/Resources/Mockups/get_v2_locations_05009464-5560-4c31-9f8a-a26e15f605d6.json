@@ -1,0 +1,58 @@
+{
+    "city" : "Rosario",
+    "account" : {
+        "id" : "eb840abe-1810-4e3c-b0db-80f1d8ddd36a"
+    },
+    "country" : "us",
+    "plumbingAppliances" : [
+        
+    ],
+    "occupants" : 2,
+    "state" : "AR",
+    "toiletCount" : 2,
+    "plumbingType" : "galvanized",
+    "gallonsPerDayGoal" : 26.417217685798896,
+    "notifications" : {
+        "criticalCount" : 0,
+        "warningCount" : 0,
+        "infoCount" : 0
+    },
+    "systemMode" : {
+        "isLocked" : true
+    },
+    "devices" : [
+        
+    ],
+    "address2" : "Office 3",
+    "waterShutoffKnown" : "yes",
+    "isProfileComplete" : true,
+    "postalCode" : "2000",
+    "indoorAmenities" : [
+        "dishwasher",
+        "ice_maker"
+    ],
+    "outdoorAmenities" : [
+        
+    ],
+    "locationSize" : "gt_700_ft_lte_1000_ft",
+    "timezone" : "US\/Central",
+    "users" : [
+        {
+            "id" : "ffbddca2-0a18-4adb-899c-d2cfc3bf44fc"
+        }
+    ],
+    "locationType" : "sfh",
+    "userRoles" : [
+        {
+            "roles" : [
+                "owner"
+            ],
+            "userId" : "ffbddca2-0a18-4adb-899c-d2cfc3bf44fc"
+        }
+    ],
+    "address" : "Oroño 123",
+    "nickname" : "Weekend house",
+    "stories" : 1,
+    "id" : "05009464-5560-4c31-9f8a-a26e15f605d6",
+    "floprotect" : false
+}

@@ -1,0 +1,13 @@
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
+    kubernetes.io/tls-acme: "true"
+  paths:
+    - /
+  hosts:
+    - flo-moen-auth.flocloud.co
+  tls:
+    - secretName: flo-moen-auth-tls
+      hosts:
+        - flo-moen-auth.flocloud.co

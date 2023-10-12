@@ -1,0 +1,120 @@
+{
+  "name" : "Australia",
+  "locale" : "au",
+  "timezones" : [
+    {
+      "display" : "UTC+10:00 AEST (NSW)",
+      "tz" : "Australia\/NSW"
+    },
+    {
+      "display" : "UTC+10:00 AEST (Queensland)",
+      "tz" : "Australia\/Queensland"
+    },
+    {
+      "display" : "UTC+09:30 ACST (South)",
+      "tz" : "Australia\/South"
+    },
+    {
+      "display" : "UTC+10:00 AEST (Tasmania)",
+      "tz" : "Australia\/Tasmania"
+    },
+    {
+      "display" : "UTC+10:00 AEST (Victoria)",
+      "tz" : "Australia\/Victoria"
+    },
+    {
+      "display" : "UTC+08:00 AWST (West)",
+      "tz" : "Australia\/West"
+    },
+    {
+      "display" : "UTC+10:00 AEST (ACT)",
+      "tz" : "Australia\/ACT"
+    },
+    {
+      "display" : "UTC+09:30 ACST (North)",
+      "tz" : "Australia\/North"
+    }
+  ],
+  "regions" : [
+    {
+      "name" : "Australian Capital Territory",
+      "timezones" : [
+        {
+          "display" : "UTC+10:00 AEST (ACT)",
+          "tz" : "Australia\/ACT"
+        }
+      ],
+      "abbrev" : "ACT"
+    },
+    {
+      "name" : "New South Wales",
+      "timezones" : [
+        {
+          "display" : "UTC+10:00 AEST (NSW)",
+          "tz" : "Australia\/NSW"
+        }
+      ],
+      "abbrev" : "NSW"
+    },
+    {
+      "name" : "Northern Territory",
+      "timezones" : [
+        {
+          "tz" : "Australia\/North",
+          "display" : "UTC+09:30 ACST (North)"
+        }
+      ],
+      "abbrev" : "NT"
+    },
+    {
+      "name" : "Queensland",
+      "timezones" : [
+        {
+          "tz" : "Australia\/Queensland",
+          "display" : "UTC+10:00 AEST (Queensland)"
+        }
+      ],
+      "abbrev" : "QLD"
+    },
+    {
+      "name" : "South Australia",
+      "timezones" : [
+        {
+          "tz" : "Australia\/South",
+          "display" : "UTC+09:30 ACST (South)"
+        }
+      ],
+      "abbrev" : "SA"
+    },
+    {
+      "name" : "Tasmania",
+      "timezones" : [
+        {
+          "display" : "UTC+10:00 AEST (Tasmania)",
+          "tz" : "Australia\/Tasmania"
+        }
+      ],
+      "abbrev" : "TAS"
+    },
+    {
+      "name" : "Victoria",
+      "timezones" : [
+        {
+          "tz" : "Australia\/Victoria",
+          "display" : "UTC+10:00 AEST (Victoria)"
+        }
+      ],
+      "abbrev" : "VIC"
+    },
+    {
+      "name" : "Western Australia",
+      "timezones" : [
+        {
+          "tz" : "Australia\/West",
+          "display" : "UTC+08:00 AWST (West)"
+        }
+      ],
+      "abbrev" : "WA"
+    }
+  ]
+}

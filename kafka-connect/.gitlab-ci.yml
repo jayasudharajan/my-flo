@@ -1,0 +1,120 @@
+variables:
+  CONNECTORS_IMAGE: 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-kafka-connect-connectors
+stages:
+  - build
+  - package
+  - image
+  - deploy
+
+before_script:
+- |
+  # Export Vars
+  export BUILD_TIMESTAMP="$(date '+%Y%m%d.%H%M')"
+  export BUILD_ROOT="${CI_PROJECT_DIR}"
+
+  # AWS Cli
+  mkdir -p ~/.aws /root/.aws
+
+  # Configure AWS credentials
+  echo -e "[flo-dev]\naws_access_key_id=$AWS_ACCESS_KEY_ID\naws_secret_access_key=$AWS_SECRET_ACCESS_KEY\nregion=us-west-2" > ~/.aws/credentials
+  # Login to ECR for docker images
+  eval $(aws ecr get-login --profile=flo-dev --no-include-email)
+
+  # Git fails without these settings
+  git config --global user.email "nobody@gitlab.flotech.co"
+  git config --global user.name "Gitlab Runner"
+
+
+
+  echo "Syncing Submodules"
+  cd ${CI_PROJECT_DIR}
+  ./gradlew clean
+  ./gradlew temp-repo --refresh-dependencies
+
+package:kafka-connect-s3:
+  stage: build
+  script:
+    - docker-compose run build-kafka-connect-s3
+  cache:
+    paths:
+    - .m2/repository
+  artifacts:
+    paths:
+      - flo-kafka-connect-s3-connector/target/*.jar
+    expire_in: 1 week
+
+build:kafka-connect-s3:
+  stage: package
+  script:
+    - mkdir -p connectors
+    - cp flo-kafka-connect-s3-connector/target/*.jar connectors/
+  artifacts:
+    paths:
+    - connectors/
+    expire_in: 1 day
+
+build:kafka-connect-http:
+  stage: package
+  script:
+    - mkdir -p connectors
+    - wget https://s3-us-west-2.amazonaws.com/flocloud-public/download/kafka-connect-http-1.0.0.jar -O connectors/kafka-connect-http-1.0.0.jar
+  artifacts:
+    paths:
+    - connectors/
+    expire_in: 1 day
+
+build:kafka-connect-influxdb:
+  stage: package
+  script:
+  - mkdir -p connectors
+  - wget https://github.com/Landoop/stream-reactor/releases/download/1.2.0/kafka-connect-influxdb-1.2.0-2.0.0-all.tar.gz -O kafka-connect-influxdb-1.2.0-2.0.0-all.tar.gz
+  - tar xzf kafka-connect-influxdb-1.2.0-2.0.0-all.tar.gz
+  - cp kafka-connect-influxdb-1.2.0-2.0.0-all.jar connectors/
+  artifacts:
+    paths:
+      - connectors/
+    expire_in: 1 day
+
+
+build:kafka-connect-mqtt:
+  stage: package
+  script:
+  - mkdir -p connectors
+  - wget https://github.com/Landoop/stream-reactor/releases/download/1.2.0/kafka-connect-mqtt-1.2.0-2.0.0-all.tar.gz
+  - tar xzf kafka-connect-mqtt-1.2.0-2.0.0-all.tar.gz
+  - cp kafka-connect-mqtt-1.2.0-2.0.0-all.jar connectors/
+  artifacts:
+    paths:
+      - connectors/
+    expire_in: 1 day
+
+
+build:connect-connectors-image:
+  stage: image
+  dependencies:
+    - build:kafka-connect-s3
+    - build:kafka-connect-influxdb
+    - build:kafka-connect-mqtt
+    - build:kafka-connect-http
+  script:
+    - docker build -f Dockerfile-connectors -t $CONNECTORS_IMAGE .
+    - docker push $CONNECTORS_IMAGE
+
+dev:cherry:
+  stage: deploy
+  only:
+    - dev
+  script:
+    - |
+      if [ -d ".ebextensions" ]; then
+        git rm -rf .ebextensions/*
+      else
+        mkdir .ebextensions
+      fi
+      cp .app/.ebextensions/* .ebextensions/
+      cp `echo connect-ebextensions/*.config` .ebextensions/
+      git add .ebextensions/*
+      git add .app
+      eb init --profile flo-dev --region us-west-2 --platform docker-17.03.1-ce kafka-connect
+      eb deploy --profile flo-dev kafka-connect-cherry-dev --staged
+      git stash

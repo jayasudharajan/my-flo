@@ -1,0 +1,44 @@
+{
+  "date":"2020-01-03T19:35:08Z",
+  "type":"alert",
+  "action":"updated",
+  "id":"34ffcdfe-0e0d-49a0-b122-9c857c3cdd16",
+  "item":{
+    "id":"34ffcdfe-0e0d-49a0-b122-9c857c3cdd16",
+    "alarm":{
+      "id":100,
+      "severity":"critical"
+    },
+    "device":{
+      "id":"47689d10-6dc1-482e-a320-7aaed01128fb",
+      "macAddress":"d8a01d6717e4"
+    },
+    "status":"resolved",
+    "reason":"snoozed",
+    "snoozeTo":"2020-01-03T19:40:08Z",
+    "locationId":"3bd5c223-5335-4f3d-9833-9e9ba0b4b8f2",
+    "systemMode":"home",
+    "displayTitle":"Leak Detected",
+    "displayMessage":"On January 3 at 11:34 am, your Smart Water Detector detected a leak.",
+    "fwValues":{
+      "gpm":-1.0,
+      "galUsed":-1.0,
+      "leakLossMinGal":0.0,
+      "leakLossMaxGal":0.0,
+      "flowEventDuration":-1.0
+    },
+    "resolutionDate":"2020-01-03T19:35:08Z",
+    "updateAt":"2020-01-03T19:35:08Z",
+    "createAt":"2020-01-03T19:34:46Z",
+    "deliveryMedium":[
+      {
+        "userId":"73a0f516-35bf-4922-a810-8e988a20e6f6",
+        "push":{
+          "status":"queued",
+          "createdAt":"2020-01-03T19:34:47Z",
+          "updatedAt":"2020-01-03T19:34:47Z"
+        }
+      }
+    ]
+  }
+}

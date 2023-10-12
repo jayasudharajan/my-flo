@@ -1,0 +1,14 @@
+.idea
+.vscode
+**/main
+**/_debug_bin
+**/.swp
+**/tmp
+**/*.log
+
+bin
+pkg
+/flo-task-scheduler
+/flo-task-scheduler-v2
+src/src
+test/*.csv

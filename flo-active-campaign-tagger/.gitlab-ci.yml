@@ -1,0 +1,27 @@
+---
+image: node:8-alpine
+
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  paths:
+    - node_modules/
+
+before_script:
+  - npm config set unsafe-perm true # https://github.com/npm/uid-number/issues/3#issuecomment-291362937
+  - npm install -g serverless
+
+prod:
+  environment:
+    name: prod
+  only:
+    - master
+  variables:
+    ACCOUNT_ID: 617288038711
+    DOCKER_HOST: tcp://localhost:2375
+    ONBOARDING_LOG_STREAM_ID: "2017-12-05T02:39:49.477"
+    USER_DETAIL_STREAM_ID: "2017-04-03T18:33:30.070"
+  script:
+    - npm install -g serverless
+    - npm install
+    - serverless deploy --verbose --force --stage prod

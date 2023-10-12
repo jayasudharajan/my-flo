@@ -1,0 +1,27 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ include "fullname" . }}
+  labels:
+    app: {{ include "fullname" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    component: "mender"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  {{- if .Values.service.annotations }}
+annotations:
+  {{ toYaml .Values.service.annotations | indent 4 }}
+  {{- end }}
+spec:
+  type: "{{ .Values.service.type }}"
+  ports:
+    - name: elasticsearch-transport
+      port: {{ .Values.servicePort }}
+      targetPort: {{ .Values.servicePort }}
+    - name: elasticsearch-rest
+      port: {{ .Values.restPort }}
+      targetPort: {{ .Values.restPort }}
+
+  selector:
+    app: {{ include "fullname" . }}
+    component: "mender"

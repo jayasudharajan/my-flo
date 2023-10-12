@@ -1,0 +1,121 @@
+---
+image: registry.gitlab.com/flotechnologies/devops/docker-tools@sha256:4442bf7c5959ab0b9428af9fb43bf6cc15f5b7f9f1b59f281adba9781633bb43
+
+services:
+  - name: docker:18.09-dind
+    command: ["--mtu=1300"]
+
+variables:
+  BUILD_TAG: "${CI_PIPELINE_ID}"
+  CI_REGISTRY: registry.gitlab.com
+  CI_REGISTRY_IMAGE: "registry.gitlab.com/flotechnologies/flo-sms-service"
+  DOCKER_DRIVER: overlay2
+  DOCKER_HOST: tcp://localhost:2375
+
+stages:
+  - build
+  - build-docker
+  - test
+  - deploy
+
+before_script:
+  - |
+    apk add --no-cache make bash gettext jq gettext
+    mkdir -pv "${HOME}/.docker/"
+    echo "${DOCKER_AUTH_CONFIG}" > "${HOME}/.docker/config.json"
+    docker login
+    docker login \
+      --username "${CI_REGISTRY_USER}" \
+      --password "${CI_REGISTRY_PASSWORD}" \
+      "${CI_REGISTRY}"
+    # make prepare-build-image
+
+Compile:
+  stage: build
+  except:
+    - tags
+  variables:
+    BUILD_TAG: "${CI_PIPELINE_ID}"
+    DOCKER_TAG: "${CI_PIPELINE_ID}"
+  script:
+    - make build
+    - make push
+  artifacts:
+    paths:
+      - /builds/flotechnologies/flo-sms-service/target/scala-2.12/app-assembly.jar
+    untracked: true
+  tags:
+    - build
+
+BuildDockerImage:
+  stage: build-docker
+  dependencies:
+    - Compile
+  except:
+    - tags
+  script:
+    - make pull
+    - make build
+    - make push
+  tags:
+    - build
+
+Sanity:
+  stage: test
+  allow_failure: true
+  artifacts:
+    when: always
+    paths:
+      # Collect logs
+      - build.log
+  dependencies:
+    - Compile
+  variables:
+    BUILD_TAG: "${CI_PIPELINE_ID}"
+  script:
+    - make pull
+    - make run-tests | tee build.log
+  tags:
+    - test
+
+K8sDev:
+  stage: deploy
+  variables:
+    BUILD_TAG: "${CI_PIPELINE_ID}"
+    ENV: "development"
+    VAULT_URL: ${VAULT_URL_DEV}
+    VAULT_TOKEN: ${VAULT_TOKEN_DEV}
+  image: registry.gitlab.com/flotechnologies/devops/docker-tools:helm-v3-5-4
+  dependencies:
+    - Compile
+  only:
+    - dev
+  environment:
+    name: dev-flo-cloud-eks
+    url: https://flo-sms-service.flocloud.co
+  script:
+    - make environment
+    - make deploy
+  tags:
+    - dev-flo-cloud-eks
+
+K8sProd:
+  stage: deploy
+  variables:
+    BUILD_TAG: "${CI_PIPELINE_ID}"
+    ENV: "production"
+    VAULT_URL: ${VAULT_URL_PROD}
+    VAULT_TOKEN: ${VAULT_TOKEN_PROD}
+  image: registry.gitlab.com/flotechnologies/devops/docker-tools:helm-v3-5-4
+  dependencies:
+    - Compile
+  only:
+    - master
+  environment:
+    name: eks-prod
+    url: https://flo-push-notification-service.flosecurecloud.com
+  script:
+    - make environment
+    - make deploy
+  tags:
+    - eks-prod

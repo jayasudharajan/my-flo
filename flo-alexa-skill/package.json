@@ -1,0 +1,26 @@
+{
+  "name": "flo-alexa-skill-lambda",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "./node_modules/.bin/serverless offline",
+    "debug": "export SLS_DEBUG=* && node --inspect --trace-warnings ./node_modules/.bin/serverless offline --stage local",
+    "test": "echo \"no test specified\" && exit 0"
+  },
+  "author": "Flo Technologies",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.872.0",
+    "axios": "^0.21.1",
+    "axios-retry": "^3.2.3",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.2",
+    "moment-timezone": "^0.5.27",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "serverless-dotenv-plugin": "^3.9.0",
+    "serverless-offline": "^7.0.0"
+  }
+}

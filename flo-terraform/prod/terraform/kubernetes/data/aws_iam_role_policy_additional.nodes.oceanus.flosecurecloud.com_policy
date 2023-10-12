@@ -1,0 +1,96 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ecs:CreateCluster",
+        "ecs:DeregisterContainerInstance",
+        "ecs:DiscoverPollEndpoint",
+        "ecs:DescribeContainerInstances",
+        "ecs:Poll",
+        "ecs:RegisterContainerInstance",
+        "ecs:StartTelemetrySession",
+        "ecs:Submit*",
+        "ecs:StartTask",
+        "ecs:StopTask"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:Get*",
+        "s3:List*"
+      ],
+      "Resource": [
+        "arn:aws:s3:::flocloud-config/docker/*",
+        "arn:aws:s3:::flocloud-config/filebeat/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:Get*",
+        "s3:List*"
+      ],
+      "Resource": [
+        "arn:aws:s3:::flosecurecloud-config/docker/*",
+        "arn:aws:s3:::flosecurecloud-config/filebeat/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-api/mqtt-client-certs/*",
+        "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-ca/flo-ca-certificate.pem",
+        "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-ca/prod/*",
+        "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-directive-response/prod/*",
+        "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-directive-router/prod/*",
+        "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-directive-router/mqtt-client-certs/*",
+        "arn:aws:s3:::flosecurecloud-config/docker/*",
+        "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-email-reports-generator/*",
+        "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-encryption/kafka/*",
+        "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-encryption/prod/kafka/*",
+        "arn:aws:s3:::flosecurecloud-config/flo-apps/flo-kafka-tls/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:Query",
+        "dynamodb:Scan"
+      ],
+      "Resource": "arn:aws:dynamodb:us-west-2:617288038711:table/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ecr:*"
+      ],
+      "Resource": [
+        "arn:aws:ecr:us-west-2:098786959887:repository/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "kms:Decrypt",
+        "secretsmanager:GetSecretValue"
+      ],
+      "Resource": [
+        "arn:aws:secretsmanager:us-west-2:617288038711:secret:/prod/apps/flo-email-reports-generator/docker-auth",
+        "arn:aws:kms:us-west-2:617288038711:alias/aws/secretsmanager"
+      ]
+    }
+  ]
+}

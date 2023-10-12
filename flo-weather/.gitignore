@@ -1,0 +1,10 @@
+.idea
+.vscode
+*/**/main
+src/src
+*/**/flo-weather
+*/**/run.*.txt
+*/**/data.*.csv
+*/**/_debug_bin
+*/**/.swp
+.swp

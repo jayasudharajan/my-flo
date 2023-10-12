@@ -1,0 +1,43 @@
+{{- $dot := . }}
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ include "fullname" . | quote }}
+  labels:
+    app: {{ include "fullname" . | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    component: "mender"
+
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "fullname" . | quote }}
+        component: "mender"
+        hostPort: {{ .Values.servicePort | quote }}
+        containerPort: {{ .Values.servicePort | quote }}
+    spec:
+      volumes:             
+        - name: config
+          configMap:
+            name: {{ include "fullname" . | quote }}
+      serviceAccountName: {{ .Values.serviceAccount }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{if .Values.image.tag }}{{ .Values.image.tag }}{{else}}{{ .Chart.AppVersion }}{{end}}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.servicePort }}
+        livenessProbe:
+          tcpSocket:
+            port: {{ .Values.servicePort }}
+          initialDelaySeconds: 120
+          periodSeconds: 3
+        env:
+        - name: GATEWAY_IP
+          value: api.mender.flocloud.co
+        resources:
+{{ toYaml .Values.resources | indent 10 }}     

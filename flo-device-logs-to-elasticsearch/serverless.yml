@@ -1,0 +1,60 @@
+---
+app: device-logs-to-elasticsearch
+org: flo
+service: device-logs-to-elasticsearch
+
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux
+  defaultRegion: us-west-2
+  accountId:
+    dev: "098786959887"
+    prod: "617288038711"
+  region: ${opt:region, self:custom.defaultRegion}
+  lambdaTimeoutInSeconds: ${env:LAMBDA_TIMEOUT_IN_SECONDS}
+  esDomainUrl: ${env:ES_DOMAIN_URL}
+  esIndex: ${env:ES_INDEX}
+  sourceDataBucket:
+    dev: flocloud-bulk-device-logs
+    prod: flosecurecloud-bulk-device-logs
+  vpc: ${env:VPC_ID}
+
+provider:
+  name: aws
+  runtime: python3.7
+  region: ${self:custom.region}
+  memorySize: 512
+  timeout: 120
+  vpc: ${file(vpc.${opt:stage}.yml):vpc}
+  logRetentionInDays: 14
+  environment:
+    ES_DOMAIN_URL: ${self:custom.esDomainUrl}
+    ES_INDEX: ${self:custom.esIndex}
+    REGION: ${self:custom.defaultRegion}
+  iamRoleStatements:
+    - Effect: Allow
+      Action: lambda:InvokeFunction
+      Resource: arn:aws:lambda:${self:custom.defaultRegion}:${self:custom.accountId.${opt:stage}}:function:${self:service}
+    - Effect: Allow
+      Action: s3:ListBucket*
+      Resource: arn:aws:s3:::${self:custom.sourceDataBucket.${opt:stage}}
+    - Effect: Allow
+      Action: s3:GetObject*
+      Resource: arn:aws:s3:::${self:custom.sourceDataBucket.${opt:stage}}/*
+
+functions:
+  device-logs-to-es:
+    handler: main.handler
+    events:
+      - s3:
+          bucket: ${self:custom.sourceDataBucket.${opt:stage}}
+          event: s3:ObjectCreated:*
+          existing: true
+
+package:
+  exclude:
+    - node_modules/**
+
+plugins:
+  - serverless-offline
+  - serverless-python-requirements

@@ -1,0 +1,20 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+jedi = "*"
+pylint = "*"
+flake8 = "*"
+mccabe = "*"
+autopep8 = "*"
+pycodestyle = "*"
+
+[packages]
+requests = "*"
+requests-aws4auth = "*"
+elasticsearch = "*"
+
+[requires]
+python_version = "3.7"

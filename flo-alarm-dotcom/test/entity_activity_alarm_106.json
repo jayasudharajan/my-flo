@@ -1,0 +1,46 @@
+{
+  "date": "2020-06-03T17:10:53Z",
+  "type": "alert",
+  "action": "created",
+  "id": "fc31e522-5dfd-452e-9c70-178c3ab8f925",
+  "item": {
+    "id": "fc31e522-5dfd-452e-9c70-178c3ab8f925",
+    "alarm": {
+      "id": 106,
+      "severity": "warning"
+    },
+    "device": {
+      "id": "cf3c3bf5-2619-4348-ae1c-13b0e91853a6",
+      "macAddress": "03e182180196"
+    },
+    "status": "triggered",
+    "locationId": "2181e548-6bf9-49b0-ac6c-26a9c92477b6",
+    "systemMode": "home",
+    "displayTitle": "Low Battery",
+    "displayMessage": "On June 3 at 10:10 am, your Smart Water Detector battery level dropped below %.",
+    "fwValues": {
+      "gpm": -1,
+      "galUsed": -1,
+      "leakLossMinGal": 0,
+      "leakLossMaxGal": 0,
+      "flowEventDuration": -1
+    },
+    "updateAt": "2020-06-03T17:10:53Z",
+    "createAt": "2020-06-03T17:10:52Z",
+    "deliveryMedium": [
+      {
+        "userId": "03112551-2633-473a-8d77-996d93c21dfb",
+        "email": {
+          "status": "queued",
+          "createdAt": "2020-06-03T17:10:53Z",
+          "updatedAt": "2020-06-03T17:10:53Z"
+        },
+        "push": {
+          "status": "queued",
+          "createdAt": "2020-06-03T17:10:53Z",
+          "updatedAt": "2020-06-03T17:10:53Z"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "items": [
+    {
+      "country": [
+        {
+          "key": "us",
+          "shortDisplay": "USA",
+          "longDisplay": "United States of America"
+        },
+        {
+          "key": "ca",
+          "shortDisplay": "Canada",
+          "longDisplay": "Canada"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+.vscode
+.vscodex
+.idea
+.aws
+.ssh
+.lambda
+**/.env
+**/*.env
+**/node_modules/*
+**/.webpack
+**/lib
+**/.dynamodb
+**/.serverless
+readme.md

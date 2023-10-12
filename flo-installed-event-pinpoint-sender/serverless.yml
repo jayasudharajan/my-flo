@@ -1,0 +1,70 @@
+---
+service:
+  name: flo-installed-event-pinpoint-sender
+
+plugins:
+  - serverless-webpack
+
+custom:
+  defaultRegion: us-west-2
+  defaultBatchSize: 100
+  defaultStartingPosition: TRIM_HORIZON
+  defaultPinpointEventType: Device Installed
+  defaultPinpointAppTitle: flo-device-installed-notifications
+  region: ${opt:region, self:custom.defaultRegion}
+  tablePrefix: ${env:TABLE_PREFIX, opt:stage}_
+  accountId: ${env:ACCOUNT_ID}
+  pinpointAppId: ${env:PINPOINT_APP_ID}
+  pinpointVersion: ${env:PINPOINT_VERSION}
+  pinpointEventType: ${env:PINPOINT_EVENT_TYPE, self:custom.defaultPinpointEventType}
+  pinpointAppTitle: ${env:PINPOINT_APP_TITLE, self:custom.defaultPinpointAppTitle}
+  streamBatchSize: ${env:STREAM_BATCH_SIZE, self:custom.defaultBatchSize}
+  streamStartingPosition: ${env:STREAM_STARTING_POSITION, self:custom.defaultStartingPosition}
+  dynamoDbStreamId: ${env:DYNAMODB_STREAM_ID}
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: ${self:custom.region}
+  environment:
+    TABLE_PREFIX: ${self:custom.tablePrefix}
+    PINPOINT_APP_ID: ${self:custom.pinpointAppId}
+    PINPOINT_VERSION: ${self:custom.pinpointVersion}
+    PINPOINT_EVENT_TYPE: ${self:custom.pinpointEventType}
+    PINPOINT_APP_TITLE: ${self:custom.pinpointAppTitle}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - "dynamodb:Get*"
+      Resource:
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}Account"
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}ICD"
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}User"
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}UserDetail"
+    - Effect: Allow
+      Action:
+        - "dynamodb:Query"
+      Resource:
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}Location/index/*"
+        - "arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}PushNotificationToken/index/*"
+    - Effect: Allow
+      Action:
+        - "mobiletargeting:Put*"
+        - "mobiletargeting:Update*"
+        - "mobiletargeting:Get*"
+        - "mobiletargeting:Create*"
+        - "mobiletargeting:Delete*"
+        - "mobiletargeting:SendMessages"
+      Resource:
+        - "arn:aws:mobiletargeting:${self:provider.region}:${self:custom.accountId}:apps/${self:custom.pinpointAppId}"
+        - "arn:aws:mobiletargeting:${self:provider.region}:${self:custom.accountId}:apps/${self:custom.pinpointAppId}/*"
+        - "arn:aws:mobiletargeting:${self:provider.region}:${self:custom.accountId}:reports"
+
+
+functions:
+  handle:
+    handler: src/main.handle
+    events:
+      - stream: arn:aws:dynamodb:${self:provider.region}:${self:custom.accountId}:table/${self:custom.tablePrefix}OnboardingLog/stream/${self:custom.dynamoDbStreamId}
+        batchSize: ${self:custom.streamBatchSize}
+        startingPosition: ${self:custom.streamStartingPosition}

@@ -1,0 +1,1 @@
+DELETE FROM user_delivery_settings WHERE alarm_system_mode_settings_id IN (196, 197, 198);

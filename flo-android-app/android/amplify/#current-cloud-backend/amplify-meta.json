@@ -1,0 +1,75 @@
+{
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "floandroidapp-20181221112853-authRole",
+			"UnauthRoleArn": "arn:aws:iam::176666219354:role/floandroidapp-20181221112853-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::176666219354:role/floandroidapp-20181221112853-authRole",
+			"Region": "us-west-2",
+			"DeploymentBucketName": "floandroidapp-20181221112853-deployment",
+			"UnauthRoleName": "floandroidapp-20181221112853-unauthRole",
+			"StackName": "floandroidapp-20181221112853",
+			"StackId": "arn:aws:cloudformation:us-west-2:176666219354:stack/floandroidapp-20181221112853/8b85c820-04d0-11e9-a63a-500c33711099"
+		}
+	},
+	"notifications": {
+		"flo": {
+			"service": "Pinpoint",
+			"output": {
+				"Name": "flo",
+				"Id": "516dd93cc3884badbc86d8ab1af4cecc",
+				"Region": "us-east-1",
+				"FCM": {
+					"ApplicationId": "516dd93cc3884badbc86d8ab1af4cecc",
+					"CreationDate": "2018-12-21T03:40:11.326Z",
+					"Enabled": true,
+					"HasCredential": true,
+					"Id": "gcm",
+					"IsArchived": false,
+					"LastModifiedDate": "2018-12-21T03:40:11.326Z",
+					"Platform": "GCM",
+					"Version": 1
+				}
+			},
+			"lastPushTimeStamp": "2018-12-21T03:37:41.381Z"
+		}
+	},
+	"auth": {
+		"cognitodcbc6639": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/floandroidapp-20181221112853-deployment/amplify-cfn-templates/auth/cognitodcbc6639-cloudformation-template.yml",
+				"logicalId": "authcognitodcbc6639"
+			},
+			"lastPushTimeStamp": "2019-03-12T08:28:07.370Z",
+			"output": {
+				"IdentityPoolId": "us-west-2:26104863-99a4-4ba1-aabd-c8d0e671a36d",
+				"IdentityPoolName": "floandroidapp_identitypool_b22db2de",
+				"AppClientSecret": "19pljjt1q5rpaam1h0743jmo2sul0031b4g5jq4dohnlcht2igqo",
+				"UserPoolId": "us-west-2_UpM72lxw6",
+				"AppClientIDWeb": "6mvalsntflo8ohgb1d0jomllrs",
+				"AppClientID": "24t0q9aft74avmdmpq5q4260r0",
+				"UserPoolName": "cognitodcbc6639_userpool_db902c86"
+			},
+			"lastPushDirHash": "IMBq5Bo66/x2zKIX7fn9ETmQDJM=",
+			"[object Object]": {}
+		}
+	},
+	"analytics": {
+		"flo": {
+			"service": "Pinpoint",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/floandroidapp-20181221112853-deployment/amplify-cfn-templates/analytics/pinpoint-cloudformation-template.json",
+				"logicalId": "analyticsflo"
+			},
+			"lastPushTimeStamp": "2019-03-12T08:28:07.369Z",
+			"output": {
+				"appName": "flo",
+				"Region": "us-east-1",
+				"Id": "516dd93cc3884badbc86d8ab1af4cecc"
+			},
+			"lastPushDirHash": "4lQPuWZfzTjPF+/Dca5XqgP6ObY="
+		}
+	}
+}

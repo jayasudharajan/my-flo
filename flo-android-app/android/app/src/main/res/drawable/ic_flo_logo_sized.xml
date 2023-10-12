@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape
+            android:shape="rectangle">
+
+            <size
+                android:width="152dp"
+                android:height="152dp"/>
+
+            <solid
+                android:color="#00FFFFFF"/>
+        </shape>
+    </item>
+
+    <item>
+        <bitmap
+            android:gravity="left|right|top|bottom"
+            android:src="@drawable/ic_flo_logo_padding"/>
+    </item>
+</layer-list>

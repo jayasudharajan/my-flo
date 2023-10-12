@@ -1,0 +1,41 @@
+{{- $dot := . }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "fullname" . | quote }}
+  labels:
+    app.kubernetes.io/name: {{ include "name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      volumes:             
+        - name: config
+          configMap:
+            name: {{ include "fullname" . | quote }}
+      serviceAccountName: {{ .Values.serviceAccount }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{if .Values.image.tag }}{{ .Values.image.tag }}{{else}}{{ .Chart.AppVersion }}{{end}}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.servicePort }}
+        livenessProbe:
+          tcpSocket:
+            port: {{ .Values.servicePort }}
+          initialDelaySeconds: 120
+          periodSeconds: 3
+        env:
+        - name: GATEWAY_IP
+          value: mender.flotech.co
+        resources:
+{{ toYaml .Values.resources | indent 10 }}     

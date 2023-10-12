@@ -1,0 +1,1 @@
+DROP TRIGGER IF EXISTS set_types_created_column ON types CASCADE;

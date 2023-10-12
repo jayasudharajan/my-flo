@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+# Quick and dirty script to give a developer access to a role that should already exist
+
+function usage() {
+    echo "usage: ${0} kubernetes_cluster_name namespace role_name user_name"
+    echo
+    echo "    NOTE: \`namespace\` and \`role_name\` must exist ahead of time"
+    exit 1
+}
+
+if [ -z "${KOPS_STATE_STORE}" ]; then
+    echo "Please set variable KOPS_STATE_STORE"
+    exit 1
+fi
+
+if [ $# -lt 4 ]; then
+    usage
+fi
+
+temp_asset_path=$(mktemp -d -t "$(basename ${0})")
+
+cluster_name="${1}"
+cluster_config_bucket="${KOPS_STATE_STORE}"
+cluster_config_base="${cluster_config_bucket}/${cluster_name}/pki"
+namespace="${2}"
+role_name="${3}"
+user_name="${4}"
+
+_download_ca_key() {
+    s3_path="${cluster_config_base}/private/ca"
+    ca_key=$(aws s3 ls "${s3_path}/" | grep '\.key' | awk '{print $4}')
+    aws s3 cp "${s3_path}/${ca_key}" $temp_asset_path/ca.key
+}
+_download_ca_crt() {
+    s3_path="${cluster_config_base}/issued/ca"
+    ca_crt=$(aws s3 ls "${s3_path}/" | grep '\.crt' | awk '{print $4}')
+    aws s3 cp "${s3_path}/${ca_crt}" $temp_asset_path/ca.crt
+}
+_download_ca_master() {
+    s3_path="${cluster_config_base}/issued/master"
+    ca_crt=$(aws s3 ls "${s3_path}/" | grep '\.crt' | awk '{print $4}')
+    aws s3 cp "${s3_path}/${ca_crt}" $temp_asset_path/ca_master.crt
+}
+
+get_cluster_certs() {
+    echo "Retrieving cluster certificates"
+    echo "TEMPDIR: ${temp_asset_path}"
+    _download_ca_key
+    _download_ca_crt
+    _download_ca_master
+}
+
+generate_user_certs() {
+    echo "Generating user key"
+    openssl genrsa -out $temp_asset_path/user.key 4096
+    openssl req -new -key $temp_asset_path/user.key -out $temp_asset_path/user.csr -subj "/CN=${user_name}/O=firmware-developer"
+    openssl x509 -req -in $temp_asset_path/user.csr -CA $temp_asset_path/ca.crt -CAkey $temp_asset_path/ca.key -CAcreateserial -out $temp_asset_path/user.crt -days 730
+}
+
+package_user_certs() {
+    echo "Achiving certificates"
+    echo "TEMPDIR: ${temp_asset_path}"
+    pushd $temp_asset_path
+    tar cvzf "/tmp/${user_name}.tar.gz" user.key user.crt ca_master.crt README.txt && rm -rfv $temp_asset_path
+    popd
+}
+
+k8s_bind_role() {
+    crb_name="firmware-developer-${user_name}"
+    echo "Create K8S ClusterRoleBinding for user ${user_name}-"
+    kubectl create clusterrolebinding "${crb_name}" --clusterrole="${role_name}" --user="${user_name}" --namespace="${namespace}" \
+        || (kubectl delete clusterrolebinding "${crb_name}" && kubectl create clusterrolebinding "${crb_name}" --clusterrole="${role_name}" --user="${user_name}" --namespace="${namespace}")
+}
+
+generate_readme() {
+    cat <<EOT >>$temp_asset_path/README.txt
+kubectl config set-cluster "${cluster_name}" --server=https://api.${cluster_name}
+kubectl config set-cluster "${cluster_name}" --certificate-authority=ca_master.crt
+kubectl config set-credentials ${user_name} --client-key=user.key --client-certificate=user.crt
+kubectl config set-context "${cluster_name}" --user="${user_name}" --cluster "${cluster_name}"
+kubectl config use-context "${cluster_name}"
+EOT
+}
+
+set -e
+get_cluster_certs
+generate_user_certs
+generate_readme
+k8s_bind_role
+package_user_certs
+
+echo "Credential generation complete, you can find them in /tmp/${user_name}.tar.gz"

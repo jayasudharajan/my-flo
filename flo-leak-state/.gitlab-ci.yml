@@ -1,0 +1,104 @@
+---
+image: amazonlinux:2
+
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  paths:
+    - node_modules/
+
+before_script:
+  - |
+    curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+    yum install -y nodejs
+    npm config set unsafe-perm true   # https://github.com/npm/uid-number/issues/3#issuecomment-291362937
+    npm install -g serverless
+    let "LAMBDA_TIMEOUT_IN_SECONDS = LAMBDA_RATE_IN_MINUTES * 60"
+    export LAMBDA_TIMEOUT_IN_SECONDS
+
+dev:
+  image: amazonlinux:2
+  environment:
+    name: dev
+  only:
+    - dev
+  variables:
+    # Defaults
+    ACCOUNT_ID_DEV: 098786959887
+    API_URL_DEV: https://api-gw-dev.flocloud.co/api
+    KAFKA_BROKER_LIST_DEV: "kafka-cherry-broker-1.dev.flocloud.co:9092,kafka-cherry-broker-2.dev.flocloud.co:9092,kafka-cherry-broker-3.dev.flocloud.co:9092"
+    KAFKA_GROUP_ID_DEV: flo-leak-state
+    KAFKA_TOPIC_DEV: entity-activity-v1
+    KAFKA_CONNECTION_TIMEOUT_IN_MS_DEV: 10000
+    LAMBDA_RATE_IN_MINUTES_DEV: 5
+    LEAK_RELATED_ALARM_IDS_DEV: "28,29,30,31"
+    MAX_EXECUTION_TIME_IN_SECONDS_DEV: 270
+    NUMBER_OF_MESSAGES_TO_CONSUME_AT_ONCE_DEV: 5
+    REPORT_STATE_ENDPOINT_DEV: /v1/device-state/forward
+    TOPIC_EMPTY_CHECK_LOOP_INTERVAL_IN_MS_DEV: 15000
+    IFTTT_ALERT_ENDPOINT_DEV: /v2/ifttt/v1/notifications/alert
+
+    ACCOUNT_ID: "${ACCOUNT_ID_DEV}"
+    API_TOKEN: "${API_TOKEN_DEV}"
+    API_URL: "${API_URL_DEV}"
+    AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID_DEV}"
+    AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY_DEV}"
+    DOCKER_HOST: tcp://localhost:2375
+    KAFKA_BROKER_LIST: "${KAFKA_BROKER_LIST_DEV}"
+    KAFKA_GROUP_ID: "${KAFKA_GROUP_ID_DEV}"
+    KAFKA_TOPIC: "${KAFKA_TOPIC_DEV}"
+    KAFKA_CONNECTION_TIMEOUT_IN_MS: "${KAFKA_CONNECTION_TIMEOUT_IN_MS_DEV}"
+    LAMBDA_RATE_IN_MINUTES: "${LAMBDA_RATE_IN_MINUTES_DEV}"
+    LEAK_RELATED_ALARM_IDS: "${LEAK_RELATED_ALARM_IDS_DEV}"
+    MAX_EXECUTION_TIME_IN_SECONDS: "${MAX_EXECUTION_TIME_IN_SECONDS_DEV}"
+    NUMBER_OF_MESSAGES_TO_CONSUME_AT_ONCE: "${NUMBER_OF_MESSAGES_TO_CONSUME_AT_ONCE_DEV}"
+    REPORT_STATE_ENDPOINT: "${REPORT_STATE_ENDPOINT_DEV}"
+    TOPIC_EMPTY_CHECK_LOOP_INTERVAL_IN_MS: "${TOPIC_EMPTY_CHECK_LOOP_INTERVAL_IN_MS_DEV}"
+    IFTTT_ALERT_ENDPOINT: "${IFTTT_ALERT_ENDPOINT_DEV}"
+  script:
+    - cat /etc/*-release && uname -a
+    - npm install
+    - serverless deploy --verbose --force --stage dev
+
+prod:
+  image: amazonlinux:2
+  environment:
+    name: prod
+  only:
+    - master
+  variables:
+    # Defaults
+    ACCOUNT_ID_PROD: 617288038711
+    API_URL_PROD: https://api-gw.meetflo.com/api
+    KAFKA_BROKER_LIST_PROD: kafka-cherry-broker-1.prod.flosecurecloud.com:9092,kafka-cherry-broker-2.prod.flosecurecloud.com:9092,kafka-cherry-broker-3.prod.flosecurecloud.com:9092
+    KAFKA_GROUP_ID_PROD: flo-leak-state
+    KAFKA_TOPIC_PROD: entity-activity-v1
+    KAFKA_CONNECTION_TIMEOUT_IN_MS_PROD: 10000
+    LAMBDA_RATE_IN_MINUTES_PROD: 5
+    LEAK_RELATED_ALARM_IDS_PROD: "28,29,30,31"
+    MAX_EXECUTION_TIME_IN_SECONDS_PROD: 270
+    NUMBER_OF_MESSAGES_TO_CONSUME_AT_ONCE_PROD: 5
+    REPORT_STATE_ENDPOINT_PROD: /v1/device-state/forward
+    TOPIC_EMPTY_CHECK_LOOP_INTERVAL_IN_MS_PROD: 15000
+    IFTTT_ALERT_ENDPOINT_PROD: /v2/ifttt/v1/notifications/alert
+
+    ACCOUNT_ID: "${ACCOUNT_ID_PROD}"
+    API_TOKEN: "${API_TOKEN_PROD}"
+    API_URL: "${API_URL_PROD}"
+    AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID_PROD}"
+    AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY_PROD}"
+    DOCKER_HOST: tcp://localhost:2375
+    KAFKA_BROKER_LIST: "${KAFKA_BROKER_LIST_PROD}"
+    KAFKA_GROUP_ID: "${KAFKA_GROUP_ID_PROD}"
+    KAFKA_TOPIC: "${KAFKA_TOPIC_PROD}"
+    KAFKA_CONNECTION_TIMEOUT_IN_MS: "${KAFKA_CONNECTION_TIMEOUT_IN_MS_PROD}"
+    LAMBDA_RATE_IN_MINUTES: "${LAMBDA_RATE_IN_MINUTES_PROD}"
+    LEAK_RELATED_ALARM_IDS: "${LEAK_RELATED_ALARM_IDS_PROD}"
+    MAX_EXECUTION_TIME_IN_SECONDS: "${MAX_EXECUTION_TIME_IN_SECONDS_PROD}"
+    NUMBER_OF_MESSAGES_TO_CONSUME_AT_ONCE: "${NUMBER_OF_MESSAGES_TO_CONSUME_AT_ONCE_PROD}"
+    REPORT_STATE_ENDPOINT: "${REPORT_STATE_ENDPOINT_PROD}"
+    TOPIC_EMPTY_CHECK_LOOP_INTERVAL_IN_MS: "${TOPIC_EMPTY_CHECK_LOOP_INTERVAL_IN_MS_PROD}"
+    IFTTT_ALERT_ENDPOINT: "${IFTTT_ALERT_ENDPOINT_PROD}"
+  script:
+    - npm install
+    - serverless deploy --verbose --force --stage prod

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Questrial-Regular.ttf">
+            <string>Questrial-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="vvE-G6-JoM" customClass="TooltipWithSubtitle" customModule="Flo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="137" height="34"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zyY-AK-bYl">
+                    <rect key="frame" x="126" y="32.5" width="45" height="19"/>
+                    <fontDescription key="fontDescription" name="Questrial-Regular" family="Questrial" pointSize="18"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8W2-MF-hzd">
+                    <rect key="frame" x="136" y="54.5" width="25" height="10.5"/>
+                    <fontDescription key="fontDescription" name="Questrial-Regular" family="Questrial" pointSize="10"/>
+                    <color key="textColor" white="1" alpha="0.70162671232876717" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="zyY-AK-bYl" firstAttribute="centerY" secondItem="vvE-G6-JoM" secondAttribute="centerY" constant="25" id="97A-Kw-vsO"/>
+                <constraint firstItem="zyY-AK-bYl" firstAttribute="centerX" secondItem="vvE-G6-JoM" secondAttribute="centerX" constant="80" id="X5E-rZ-NB6"/>
+                <constraint firstItem="8W2-MF-hzd" firstAttribute="centerX" secondItem="zyY-AK-bYl" secondAttribute="centerX" id="XHc-Om-Vkb"/>
+                <constraint firstItem="8W2-MF-hzd" firstAttribute="top" secondItem="zyY-AK-bYl" secondAttribute="bottom" constant="3" id="t84-Yb-OwL"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="lblSubtitle" destination="8W2-MF-hzd" id="WS5-ch-Fjn"/>
+                <outlet property="lblTitle" destination="zyY-AK-bYl" id="b3P-3z-OY4"/>
+            </connections>
+            <point key="canvasLocation" x="12.318840579710146" y="110.49107142857143"/>
+        </view>
+    </objects>
+</document>
