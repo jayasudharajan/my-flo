@@ -1,0 +1,18 @@
+{
+  "roles": "telemetry-tag.read",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveTelemetryTags_v2",
+        "retrieve_v2"
+      ]
+    },
+    {
+      "resources": ["ICD"],
+      "permissions": [
+        "retrieve_v2"
+      ]
+    }
+  ]
+}

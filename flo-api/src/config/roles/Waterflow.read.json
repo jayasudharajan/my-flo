@@ -1,0 +1,11 @@
+{
+  "roles": "Waterflow.*.read",
+  "allows": [
+    {
+      "resources": ["Waterflow"],
+      "permissions": [
+        "retrieveDailyWaterFlow"
+      ]
+    }
+  ]
+}

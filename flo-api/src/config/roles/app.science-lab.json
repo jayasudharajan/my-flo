@@ -1,0 +1,19 @@
+{
+  "roles": "app.science-lab",
+  "allows": [
+    {
+      "resources": ["User", "Account", "Location", "AccountGroup"],
+      "permissions": [
+        "retrieve_v2",
+        "retrieveNotifications_v2"
+      ]
+    },
+    {
+      "resources": ["Directives"],
+      "permissions": [
+        "set-pes-schedule",
+        "get-pes-schedule"
+      ]
+    }
+  ]
+}

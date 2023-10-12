@@ -1,0 +1,12 @@
+{
+  "roles": "app.flo-detect-scheduler",
+  "allows": [
+    {
+      "resources": ["ICD"],
+      "permissions": [
+        "retrieveAll",
+        "scrollAll"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "roles": "Grafana.full-access",
+  "allows": [
+    {
+      "resources": ["Grafana"],
+      "permissions": [
+        "*"
+      ]
+    }
+  ]
+}

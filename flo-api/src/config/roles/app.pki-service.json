@@ -1,0 +1,13 @@
+{
+  "roles": "app.pki-service",
+  "allows": [
+    {
+      "resources": ["StockICD"],
+      "permissions": ["create", "retrieve", "delete"]
+    },
+    {
+      "resources": ["PKILog"],
+      "permissions": ["create"]
+    }
+  ]
+}

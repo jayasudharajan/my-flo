@@ -1,0 +1,12 @@
+{
+  "roles": "app.mqtt-broker",
+  "allows": [
+    {
+      "resources": ["ICDOnlineStatusLog"],
+      "permissions": [
+        "logOnlineStatus",
+        "logOfflineStatus"
+      ]
+    }
+  ]
+}

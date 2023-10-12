@@ -1,0 +1,26 @@
+{
+  "roles": "Location.*.readonly",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieve_v2",
+        "retrieveNotifications_v2"
+      ]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveIrrigationSchedule",
+        "retrieveAwayModeState",
+        "retrievePairingData"
+      ]
+    },
+    {
+      "resources": ["Location", "User"],
+      "permissions": [
+        "retrieveNotificationSettings_v2"
+      ]
+    }
+  ]
+}

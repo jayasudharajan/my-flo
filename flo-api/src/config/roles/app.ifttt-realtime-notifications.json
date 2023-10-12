@@ -1,0 +1,11 @@
+{
+  "roles": "IFTTT.ifttt-realtime-notifications",
+  "allows": [
+    {
+      "resources": ["IFTTT"],
+      "permissions": [
+        "notifyRealtimeAlert"
+      ]
+    }
+  ]
+}

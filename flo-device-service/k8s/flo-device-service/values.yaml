@@ -1,0 +1,77 @@
+---
+replicaCount: 6
+
+environment: dev
+
+image:
+  repository: registry.gitlab.com/flotechnologies/flo-device-service
+  pullPolicy: IfNotPresent
+  pullSecret: gitlab-registry
+  tag:
+
+cronJob:
+  backoffLimit: 2
+  activeDeadlineSeconds: 600
+  command:
+    - /bin/sh
+  args:
+    - -c
+    - >-
+      kubectl set env deployment ${APPLICATION_NAME} LAST_RESTART_DATE="$(date)"
+      && kubectl rollout status deployment/${APPLICATION_NAME}
+  concurrencyPolicy: Forbid
+  image:
+    repository: registry.gitlab.com/flotechnologies/devops/kubectl
+    tag: 1.12.10
+    pullPolicy: Always
+    pullSecrets: gitlab-registry
+  restartPolicy: Never
+  schedule: "03 */6 * * *"
+
+service:
+  type: NodePort
+  port: 3000
+  livenessProbe:
+    path: "/ping"
+    # initialDelaySeconds: 10
+    # periodSeconds: 10
+    # timeoutSeconds: 1
+  readinessProbe:
+    path: "/ping"
+    # initialDelaySeconds: 10
+    # periodSeconds: 5
+    # successThreshold: 3
+    # timeoutSeconds: 1
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internal
+    alb.ingress.kubernetes.io/success-codes: 200,404
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+    alb.ingress.kubernetes.io/subnets: subnet-a9c538df, subnet-5feb333b, subnet-07ab52e3de6d0ff73
+  path: /
+  hosts:
+    - flo-device-service.flocloud.co
+    - flo-device-service-dev.flocloud.co
+  tls:
+    - secretName: flo-device-service
+      hosts:
+        - flo-device-service.flocloud.co
+        - flo-device-service-dev.flocloud.co
+
+tolerations: []
+
+affinity: {}
+
+secrets:
+  name: flocloud-device-secrets
+
+resources:
+  limits:
+    cpu: "2"
+    memory: 2Gi
+  requests:
+    cpu: "1"
+    memory: 1Gi

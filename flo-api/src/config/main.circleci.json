@@ -1,0 +1,70 @@
+{
+  "cryptoPassword": "e74e1de956ec2b06cea439a9684ef155",
+  "tokenSecret": "vRV0W23n09ARrAhPxn2C3vLGJyRLZQai",
+  "aws": {
+    "accessKeyId": "foo",
+    "secretAccessKey": "bar",
+    "region": "us-west-2",
+    "endpoint": "127.0.0.1:4567",
+    "apiVersion": "2012-08-10",
+    "dynamodb":{
+        "region": "us-west-2",
+        "endpoint": "127.0.0.1:4567"
+    }
+  },
+  "clientCertificatePath": "foo",
+  "clientKeyPath": "foo",
+  "certBucket": "foo",
+  "mqttBroker": {
+    "host": "mqtt.flotechnologies.com",
+    "port": 1883,
+    "caFilePath": "foo",
+    "caV2FilePath": "foo"
+  },
+  "email": {
+    "company": "Flo Technologies",
+    "sender": "admin-noreply@flotechnologies.com",
+    "sendwithus": {
+      "api_key": "live_4d05906ab026c8e91f05f641bdbdc303227601e2",
+      "templates": {
+        "forgot_password": "tem_t7UPKLecmvAHJTXMX3FhD6",
+        "registration": "tem_WrqE2RxjNynp6vyKmMZztG"
+      }
+    }
+  },
+  "admin_url": "http://localhost:8080",
+  "contact_url": "http://www.flotechnologies.com/",
+  "mobile_registration_url": "floapp://register",
+  "endpointTests": {
+    "url": "http://localhost:8000",
+    "username": "engineering@flotechnologies.com",
+    "password": "glug@glug",
+    "auth_path": "/api/v1/users/auth"
+  },
+  "systemAdmin": {
+    "username": "engineering@flotechnologies.com",
+    "password": "glug@glug"
+  },
+  "redis": {
+    "url": "redis:6379",
+    "options": {
+      "no_ready_check": true
+    }
+  },
+  "influxdb": {
+    "host": "localhost",
+    "port": "8086",
+    "database": "",
+    "username": "",
+    "password": ""
+  },
+  "encryption": {
+    "kafka": {},
+    "dynamodb": {},
+    "hmacKey": "super secret key"
+  },
+  "pes": "",
+  "defaultFieldMaxLength": 256,
+  "maxFailedLoginAttempts": 5,
+  "failedLoginAttemptsMinutes": 10
+}

@@ -1,0 +1,101 @@
+version: '2'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-base
+    ports:
+      - "8000:8000"
+      - "9001:9001"
+    container_name: flo-app
+    image: 098786959887.dkr.ecr.us-west-2.amazonaws.com/{{ APPLICATION_NAME }}
+    environment:
+      # Defaults here
+      NODE_ENV: circleci
+      APPLICATION_NAME: flo-app
+      ENVIRONMENT: local
+      NEW_RELIC_LICENSE_KEY:
+    volumes:
+      - ./logs:/var/log/app
+      - ./.docker/templates/:/etc/templates/
+
+  dev:
+    container_name: dev
+    extends: app
+    environment:
+      FLO_API_AWS_DYNAMODB_REGION: us-west-2
+      
+
+    volumes:
+      - ./:/go/
+    depends_on:
+      - redis
+      - dynamodb
+      - kafka
+
+  local:
+    container_name: local
+    extends: app
+    environment:
+      FLO_API_AWS_DYNAMODB_REGION: us-west-2
+
+    depends_on:
+      - redis
+
+  dynamodb:
+    image: cnadiminti/dynamodb-local
+    container_name: dynamodb
+    entrypoint: "/usr/bin/java -Xms256m -Xmx256m -Djava.library.path=. -jar DynamoDBLocal.jar --inMemory -sharedDb -port 4567"
+
+    ports:
+      - "4567:4567"
+
+  kafka:
+    image: 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-kafka:2.12-0.10.2.1-alpine
+    container_name: kafka
+    environment:
+      ADVERTISED_HOST: kafka
+      ADVERTISED_PORT: 9092
+      LOG_RETENTION_HOURS: 336
+
+  redis:
+    image: redis:3.2.9-alpine
+    container_name: redis
+
+
+
+ ######################################################
+  # Build Services
+  ######################################################
+  build:
+    image: 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-golang-docker:golang-1.8-alpine-build
+    command: /bin/bash -c "go get github.com/tools/godep && cd src/main && godep restore  && go install main"
+    volumes:
+      - ./:/go/
+
+  test:
+    image: 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-golang-docker:golang-1.8-alpine-build
+    container_name: test
+    links:
+      - local
+    depends_on:
+      - kafka
+
+    environment:
+      NODE_ENV: circleci    #  Set CircleCI NODE_ENV
+      APPLICATION_NAME: flo-app
+      ENVIRONMENT: local
+      FLO_API_AWS_DYNAMODB_ENDPOINT: dynamodb:4567
+
+    volumes:
+      - ./:/go/
+      - "${HOME}/.case-sensitive/.npm:/root/.npm"
+      - ./tests:/app/tests
+      - "./test-results:/app/test-results"
+    command: |
+      /bin/bash -c " \
+        echo \"Running tests: $$APPLICATION_NAME\" && \
+        echo 'SLEEP' && sleep 30 && \
+        printf 'PING: ' && curl -s local:8000 > /dev/null && echo 'OK' || (printf 'FAIL' && exit 1) \
+      "

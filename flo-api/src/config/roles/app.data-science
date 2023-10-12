@@ -1,0 +1,13 @@
+{
+  "roles": "app.data-science",
+  "allows": [
+    {
+      "resources": ["ICD"],
+      "permissions": ["retrieveByTimezone"]
+    },
+    {
+      "resources": ["TimeZone"],
+      "permissions": ["retrieveActive"]
+    }
+  ]
+}

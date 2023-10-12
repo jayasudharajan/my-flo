@@ -1,0 +1,13 @@
+{
+  "roles": "GoogleSmartHome.*.invoke-webhook",
+  "allows": [
+    {
+      "resources": [
+        "GoogleSmartHome"
+      ],
+      "permissions": [
+        "invokeWebhook"
+      ]
+    }
+  ]
+}

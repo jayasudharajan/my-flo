@@ -1,0 +1,13 @@
+{
+  "roles": "app.dr-flo",
+  "allows": [
+    {
+      "resources": ["Alarm"],
+      "permissions": ["retrieveByICDId"]
+    },
+    {
+    	"resources": ["ICD"],
+    	"permissions": ["retrieveAll"]
+    }
+  ]
+}

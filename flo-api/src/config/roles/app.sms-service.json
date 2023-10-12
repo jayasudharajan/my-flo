@@ -1,0 +1,9 @@
+{
+  "roles": "app.sms-service",
+  "allows": [
+    {
+      "resources": [],
+      "permissions": []
+    }
+  ]
+}

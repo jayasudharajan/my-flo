@@ -1,0 +1,9 @@
+{
+  "roles": "app.kapacitor",
+  "allows": [
+    {
+      "resources": ["ICD"],
+      "permissions": ["handleDeviceAnomalyEvent", "retrieveByAnomalyTypeAndDateRange"]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "flo-device-service.fullname" . }}
+  labels:
+    app: {{ template "flo-device-service.name" . }}
+    app.kubernetes.io/name: {{ template "flo-device-service.name" . }}
+    app.kubernetes.io/environment: {{ .Values.secrets.datas.ENVIRONMENT }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ template "flo-device-service.chart" . }}
+{{- with .Values.service.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "flo-device-service.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

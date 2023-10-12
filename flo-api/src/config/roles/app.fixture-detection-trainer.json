@@ -1,0 +1,24 @@
+{
+  "roles": "app.fixture-detection-trainer",
+  "allows": [
+    {
+      "resources": ["ICD"],
+      "permissions": [
+        "retrieveAll",
+        "retrieveByDevice"
+      ]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveByLocationId"
+      ]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveFullActivityLog"
+      ]
+    }
+  ]
+}

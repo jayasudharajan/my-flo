@@ -1,0 +1,13 @@
+ingress:
+  hosts:
+    - flo-api.flosecurecloud.com
+    - flo-api-prod.flosecurecloud.com
+    - api-gw-rc.flosecurecloud.com
+    - flo-api-rc.flosecurecloud.com
+  tls:
+    - secretName: flo-api
+      hosts:
+        - flo-api.flosecurecloud.com
+        - flo-api-prod.flosecurecloud.com
+        - api-gw-rc.flosecurecloud.com
+        - flo-api-rc.flosecurecloud.com

@@ -1,0 +1,12 @@
+{
+  "roles": "User.*.read",
+  "allows": [
+    {
+      "resources": ["User"],
+      "permissions": [
+        "retrieve",
+        "retrieveAccountSubscription"
+      ]
+    }
+  ]
+}

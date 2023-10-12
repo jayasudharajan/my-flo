@@ -1,0 +1,158 @@
+{
+  "roles": "app.flo-notification-router-v2",
+  "allows": [
+    {
+      "resources": ["ICD"],
+      "permissions": [
+        "retrieve_v2",
+        "retrieveUsers",
+        "retrieveByDevice",
+        "retrieve",
+        "update",
+        "create",
+        "handleExternalAction",
+        "retrieveAll"
+      ]
+    },
+    {
+      "resources": ["User"],
+      "permissions": [
+        "retrieve_v2",
+        "retrieveLatestPushNotificationTokenByUserId",
+        "retrieveAccountSubscription"
+      ]
+    },
+    {
+      "resources": ["NotificationToken"],
+      "permissions": [
+        "retrieve"
+      ]
+    },
+    {
+      "resources": ["PushNotificationToken"],
+      "permissions": [
+        "retrieveByUserId"
+      ]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieve_v2",
+        "updateDevice_v2",
+        "retrieveAwayModeState",
+        "retrieveIrrigationSchedule",
+        "retrieve",
+        "retrieveByLocationId",
+        "setSystemMode",
+        "sleepSetSystemMode"
+      ]
+    },
+    {
+      "resources": ["AppDeviceNotificationInfo"],
+      "permissions": [
+        "retrieveByUser",
+        "retrieve",
+        "update",
+        "create"
+      ]
+    },
+    {
+      "resources": ["AlarmNotificationDeliveryFilter"],
+      "permissions": [
+        "retrieve",
+        "update",
+        "create",
+        "retrieveByICDId"
+      ]
+    },
+    {
+      "resources": ["Account"],
+      "permissions": [
+        "retrieveByAccount",
+        "retrieve_v2"
+      ]
+    },
+    {
+      "resources": ["AccountGroup"],
+      "permissions": [
+        "retrieveAccountGroupAlarmNotificationDeliveryRuleByGroupId",
+        "retrieveAccountGroupAlarmNotificationDeliveryRuleByGroupIdAlarmIdSystemMode",
+        "retrieveUserAccountGroupRolesByGroupId"
+      ]
+    },
+    {
+      "resources": ["ICDAlarmNotificationDeliveryRule"],
+      "permissions": [
+        "retrieve",
+        "update",
+        "create"
+      ]
+    },
+    {
+      "resources": ["ICDAlarmIncidentRegistry"],
+      "permissions": [
+        "retrieve",
+        "update",
+        "create",
+        "patch"
+      ]
+    },
+    {
+      "resources": ["ICDAlarmIncidentRegistryLog"],
+      "permissions": [
+        "create"
+      ]
+    },
+    {
+      "resources": ["UserAlarmNotificationDeliveryRule"],
+      "permissions": [
+        "retrieveByLocationAlarmIdSystemMode"
+      ]
+    },
+    {
+      "resources": ["UserDetail"],
+      "permissions": [
+        "retrieve",
+        "retrieveWithUser"
+      ]
+    },
+    {
+      "resources": ["ICDAlarmLog"],
+      "permissions": [
+        "create"
+      ]
+    },
+    {
+      "resources": ["ICDAlarmNotificationStatusRegistry"],
+      "permissions": [
+        "create"
+      ]
+    },
+    {
+      "resources": ["Onboarding"],
+      "permissions": [
+        "triggerEvent"
+      ]
+    },
+    {
+      "resources": ["AccountSubscription"],
+      "permissions": [
+        "retrieveByUserId",
+        "retrieve",
+        "retrieveSubscriptionPlan"
+      ]
+    },
+    {
+      "resources": ["WeeklyReport"],
+      "permissions": [
+        "issueUnsubscribeLink"
+      ]
+    },
+    {
+      "resources": ["Directives"],
+      "permissions": [
+        "close-valve"
+      ]
+  }
+  ]
+}

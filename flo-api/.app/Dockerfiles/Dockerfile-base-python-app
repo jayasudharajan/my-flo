@@ -1,0 +1,47 @@
+FROM 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-python-base:3.6-alpine
+MAINTAINER Flo Technologies Engineering Team
+
+################################################################################
+# Container Scripts
+################################################################################
+# Add app-env
+ADD .docker/bin/app-env /usr/local/bin/app-env
+RUN chmod a+x /usr/local/bin/app-env
+
+# Add start
+ADD .docker/bin/start /usr/local/bin/start
+RUN chmod a+x /usr/local/bin/start
+
+# Add configuration files
+ADD .docker/templates/ /etc/templates/
+
+WORKDIR /app/
+
+
+################################################################################
+# Add App
+################################################################################
+ADD ./src /app/
+ADD ./requirements.txt /app/requirements.txt
+RUN ln -s /app/run.py /app/app.py
+
+RUN pip install -r /app/requirements.txt
+
+
+################################################################################
+# Volumes
+################################################################################
+VOLUME ["/var/log/app"]
+
+
+################################################################################
+# Ports
+################################################################################
+
+EXPOSE 8000
+
+################################################################################
+# Entrypoint
+################################################################################
+
+ENTRYPOINT ["/usr/local/bin/start"]

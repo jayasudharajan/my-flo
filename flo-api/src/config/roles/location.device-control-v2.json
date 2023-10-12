@@ -1,0 +1,12 @@
+{
+  "roles": "Location.*.device-control-v2",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "update_v2",
+        "updateDevice_v2"
+      ]
+    }
+  ]
+}

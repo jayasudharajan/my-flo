@@ -1,0 +1,9 @@
+{
+  "roles": "app.onboarding-lambda",
+  "allows": [
+    {
+      "resources": ["Onboarding"],
+      "permissions": ["triggerEvent"]
+    }
+  ]
+}

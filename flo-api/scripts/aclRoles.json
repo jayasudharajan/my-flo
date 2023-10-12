@@ -1,0 +1,1619 @@
+[{
+  "roles": "Waterflow.*.read",
+  "allows": [
+    {
+      "resources": ["Waterflow"],
+      "permissions": [
+        "retrieveDailyWaterFlow"
+      ]
+    }
+  ]
+}
+,
+{
+  "roles": "WeeklyReport.*.unsubscribeLink",
+  "allows": [
+    {
+      "resources": ["WeeklyReport"],
+      "permissions": [
+        "unsubscribeByEmbeddedLink"
+      ]
+    }
+  ]
+}
+,
+{
+  "roles": "Account.*.readonly",
+  "allows": [
+    {
+      "resources": ["Account"],
+      "permissions": [
+        "retrieve_v2"
+      ]
+    }
+  ]
+},
+{
+  "roles": "Account.*.provision",
+  "allows": [
+    {
+      "resources": ["Account"],
+      "permissions": [
+        "retrieve_v2",
+        "updateUserRole_v2",
+        "retrieveUser_v2"
+      ]
+    }
+  ]
+},
+{
+  "roles": "Account.*.write",
+  "allows": [
+    {
+      "resources": ["Account"],
+      "permissions": [
+        "retrieve_v2",
+        "update_v2",
+        "updateUserRole_v2",
+        "updateUser_v2",
+        "retrieveUser_v2",
+        "removeUser_v2"
+      ]
+    }
+  ]
+},
+{
+  "roles": "AccountGroup.*.admin",
+  "allows": [
+    {
+      "resources": ["AccountGroup"],
+      "permissions": ["*"]
+    }
+  ]
+},
+{
+  "roles": "AccountGroup.*.analyst",
+  "allows": [
+    {
+      "resources": ["AccountGroup"],
+      "permissions": [
+        "retrieveAllGroupICDs",
+        "retrieveICD",
+        "retrievePendingNotifications",
+        "impersonate",
+        "retrieveThisWeekMeasurements",
+        "retrieveDailyAlertCountByGroupId",
+        "open-valve",
+        "close-valve"
+      ]
+    },
+    {
+      "resources": ["Client:property-sentinel"],
+      "permissions": [
+        "login"
+      ]
+    }
+  ]
+},
+{
+  "roles": "AccountGroup.*.landlord",
+  "allows": [
+    {
+      "resources": ["AccountGroup"],
+      "permissions": [
+        "retrieveAllGroupICDs",
+        "retrieveICD",
+        "retrievePendingNotifications",
+        "impersonate",
+        "retrieveThisWeekMeasurements",
+        "retrieveDailyAlertCountByGroupId",
+        "open-valve",
+        "close-valve"
+      ]
+    },
+    {
+      "resources": ["Client:property-sentinel"],
+      "permissions": [
+        "login"
+      ]
+    }
+  ]
+},
+{
+  "roles": "AccountGroup.*.property-manager",
+  "allows": [
+    {
+      "resources": ["AccountGroup"],
+      "permissions": [
+        "retrieveAllGroupICDs",
+        "retrieveICD",
+        "retrievePendingNotifications",
+        "impersonate",
+        "retrieveThisWeekMeasurements",
+        "retrieveDailyAlertCountByGroupId",
+        "open-valve",
+        "close-valve"
+      ]
+    },
+    {
+      "resources": ["Client:property-sentinel"],
+      "permissions": [
+        "login"
+      ]
+    }
+  ]
+},
+{
+  "roles": "Account.*.owner",
+  "allows": [
+    {
+      "resources": ["Account"],
+      "permissions": [
+        "retrieve_v2",
+        "update_v2",
+        "updateUser_v2",
+        "updateUserRole_v2",
+        "retrieveUser_v2",
+        "removeUser_v2",
+        "subscription_v2"
+      ]
+    }
+  ]
+},
+{
+  "roles": "all.read-only",
+  "allows": [
+    {
+      "resources": ["Location", "User", "Account", "Device", "ICD"],
+      "permissions": [
+        "retrieve_v2",
+        "retrieve",
+        "retrieveAll",
+        "scrollAll"
+      ]
+    },
+    {
+      "resources": ["Account"],
+      "permissions": [
+        "retrieveUser_v2"
+      ]
+    },
+    {
+      "resources": ["Location", "User"],
+      "permissions": [
+        "retrieveNotificationSettings_v2"
+      ]
+    },
+    {
+      "resources": ["StockICD"],
+      "permissions": [
+        "retrieveQrCode",
+        "retrieveSerialNumber",
+        "retrieveSerialNumberByDeviceId"
+      ]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveIrrigationSchedule",
+        "retrieveAwayModeState",
+        "retrievePairingData"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.control4",
+  "allows": [
+    {
+      "resources": ["Client"],
+      "permissions": [
+        "patchRedirectURIWhitelist"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.data-science",
+  "allows": [
+    {
+      "resources": ["ICD"],
+      "permissions": ["retrieveByTimezone"]
+    },
+    {
+      "resources": ["TimeZone"],
+      "permissions": ["retrieveActive"]
+    }
+  ]
+},
+{
+  "roles": "app.default-health-test-time",
+  "allows": [
+    {
+      "resources": [
+        "ICD"
+      ],
+      "permissions": [
+        "deployMicroleakTestTimeConfig"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.device-service",
+  "allows": [
+    {
+      "resources": ["User"],
+      "permissions": ["retrieve_v2"]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveAwayModeState",
+        "retrieveIrrigationSchedule",
+        "retrieve_v2",
+        "update_v2",
+        "setSystemMode",
+        "disableForcedSleep",
+        "enableForcedSleep"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.device-state",
+  "allows": [
+    {
+      "resources": ["ICD"],
+      "permissions": ["forwardDeviceState"]
+    }
+  ]
+},
+{
+  "roles": "app.device-status",
+  "allows": [
+    {
+      "resources": ["TaskSchedulerLog"],
+      "permissions": [
+        "logTaskStatus"
+      ]
+    },
+    {
+      "resources": ["ICDOnlineStatusLog"],
+      "permissions": ["logDeviceStatus"]
+    },
+    {
+      "resources": ["ICDForcedSystemMode"],
+      "permissions": ["retrieveLatestByDeviceId"]
+    }
+  ]
+},
+{
+  "roles": "app.directive-router",
+  "allows": [
+    {
+      "resources": ["Directives"],
+      "permissions": [
+        "track"
+      ]
+    },
+    {
+      "resources": ["ICDForcedSystemMode"],
+      "permissions": ["retrieveLatestByDeviceId"]
+    }
+  ]
+},
+{
+  "roles": "app.directives-response",
+  "allows": [
+    {
+      "resources": ["ZITResult"],
+      "permissions": [
+        "create"
+      ]
+    },
+    {
+      "resources": ["DirectiveResponseLog"],
+      "permissions": [
+      	"logDirectiveResponse"
+      ]
+    },
+    {
+      "resources": ["Directives"],
+      "permissions": [
+        "retrieveDirectiveLogByDirectiveId"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.dr-flo",
+  "allows": [
+    {
+      "resources": ["Alarm"],
+      "permissions": ["retrieveByICDId"]
+    },
+    {
+    	"resources": ["ICD"],
+    	"permissions": ["retrieveAll"]
+    }
+  ]
+},
+{
+  "roles": "app.email-service",
+  "allows": [
+    {
+      "resources": ["EmailDeliveryLog"],
+      "permissions": [
+        "create",
+        "update",
+        "retrieve"
+      ]
+    },
+    {
+      "resources": ["WebHooks"],
+      "permissions": ["emailServiceWebhook"]
+    }
+  ]
+},
+{
+  "roles": "app.factory-proxy",
+  "allows": [
+    {
+      "resources": ["StockICD"],
+      "permissions": [
+        "retrieve",
+        "retrieveByQrCode"
+      ]
+    },
+    {
+      "resources": ["ICD"],
+      "permissions": [
+        "retrieve",
+        "retrieve_v2"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.fixture-detection-generator",
+  "allows": [
+    {
+      "resources": ["ICD"],
+      "permissions": [
+        "logFixtureDetection",
+        "retrieveByDevice"
+      ]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveByLocationId"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.fixture-detection-trainer",
+  "allows": [
+    {
+      "resources": ["ICD"],
+      "permissions": [
+        "retrieveAll",
+        "retrieveByDevice"
+      ]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveByLocationId"
+      ]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveFullActivityLog"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.flo-cli",
+  "allows": [
+    {
+      "resources": ["UserAccount"],
+      "permissions": ["createNewUserAndAccount"]
+    },
+    {
+      "resources": ["UserAccount"],
+      "permissions": ["removeUserAndAccount"]
+    },
+
+    {
+      "resources": ["AccountGroup"],
+      "permissions": ["removeUserAndAccount"]
+    },
+    {
+      "resources": ["AccountGroup"],
+      "permissions": ["createAccountGroupAlarmNotificationDeliveryRule"]
+    },
+    {
+      "resources": ["AccountGroup"],
+      "permissions": ["patchAccountGroupAlarmNotificationDeliveryRule"]
+    },
+    {
+      "resources": ["AccountGroup"],
+      "permissions": ["updateAccountGroupAlarmNotificationDeliveryRule"]
+    }
+  ]
+},
+{
+  "roles": "app.flo-detect-scheduler",
+  "allows": [
+    {
+      "resources": ["ICD"],
+      "permissions": [
+        "retrieveAll",
+        "scrollAll"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.flo-internal-service",
+  "allows": [
+    {
+      "resources": ["User"],
+      "permissions": [
+        "retrieve_v2",
+        "update_v2",
+        "remove_v2"
+      ]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieve_v2",
+        "update_v2",
+        "updateDevice_v2",
+        "sleepSetSystemMode",
+        "setSystemMode",
+        "disableForcedSleep",
+        "enableForcedSleep",
+        "retrieveAwayModeState",
+        "retrieveIrrigationSchedule"
+      ]
+    },
+    {
+      "resources": ["Directives"],
+      "permissions": [
+        "open-valve",
+        "close-valve",
+        "power-reset",
+        "vrzit"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.flo-mttc-device-enabler",
+  "allows": [
+    {
+      "resources": ["ICD"],
+      "permissions": [
+        "scrollAll"
+      ]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieve_v2"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.flo-notification-router-v2",
+  "allows": [
+    {
+      "resources": ["ICD"],
+      "permissions": [
+        "retrieve_v2",
+        "retrieveUsers",
+        "retrieveByDevice",
+        "retrieve",
+        "update",
+        "create",
+        "handleExternalAction",
+        "retrieveAll"
+      ]
+    },
+    {
+      "resources": ["User"],
+      "permissions": [
+        "retrieve_v2",
+        "retrieveLatestPushNotificationTokenByUserId",
+        "retrieveAccountSubscription"
+      ]
+    },
+    {
+      "resources": ["NotificationToken"],
+      "permissions": [
+        "retrieve"
+      ]
+    },
+    {
+      "resources": ["PushNotificationToken"],
+      "permissions": [
+        "retrieveByUserId"
+      ]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieve_v2",
+        "updateDevice_v2",
+        "retrieveAwayModeState",
+        "retrieveIrrigationSchedule",
+        "retrieve",
+        "retrieveByLocationId",
+        "setSystemMode",
+        "sleepSetSystemMode"
+      ]
+    },
+    {
+      "resources": ["AppDeviceNotificationInfo"],
+      "permissions": [
+        "retrieveByUser",
+        "retrieve",
+        "update",
+        "create"
+      ]
+    },
+    {
+      "resources": ["AlarmNotificationDeliveryFilter"],
+      "permissions": [
+        "retrieve",
+        "update",
+        "create",
+        "retrieveByICDId"
+      ]
+    },
+    {
+      "resources": ["Account"],
+      "permissions": [
+        "retrieveByAccount",
+        "retrieve_v2"
+      ]
+    },
+    {
+      "resources": ["AccountGroup"],
+      "permissions": [
+        "retrieveAccountGroupAlarmNotificationDeliveryRuleByGroupId",
+        "retrieveAccountGroupAlarmNotificationDeliveryRuleByGroupIdAlarmIdSystemMode",
+        "retrieveUserAccountGroupRolesByGroupId"
+      ]
+    },
+    {
+      "resources": ["ICDAlarmNotificationDeliveryRule"],
+      "permissions": [
+        "retrieve",
+        "update",
+        "create"
+      ]
+    },
+    {
+      "resources": ["ICDAlarmIncidentRegistry"],
+      "permissions": [
+        "retrieve",
+        "update",
+        "create",
+        "patch"
+      ]
+    },
+    {
+      "resources": ["ICDAlarmIncidentRegistryLog"],
+      "permissions": [
+        "create"
+      ]
+    },
+    {
+      "resources": ["UserAlarmNotificationDeliveryRule"],
+      "permissions": [
+        "retrieveByLocationAlarmIdSystemMode"
+      ]
+    },
+    {
+      "resources": ["UserDetail"],
+      "permissions": [
+        "retrieve",
+        "retrieveWithUser"
+      ]
+    },
+    {
+      "resources": ["ICDAlarmLog"],
+      "permissions": [
+        "create"
+      ]
+    },
+    {
+      "resources": ["ICDAlarmNotificationStatusRegistry"],
+      "permissions": [
+        "create"
+      ]
+    },
+    {
+      "resources": ["Onboarding"],
+      "permissions": [
+        "triggerEvent"
+      ]
+    },
+    {
+      "resources": ["AccountSubscription"],
+      "permissions": [
+        "retrieveByUserId",
+        "retrieve",
+        "retrieveSubscriptionPlan"
+      ]
+    },
+    {
+      "resources": ["WeeklyReport"],
+      "permissions": [
+        "issueUnsubscribeLink"
+      ]
+    },
+    {
+      "resources": ["Directives"],
+      "permissions": [
+        "close-valve"
+      ]
+  }
+  ]
+}
+,
+{
+  "roles": "app.flo-onboarding-service",
+  "allows": [
+    {
+      "resources": ["Onboarding"],
+      "permissions": ["triggerEvent"]
+    }
+  ]
+},
+{
+  "roles": "app.flo-sense-trainer",
+  "allows": [
+    {
+      "resources": ["ICD"],
+      "permissions": ["retrieveByDevice"]
+    },
+    {
+      "resources": ["Directives"],
+      "permissions": ["set-flosense-config"]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveFullActivityLog"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.flo-sense",
+  "allows": [
+    {
+      "resources": ["FloSense"],
+      "permissions": [
+        "*"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.health-test-time-calculator",
+  "allows": [
+    {
+      "resources": [
+        "ICD"
+      ],
+      "permissions": [
+        "retrieveAll",
+        "deployMicroleakTestTimeConfig",
+        "retrievePendingMicroleakTestTimeConfig"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.icd-provisioner",
+  "allows": [
+    {
+      "resources": ["StockICD"],
+      "permissions": [
+        "retrieve",
+        "generate",
+        "retrieveQrCode",
+        "generateSerialNumber",
+        "retrieveSerialNumberByDeviceId",
+        "retrieveSerialNumber",
+        "removeSerialNumber"
+      ]
+    }
+  ]
+},
+{
+  "roles": "IFTTT.ifttt-realtime-notifications",
+  "allows": [
+    {
+      "resources": ["IFTTT"],
+      "permissions": [
+        "notifyRealtimeAlert"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.kapacitor",
+  "allows": [
+    {
+      "resources": ["ICD"],
+      "permissions": ["handleDeviceAnomalyEvent", "retrieveByAnomalyTypeAndDateRange"]
+    }
+  ]
+},
+{
+  "roles": "app.leak-state-service",
+  "allows": [
+    {
+      "resources": ["ICD"],
+      "permissions": ["retrieve", "forwardDeviceState"]
+    }
+  ]
+},
+{
+  "roles": "app.moen",
+  "allows": [
+    {
+      "resources": ["Client"],
+      "permissions": [
+        "patchRedirectURIWhitelist"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.mqtt-broker",
+  "allows": [
+    {
+      "resources": ["ICDOnlineStatusLog"],
+      "permissions": [
+        "logOnlineStatus",
+        "logOfflineStatus"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.notification-system-migration",
+  "allows": [
+    {
+      "resources": [
+        "User"
+      ],
+      "permissions": [
+        "retrieve_v2",
+        "update_v2",
+        "retrieveUserAlarmNotificationDeliveryRuleByUserLocation"
+      ]
+    },
+    {
+      "resources": [
+        "Account"
+      ],
+      "permissions": [
+        "retrieveUser_v2"
+      ]
+    },
+    {
+      "resources": [
+        "UserAlarmNotificationDeliveryRule"
+      ],
+      "permissions": [
+        "retrieveByUserLocation"
+      ]
+    },
+    {
+      "resources": [
+        "Location"
+      ],
+      "permissions": [
+        "retrieve",
+        "update",
+        "retrieve_v2",
+        "update_v2",
+        "removeNotifications_v2"
+      ]
+    },
+    {
+      "resources": [
+        "ICD"
+      ],
+      "permissions": [
+        "retrieve",
+        "update",
+        "retrieve_v2",
+        "update_v2"
+      ]
+    }
+  ]
+}
+,
+{
+  "roles": "app.odt-vpn-server",
+  "allows": [
+    {
+      "resources": ["ICD"],
+      "permissions": ["vpn"]
+    }
+  ]
+},
+{
+  "roles": "app.onboarding-lambda",
+  "allows": [
+    {
+      "resources": ["Onboarding"],
+      "permissions": ["triggerEvent"]
+    }
+  ]
+},
+{
+  "roles": "app.pes-v2",
+  "allows": [
+    {
+      "resources": ["ICD"],
+      "permissions": [
+        "retrieveAll",
+        "retrieveByDevice"
+      ]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveByLocationId"
+      ]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveFullActivityLog"
+      ]
+    },
+    {
+      "resources": ["Directives"],
+      "permissions": [
+        "update-profile"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.pki-service",
+  "allows": [
+    {
+      "resources": ["StockICD"],
+      "permissions": ["create", "retrieve", "delete"]
+    },
+    {
+      "resources": ["PKILog"],
+      "permissions": ["create"]
+    }
+  ]
+},
+{
+  "roles": "app.puck-service",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieve_v2",
+        "update_v2",
+        "updateDevice_v2",
+        "sleepSetSystemMode",
+        "setSystemMode"
+      ]
+    },
+    {
+      "resources": ["Directives"],
+      "permissions": [
+        "open-valve",
+        "close-valve"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.report-service",
+  "allows": [
+    {
+      "resources": ["User"],
+      "permissions": [
+        "retrieve",
+        "retrieveAll",
+        "retrieve_v2"
+      ]
+    },
+    {
+      "resources": ["UserDetail"],
+      "permissions": [
+        "retrieve",
+        "retrieveWithUser"
+      ]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveMonthlyUsage",
+        "retrieveByLocationId",
+        "retrieveFullActivityLog",
+        "retrieveAnalytics",
+        "retrievePendingNotifications",
+        "retrieveDailyLeakTestResult",
+        "retrieve_v2"
+      ]
+    },
+    {
+      "resources": ["Alarm"],
+      "permissions": [
+        "retrieveDeliveryAnalytics"
+      ]
+    },
+    {
+      "resources": ["ICD"],
+      "permissions": [
+        "retrieveAll",
+        "retrieveLatestFixtureAverages"
+      ]
+    },
+    {
+      "resources": ["Waterflow"],
+      "permissions": ["retrieveTransmittingDevices"]
+    },
+    {
+      "resources": ["WeeklyReport"],
+      "permissions": ["issueUnsubscribeLink"]
+    }
+  ]
+},
+{
+  "roles": "app.runscope",
+  "allows": [
+    {
+      "resources": ["Notification"],
+      "permissions": [
+        "create_v2"
+      ]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "publishTelemetry_v2",
+        "retrieve_v2"
+      ]
+    },
+    {
+      "resources": ["User"],
+      "permissions": [
+        "retrieveRegistrationToken",
+        "retrieve_v2"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.science-lab",
+  "allows": [
+    {
+      "resources": ["User", "Account", "Location", "AccountGroup"],
+      "permissions": [
+        "retrieve_v2",
+        "retrieveNotifications_v2"
+      ]
+    },
+    {
+      "resources": ["Directives"],
+      "permissions": [
+        "set-pes-schedule",
+        "get-pes-schedule"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.sms-service",
+  "allows": [
+    {
+      "resources": [],
+      "permissions": []
+    }
+  ]
+},
+{
+  "roles": "app.task-scheduler",
+  "allows": [
+    {
+      "resources": ["TaskSchedulerLog"],
+      "permissions": ["logTaskStatus"]
+    }
+  ]
+},
+{
+  "roles": "app.test-bench",
+  "allows": [
+    {
+      "resources": ["StockICD"],
+      "permissions": [
+      	"generate",
+      	"retrieve",
+      	"generateSerialNumber",
+      	"retrieveSerialNumberByDeviceId",
+      	"retrieveSerialNumber",
+      	"removeSerialNumber"
+      ]
+    }
+  ]
+},
+{
+  "roles": "app.weekly-report-subscription-lambda",
+  "allows": [
+    {
+      "resources": ["WeeklyReport"],
+      "permissions": ["subscribe", "unsubscribe"]
+    }
+  ]
+},
+{
+  "roles": "GoogleSmartHome.*.invoke-webhook",
+  "allows": [
+    {
+      "resources": [
+        "GoogleSmartHome"
+      ],
+      "permissions": [
+        "invokeWebhook"
+      ]
+    }
+  ]
+},
+{
+  "roles": "Grafana.full-access",
+  "allows": [
+    {
+      "resources": ["Grafana"],
+      "permissions": [
+        "*"
+      ]
+    }
+  ]
+},
+{
+  "roles": "IFTTT.*.alerts-read",
+  "allows": [
+    {
+      "resources": ["IFTTT"],
+      "permissions": [
+        "deleteTriggerIdentity",
+        "getAlertDetectedTriggerEventsBySeverity"
+      ]
+    }
+  ]
+},
+{
+  "roles": "IFTTT.*.device-control",
+  "allows": [
+    {
+      "resources": ["IFTTT"],
+      "permissions": [
+        "deviceControlAction"
+      ]
+    }
+  ]
+},
+{
+  "roles": "IFTTT.*.user-read",
+  "allows": [
+    {
+      "resources": ["IFTTT"],
+      "permissions": [
+        "getUserInfo"
+      ]
+    }
+  ]
+},
+{
+  "roles": "Localization.read-v2",
+  "allows": [
+    {
+      "resources": ["Localization"],
+      "permissions": [
+        "retrieveLocalization_v2",
+        "retrieveLocale_v2",
+        "retrieveAssest_v2"
+      ]
+    }
+  ]
+},
+{
+  "roles": "Location.*.alerts-read",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveCurrentICDOnboardingState",
+        "retrievePendingNotifications"
+      ]
+    }
+  ]
+},
+{
+  "roles": "Location.*.clear-alert-v2",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "removeNotifications_v2",
+        "retrieveNotifications_v2"
+      ]
+    }
+  ]
+},
+{
+  "roles": "Location.*.device-control-v2",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "update_v2",
+        "updateDevice_v2"
+      ]
+    }
+  ]
+},
+{
+  "roles": "Location.*.device-control",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "sleepSetSystemMode",
+        "setSystemMode",
+        "open-valve",
+        "close-valve"
+      ]
+    }
+  ]
+},
+{
+  "roles": "Location.*.read-device-v2",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieve_v2"
+      ]
+    }
+  ]
+},
+{
+  "roles": "Location.*.read-icd",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveCurrentICDOnboardingState",
+        "retrieveDailyWaterFlow",
+        "retrieveMonthlyUsage",
+        "retrievePendingNotifications"
+      ]
+    }
+  ]
+},
+{
+  "roles": "Location.*.read-v2",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieve_v2",
+        "retrieveNotifications_v2"
+      ]
+    }
+  ]
+},
+{
+  "roles": "Location.*.readonly",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieve_v2",
+        "retrieveNotifications_v2"
+      ]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveIrrigationSchedule",
+        "retrieveAwayModeState",
+        "retrievePairingData"
+      ]
+    },
+    {
+      "resources": ["Location", "User"],
+      "permissions": [
+        "retrieveNotificationSettings_v2"
+      ]
+    }
+  ]
+},
+{
+  "roles": "Location.*.waterflow-read",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveCurrentICDOnboardingState",
+        "retrieveDailyWaterFlow",
+        "retrieveMonthlyUsage"
+      ]
+    }
+  ]
+},
+{
+  "roles": "Location.*.write",
+  "allows": [
+    {
+        "resources": ["Location"],
+        "permissions": [
+            "update_v2",
+            "retrieve_v2",
+            "pairDevice_v2",
+            "unpairDevice_v2",
+            "updateDevice_v2",
+            "addUserRole_v2",
+            "updateUserRole_v2",
+            "removeUserRole_v2",
+            "retrieveNotifications_v2",
+            "removeNotifications_v2",
+            "open-valve",
+            "close-valve"
+        ]
+    }
+  ]
+}
+,
+{
+  "roles": "Location.*.owner",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "toggleValve",
+        "powerReset",
+        "setSystemMode",
+        "requestUpgrade",
+        "runZit",
+        "factoryReset",
+        "sleepSetSystemMode",
+        "getVersion",
+        "retrieveDailyWaterFlow",
+        "retrieveMonthlyCost",
+        "retrieveMonthlyUsage",
+        "retrieveAlarmNotificationDeliveryFilterHighestSeverityByICDId",
+        "retrieveAlarmNotificationDeliveryFilter",
+        "retrieveAlarmNotificationDeliveryFilterByICDIdAlarmId",
+        "retrieveAlarmNotificationDeliveryFilterByICDId",
+        "retrievePendingNotifications",
+        "retrieveClearedNotifications",
+        "retrieveFullActivityLog",
+        "retrievePendingSeverityBySeverity",
+        "clearNotifications",
+        "retrieveQrCode",
+        "get-health-test-config",
+        "update-health-test-config",
+        "open-valve",
+        "close-valve",
+        "retrieveCurrentICDOnboardingState",
+        "retrieveFixtureDetectionResults",
+        "retrieveByDeviceIdAndDateRange",
+        "runFixturesDetection",
+        "retrieveLatestByDeviceId",
+        "subscribeToWeeklyReport",
+        "unsubscribeFromWeeklyReport",
+        "updateFixturesWithFeedback",
+        "get-version",
+        "vrzit",
+        "retrievePairingData",
+        "unpairDevice",
+        "retrievePESParams",
+        "computePESParams",
+        "retrieveIrrigationSchedule",
+        "toggleDeviceAwayMode",
+        "retrieveAwayModeState",
+        "generateInsuranceLetter",
+        "downloadInsuranceLetter",
+        "submitAlertFeedback",
+        "retrieveAlertFeedback",
+        "power-reset",
+        "triggerOnboardingEvent"
+      ]
+    },
+    {
+        "resources": ["Location"],
+        "permissions": [
+            "create_v2",
+            "update_v2",
+            "remove_v2",
+            "retrieve_v2",
+            "pairDevice_v2",
+            "unpairDevice_v2",
+            "updateDevice_v2",
+            "addUserRole_v2",
+            "updateUserRole_v2",
+            "removeUserRole_v2",
+            "retrieveNotifications_v2",
+            "removeNotifications_v2",
+            "createSampleNotification_v2"
+        ]
+    }
+  ]
+}
+,
+{
+  "roles": "Passwordless.*.magicLink",
+  "allows": [
+    {
+      "resources": ["Passwordless"],
+      "permissions": [
+        "redirectWithMagicLink",
+        "loginWithMagicLink"
+      ]
+    }
+  ]
+}
+,
+{
+  "roles": "system.admin",
+  "allows": [
+    {
+      "resources": [
+        "Account",
+        "AccountSubscription",
+        "AccountGroup",
+        "Alarm",
+        "AlarmNotificationDeliveryFilter",
+        "AppDeviceNotificationInfo",
+        "EmailDeliveryLog",
+        "Directives",
+        "FAQAndroid",
+        "FAQiOS",
+        "ICD",
+        "ICDAlarmIncidentRegistry",
+        "ICDAlarmIncidentRegistryLog",
+        "ICDAlarmNotificationDeliveryRule",
+        "ICDDirectiveRegistry",
+        "KernelVersion",
+        "Location",
+        "NotificationToken",
+        "PES",
+        "PressureTestProfile",
+        "PushNotificationDeliveryLog",
+        "RegistrationToken",
+        "ResetToken",
+        "SMSDeliveryLog",
+        "SprinklerProfile",
+        "StockICD",
+        "SystemUserRoles",
+        "TelemetryReport",
+        "TimeZone",
+        "UltimaVersion",
+        "User",
+        "UserAccount",
+        "UserAccountRole",
+        "UserAccountGroupRole",
+        "UserAlarmNotificationDeliveryRule",
+        "UserDetail",
+        "UserLocationRole",
+        "UserUtils",
+        "WebHooks",
+        "ZITResult",
+        "ICDAlarmLog",
+        "ICDAlarmNotificationStatusRegistry",
+        "ICDForcedSystemMode",
+        "ICDOnlineStatusLog",
+        "TaskSchedulerLog",
+        "CountryStateProvince",
+        "Client",
+        "Waterflow",
+        "Onboarding",
+        "PushNotificationToken",
+        "IFTTT",
+        "GoogleSmartHome",
+        "Notification",
+        "Localization"
+      ],
+      "permissions": ["*"]
+    }
+  ]
+},
+{
+  "roles": "telemetry-tag.read",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveTelemetryTags_v2",
+        "retrieve_v2"
+      ]
+    },
+    {
+      "resources": ["ICD"],
+      "permissions": [
+        "retrieve_v2"
+      ]
+    }
+  ]
+},
+{
+  "roles": "telemetry-tag.write",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "openCloseTelemetryTags_v2",
+        "createTelemetryTags_v2",
+        "updateDevice_v2"
+      ]
+    }
+  ]
+},
+{
+  "roles": "user",
+  "allows": [
+    {
+      "resources": ["StockICD"],
+      "permissions": ["retrieveByQrCode", "retrieveQrCode"]
+    },
+    {
+    	"resources": ["FAQiOS", "FAQAndroid"],
+    	"permissions": "retrieveOne"
+    },
+    {
+      "resources": ["CountryStateProvince"],
+      "permissions": ["retrieve"]
+    },
+    {
+      "resources": ["TimeZone"],
+      "permissions": ["retrieveActive"]
+    },
+    {
+      "resources": ["ICDAlarmNotificationDeliveryRule"],
+      "permissions": ["retrieve"]
+    },
+    {
+      "resources": ["AccountSubscription"],
+      "permissions": ["retrieveSubscriptionPlan", "retrieveCouponInfo"]
+    },
+    {
+      "resources": ["PushNotificationToken"],
+      "permissions": ["registerPushNotificationToken"]
+    },
+    {
+      "resources": ["FirebaseToken"],
+      "permissions": ["issueToken"]
+    },
+    {
+      "resources": ["ICD"],
+      "permissions": ["retrieveVersionFeatures"]
+    },
+    {
+      "resources": ["Notification"],
+      "permissions": ["retrieveActions_v2"]
+    },
+    {
+      "resources": ["Localization"],
+      "permissions": ["retrieveLocalization_v2"]
+    }
+  ]
+},
+{
+  "roles": "User.*.presence",
+  "allows": [
+    {
+      "resources": ["User"],
+      "permissions": [
+        "presence"
+      ]
+    }
+  ]
+}
+,
+{
+  "roles": "User.*.read-v2",
+  "allows": [
+    {
+      "resources": ["User"],
+      "permissions": [
+        "retrieve_v2"
+      ]
+    },
+    {
+      "resources": ["Localization"],
+      "permissions": [
+        "retrieveLocalization_v2",
+        "retrieveLocale_v2",
+        "retrieveAssest_v2"
+      ]
+    }
+  ]
+},
+{
+  "roles": "User.*.read",
+  "allows": [
+    {
+      "resources": ["User"],
+      "permissions": [
+        "retrieve",
+        "retrieveAccountSubscription"
+      ]
+    }
+  ]
+},
+{
+  "roles": "User.*.self",
+  "allows": [
+    {
+      "resources": ["User"],
+      "permissions": [
+        "resetPassword",
+        "retrieveUserAlarmNotificationDeliveryRuleByUser",
+        "retrieveUserAlarmNotificationDeliveryRuleByUserLocation",
+        "retrieveDeliveryRules",
+        "retrieveUserAlarmNotificationDeliveryRule",
+        "createUserAlarmNotificationDeliveryRule",
+        "updateUserAlarmNotificationDeliveryRule",
+        "patchUserAlarmNotificationDeliveryRule",
+        "removeUserAlarmNotificationDeliveryRule",
+        "retrieveNotificationToken",
+        "updateNotificationToken",
+        "patchNotificationToken",
+        "removeNotificationToken",
+        "addNotificationToken",
+        "removeNotificationToken",
+        "createPushNotificationToken",
+        "retrieveMFASettings",
+        "createMFASettings",
+        "enableMFA",
+        "disableMFA",
+        "retrieveUserAccountGroupRolesByUserId",
+        "handleStripePayment",
+        "retrieveAccountSubscription",
+        "cancelAccountSubscription",
+        "retrieveUserInfo",
+        "retrieveCustomerEmailSubscription",
+        "updateCustomerEmailSubscription"
+      ]
+    },
+    {
+        "resources": ["User"],
+        "permissions": [
+            "retrieve_v2",
+            "update_v2",
+            "remove_v2",
+            "retrieveNotificationSettings_v2",
+            "updateNotificationSettings_v2"
+        ]
+    }
+  ]
+}
+]

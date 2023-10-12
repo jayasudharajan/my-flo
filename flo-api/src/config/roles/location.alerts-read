@@ -1,0 +1,12 @@
+{
+  "roles": "Location.*.alerts-read",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveCurrentICDOnboardingState",
+        "retrievePendingNotifications"
+      ]
+    }
+  ]
+}

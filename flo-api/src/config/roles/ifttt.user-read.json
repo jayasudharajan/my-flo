@@ -1,0 +1,11 @@
+{
+  "roles": "IFTTT.*.user-read",
+  "allows": [
+    {
+      "resources": ["IFTTT"],
+      "permissions": [
+        "getUserInfo"
+      ]
+    }
+  ]
+}

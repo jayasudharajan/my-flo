@@ -1,0 +1,12 @@
+{
+  "roles": "IFTTT.*.alerts-read",
+  "allows": [
+    {
+      "resources": ["IFTTT"],
+      "permissions": [
+        "deleteTriggerIdentity",
+        "getAlertDetectedTriggerEventsBySeverity"
+      ]
+    }
+  ]
+}

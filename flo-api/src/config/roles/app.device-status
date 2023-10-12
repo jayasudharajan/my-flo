@@ -1,0 +1,19 @@
+{
+  "roles": "app.device-status",
+  "allows": [
+    {
+      "resources": ["TaskSchedulerLog"],
+      "permissions": [
+        "logTaskStatus"
+      ]
+    },
+    {
+      "resources": ["ICDOnlineStatusLog"],
+      "permissions": ["logDeviceStatus"]
+    },
+    {
+      "resources": ["ICDForcedSystemMode"],
+      "permissions": ["retrieveLatestByDeviceId"]
+    }
+  ]
+}

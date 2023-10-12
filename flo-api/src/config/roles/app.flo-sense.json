@@ -1,0 +1,11 @@
+{
+  "roles": "app.flo-sense",
+  "allows": [
+    {
+      "resources": ["FloSense"],
+      "permissions": [
+        "*"
+      ]
+    }
+  ]
+}

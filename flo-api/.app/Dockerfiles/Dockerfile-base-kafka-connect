@@ -1,0 +1,66 @@
+FROM 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-java-base:kafka-connect-3.3.1
+
+MAINTAINER Flo Technologies Engineering Team
+
+################################################################################
+# Container Tools
+################################################################################
+ENV \
+  DEBIAN_FRONTEND=noninteractive \
+  TERM=xterm-color
+
+ENV KAFKA_CONNECT_VERSION=3.3.1
+ENV KAFKA_CONNECT_DIR=/usr/local/share/kafka/plugins
+ENV CLASSPATH=$KAFKA_CONNECT_DIR/*:/usr/local/share/java:/usr/local/java
+
+# Install base utils
+RUN apt-get update && apt-get install -my \
+  wget \
+  curl \
+  supervisor \
+  python \
+  python-dev
+
+
+################################################################################
+# Container Scripts
+################################################################################
+# Add app-env
+ADD .docker/bin/app-env /usr/local/bin/app-env
+RUN chmod a+x /usr/local/bin/app-env
+
+# Add start
+ADD .docker/bin/start /usr/local/bin/start
+RUN chmod a+x /usr/local/bin/start
+
+# Add configuration files
+ADD .docker/templates/ /etc/templates/
+
+
+################################################################################
+# Add App
+################################################################################
+# Place flat jar and configs to /app
+ADD ./kafka-connect-s3/target/kafka-connect-s3-${KAFKA_CONNECT_VERSION}.jar $KAFKA_CONNECT_DIR/
+
+WORKDIR $KAFKA_CONNECT_DIR
+
+
+################################################################################
+# Volumes
+################################################################################
+
+VOLUME ["/var/log/app"]
+
+
+################################################################################
+# Ports
+################################################################################
+
+EXPOSE 8000
+
+################################################################################
+# Entrypoint
+################################################################################
+
+ENTRYPOINT ["/usr/local/bin/start"]

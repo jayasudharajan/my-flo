@@ -1,0 +1,30 @@
+.DS_Store
+*.iml
+.idea/
+.vscode
+.gradle
+docker-compose-local-prod.yml
+Dockerfile.local.run
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+docker-compose.local.yml
+src/certs
+src/creds
+
+# Executable
+#flo-device-service
+main
+
+**/.swp
+**/tmp
+.creds
+.swp
+**/certs
+**/certs.*
+**/creds.*
+**/creds
+pkg/
+bin/

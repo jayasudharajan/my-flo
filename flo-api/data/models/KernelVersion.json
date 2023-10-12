@@ -1,0 +1,11 @@
+[
+  {
+    "url": "https://s3-us-west-2.amazonaws.com/floultima-releases/kernel/i2cd-2.0.7.bin",
+    "checksum_alg": "sha1",
+    "checksum": "d46aaf0aab5057cf42f53ac2855749889bb8195f",
+    "model": "i2cd",
+    "kernel_version": "2.0.7",
+    "version": "2.0.7",
+    "release_date": "2016-07-19"
+  }
+]

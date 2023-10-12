@@ -1,0 +1,19 @@
+{
+  "roles": "User.*.read-v2",
+  "allows": [
+    {
+      "resources": ["User"],
+      "permissions": [
+        "retrieve_v2"
+      ]
+    },
+    {
+      "resources": ["Localization"],
+      "permissions": [
+        "retrieveLocalization_v2",
+        "retrieveLocale_v2",
+        "retrieveAssest_v2"
+      ]
+    }
+  ]
+}

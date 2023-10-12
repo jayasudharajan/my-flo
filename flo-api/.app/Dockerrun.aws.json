@@ -1,0 +1,19 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Ports": [
+    {
+      "ContainerPort": "8000"
+    }
+  ],
+  "Volumes": [
+    {
+      "HostDirectory": "/var/run/docker.sock",
+      "ContainerDirectory": "/var/run/docker.sock"
+    },
+    {
+      "HostDirectory": "/etc/env",
+      "ContainerDirectory": "/etc/env"
+    }
+  ],
+  "Logging": "/var/log/app"
+}

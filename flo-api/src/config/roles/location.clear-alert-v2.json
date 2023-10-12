@@ -1,0 +1,12 @@
+{
+  "roles": "Location.*.clear-alert-v2",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "removeNotifications_v2",
+        "retrieveNotifications_v2"
+      ]
+    }
+  ]
+}

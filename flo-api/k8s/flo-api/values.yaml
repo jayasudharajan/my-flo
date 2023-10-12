@@ -1,0 +1,75 @@
+---
+replicaCount: 13
+
+environment: production
+
+image:
+  repository: registry.gitlab.com/flotechnologies/flo-api
+  tag:
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+cronJob:
+  backoffLimit: 2
+  activeDeadlineSeconds: 600
+  command:
+    - /bin/sh
+  args:
+    - -c
+    - >-
+      kubectl set env deployment ${APPLICATION_NAME} LAST_RESTART_DATE="$(date)"
+      && kubectl rollout status deployment/${APPLICATION_NAME}
+  concurrencyPolicy: Forbid
+  image:
+    repository: registry.gitlab.com/flotechnologies/devops/kubectl
+    tag: 1.12.10
+    pullPolicy: Always
+    pullSecrets: gitlab-registry
+  restartPolicy: Never
+  schedule: "03 */6 * * *"
+
+service:
+  type: ClusterIP
+  port: 8000
+  livenessProbe:
+    path: "/api/v1/ping"
+    initialDelaySeconds: 35
+    periodSeconds: 10
+    timeoutSeconds: 1
+  readinessProbe:
+    path: "/api/v1/ping"
+    initialDelaySeconds: 25
+    periodSeconds: 5
+    successThreshold: 2
+    timeoutSeconds: 3
+
+v1ProxyService:
+  production: "not-for-public-use-api-gw.meetflo.com"
+  development: "api-dev.flocloud.co"
+  rc: "not-for-public-use-api-gw.meetflo.com"
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  hosts: []
+  tls: []
+
+tolerations: []
+
+affinity: {}
+
+secrets:
+  name: flocloud-api-secrets
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 300Mi
+  limits:
+    memory: 1Gi

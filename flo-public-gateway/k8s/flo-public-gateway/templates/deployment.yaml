@@ -1,0 +1,95 @@
+{{- $fullName := include "flo-public-gateway.fullname" . -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "flo-public-gateway.fullname" . }}
+  labels:
+    app: {{ include "flo-public-gateway.name" . }}
+    app.kubernetes.io/name: {{ include "flo-public-gateway.name" . }}
+    app.kubernetes.io/environment: {{ .Values.secrets.datas.ENVIRONMENT }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ include "flo-public-gateway.chart" . }}
+spec:
+{{ if eq .Values.environment "prod" }}
+  replicas: {{ .Values.replicaCount }}
+{{ else  }}
+  replicas: 2
+{{ end }}
+  selector:
+    matchLabels:
+      app: {{ include "flo-public-gateway.name" . }}
+      app.kubernetes.io/name: {{ include "flo-public-gateway.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      annotations:
+        checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+      labels:
+        app: {{ include "flo-public-gateway.name" . }}
+        app.kubernetes.io/name: {{ include "flo-public-gateway.name" . }}
+        app.kubernetes.io/environment: {{ .Values.secrets.datas.ENVIRONMENT }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+        helm.sh/chart: {{ include "flo-public-gateway.chart" . }}
+    spec:
+      imagePullSecrets:
+        - name: gitlab-registry
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: {{ $fullName }}-nginx-sidecar-config
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.service.livenessProbe.path }}
+              port: {{ .Values.service.port }}
+              scheme: HTTP
+            initialDelaySeconds: {{ .Values.service.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.service.livenessProbe.periodSeconds }}
+            successThreshold: 1
+            timeoutSeconds: {{ .Values.service.livenessProbe.timeoutSeconds }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.service.readinessProbe.path }}
+              port: {{ .Values.service.port }}
+              scheme: HTTP
+            initialDelaySeconds: {{ .Values.service.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.service.readinessProbe.periodSeconds }}
+            successThreshold: {{ .Values.service.readinessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.service.readinessProbe.timeoutSeconds }}
+          env:
+          - name: INSTANA_AGENT_HOST
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.hostIP
+          {{- range $key, $value := .Values.secrets.datas }}
+          - name: {{ $key | upper }}
+            valueFrom:
+              secretKeyRef:
+                  name:  flocloud-public-gateway-secrets
+                  key: {{ $key |   quote }}
+          {{- end }}
+
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

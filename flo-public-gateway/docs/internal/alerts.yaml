@@ -1,0 +1,624 @@
+paths:
+  /api/v2/alerts:
+    get:
+      summary: Retrieve alerts for device(s) and/or location(s)
+      description:
+        <h2>Pending alerts by location and device<h2>
+        <p style="font-weight:normal">You can pass as many deviceId and locationId params in the query strung as you want. The OR clause will be applied between the same params.</p>
+        <p style="font-weight:normal"><strong>Critical:</strong> GET /api/v2/events/alarms?deviceId=00977ce3-6870-441f-8792-0bca4b8c0400&locationId=2181e548-6bf9-49b0-ac6c-26a9c92477b6&severity=critical&status=triggered</p>
+        <p style="font-weight:normal"><strong>Warning:</strong> GET /api/v2/events/alarms?deviceId=00977ce3-6870-441f-8792-0bca4b8c0400&locationId=2181e548-6bf9-49b0-ac6c-26a9c92477b6&severity=critical&status=triggered</p>
+        <p style="font-weight:normal">Then the total of pendings is the sum of the total field of warning and critical request result.</p>
+        <p style="font-weight:normal">Clients should do the grouping and ordering if they need to, like group by alarm id.</p>
+        <h2>Activity log</h2>
+        <p style="font-weight:normal">You can pass as many deviceId and locationId params in the query strung as you want. The OR clause will be applied between the same params.</p>
+        <p style="font-weight:normal">GET /api/v2/events/alarms?deviceId=00977ce3-6870-441f-8792-0bca4b8c0400&locationId=2181e548-6bf9-49b0-ac6c-26a9c92477b6&status=resolved</p>
+        <h3>Alerts type filter</h3>
+        <p style="font-weight:normal">Add &severy=critical or &severy=info or &severy=warning to the query params</p>
+        <h3>Resolution Types</h3>
+        <ul>
+        <li><strong>Cleared:</strong> Add &reason=cleared</li>
+        <li><strong>Ignored:</strong> Add &reason=snoozed</li>
+        <li><strong>Cancelled:</strong> Add &reason=cancelled</li>
+        </ul>
+        <p><strong>Note:<strong> Device name is not known at this level so clients should use the device id to get the name.</p>
+      tags:
+        - Alerts
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: locationId
+          schema:
+            type: string
+            format: uuid
+          description: 'Multiple locationId query params are allowed'
+        - in: query
+          name: deviceId
+          schema:
+            type: string
+            format: uuid
+          description: 'Multiple deviceId query params are allowed'
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum:
+              - triggered
+              - resolved
+          description: |
+            Multiple filters are allowed.
+            * `triggered` - Alerts pending user feedback
+            * `resolved` - Resolved, reason will contain detail why
+        - in: query
+          name: reason
+          schema:
+            type: string
+            enum:
+              - cleared
+              - snoozed
+              - cancelled
+          description: |
+            Multiple filters are allowed.
+            * `cleared` - Cleared by user
+            * `snoozed` - User muted alert for some time
+            * `cancelled` - System cleared the alert before user
+        - in: query
+          name: severity
+          schema:
+            type: string
+            enum:
+              - info
+              - critical
+              - warning
+          description: |
+            Multiple filters are allowed.
+            * `info` - Informational message. e.g. Health Test Completed
+            * `warning` - Should look into. e.g. High Water Temperature
+            * `critical` - Water shutoff events. e.g. Fast Water Flow
+        - in: query
+          name: isInternalAlarm
+          schema:
+            type: boolean
+        - in: query
+          name: page
+          schema:
+            type: number
+          description: Page number
+        - in: query
+          name: size
+          schema:
+            type: number
+          description: Page size
+        - in: query
+          name: lang
+          schema:
+            type: string
+          description: Language
+        - in: query
+          name: unitSystem
+          schema:
+            type: string
+            enum:
+              - imperial
+              - metric
+          description: Unit System
+      responses:
+        200:
+          description: A list of matching alerts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertItemList'
+
+  /api/v2/alerts/statistics:
+    get:
+      parameters:
+        - in: query
+          name: locationId
+          schema:
+            type: string
+            format: uuid
+          description: 'Multiple locationId query params are allowed'
+        - in: query
+          name: deviceId
+          schema:
+            type: string
+            format: uuid
+          description: 'Multiple deviceId query params are allowed'
+      summary: Statistics for alerts
+      tags:
+        - Alerts
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Alert statistics for the used filters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pending:
+                    type: object
+                    properties:
+                      infoCount:
+                        type: number
+                      warningCount:
+                        type: number
+                      criticalCount:
+                        type: number
+                      alarmCount:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: number
+                            count: number
+
+  /api/v2/alerts/{id}:
+    get:
+      summary: Retrieves an Alert by ID.
+      tags:
+        - Alerts
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Alert Event ID
+        - in: query
+          name: lang
+          schema:
+            type: string
+          description: Language
+        - in: query
+          name: unitSystem
+          schema:
+            type: string
+            enum:
+              - imperial
+              - metric
+          description: Unit System          
+      produces:
+        - application/json
+      responses:
+        200:
+          description: The Alert with the given ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertItemEvent'
+
+  /api/v2/alerts/action:
+    post:
+      summary: User response to the alert
+      description: >
+        <h2>Mute 'Small Drip' alert for device XYZ for 2 hours.</h2>
+        <p><pre>POST /api/v2/alerts/action BODY: { "deviceId" : "XYZ", "alarmIds" : [28,29,30,31], "snoozeSeconds" : 7200 } </pre></p>
+        <h2>Clear 'Fast Water Flow' alert for device XYZ. Do not snooze, the next time it occurs it will again generate alert.</h2>
+        <p><pre>POST /api/v2/alerts/action BODY: { "deviceId" : "XYZ", "alarmIds" : [10], "snoozeSeconds" : 0 } </pre></p>
+      tags:
+        - Alerts
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertAction'
+
+  /api/v2/alerts/{id}/userFeedback:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Alert ID
+    post:
+      summary: Submit feedback for an incident
+      tags:
+        - Alerts
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                feedback:
+                  $ref: '#/components/schemas/Feedback'
+      responses:
+        200:
+          description: Feedback successfully submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserFeedback'
+        400:
+          description: Invalid request request body
+        403:
+          description: Unauthorized or device ID does not match incident
+        404:
+          description: Incident not found
+
+  /api/v2/alerts/filters/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Filter State ID
+
+    get:
+      summary: Retrieves a Filter State by ID.
+      tags:
+        - Alerts
+        - Filters
+      produces:
+        - application/json
+      responses:
+        200:
+          description: The Filter State with the given ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilterState'
+        400:
+          description: Invalid request request body
+        403:
+          description: Unauthorized or device ID does not match incident
+        404:
+          description: Filter State not found
+
+    delete:
+      summary: Deletes a Filter State by ID.
+      tags:
+        - Alerts
+        - Filters
+      produces:
+        - application/json
+      responses:
+        204:
+          description: The Filter State was successfully deleted or not found.
+
+  /api/v2/alerts/filters:
+    get:
+      summary: Retrieves Filter States by query parameter filters.
+      tags:
+        - Alerts
+        - Filters
+      parameters:
+        - in: query
+          name: deviceId
+          schema:
+            type: string
+            format: uuid
+          description: Device ID
+      produces:
+        - application/json
+      responses:
+        200:
+          description: The Filter States associated to the given filters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilterStates'
+    post:
+      summary: Creates a Filter State
+      tags:
+        - Alerts
+        - Filters
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilterState'
+      responses:
+        200:
+          description: The newly created Filter States.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilterState'
+        400:
+          description: Invalid request request body
+
+  /api/v2/alerts/{id}/feedback:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Alert ID
+    put:
+      summary: Submits user feedback about an alert
+      tags:
+        - Alerts
+      parameters:
+        - in: query
+          name: force
+          schema:
+            type: boolean
+          description: Overwrite feedback
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                feedback:
+                  $ref: '#/components/schemas/NewFeedback'
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Feedback successfully submitted
+        409:
+          description: Feedback has already been submitted by another user
+
+components:
+  schemas:
+    FilterState:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        alarmId:
+          type: integer
+        type:
+          enum:
+            - snooze
+            - max-frequency-cap
+        deviceId:
+          type: string
+          format: uuid
+        locationId:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        incidentId:
+          type: string
+          format: uuid
+        expiration:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+
+    FilterStates:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilterState'
+
+    AnyValue: {}
+
+    Action:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        text:
+          type: string
+        displayOnStatus:
+          type: integer
+        snoozeSeconds:
+          type: integer
+        sort:
+          type: integer
+    AlertAction:
+      type: object
+      properties:
+        deviceId:
+          type: string
+        alarmIds:
+          type: array
+          items:
+            type: number
+        snoozeSeconds:
+          type: number
+    AlertItemList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertItemEvent'
+        page:
+          type: number
+        total:
+          type: number
+    AlertItemEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayTitle:
+          type: string
+        displayMessage:
+          type: string
+        alarm:
+          type: object
+          properties:
+            id:
+              type: number
+            severity:
+              type: string
+            isInternal:
+              type: boolean
+        deviceId:
+          type: string
+          format: uuid
+        status:
+          type: string
+        reason:
+          type: string
+        systemMode:
+          type: string
+        snoozeTo:
+          type: string
+          format: date-time
+        locationId:
+          type: string
+          format: uuid
+        updateAt:
+          type: string
+          format: date-time
+        createAt:
+          type: string
+          format: date-time
+        fwValues:
+          type: object
+          properties:
+            gpm:
+              type: ['number','null']
+            galUsed:
+              type: ['number','null']
+            psiDelta:
+              type: ['number','null']
+            flowEventDuration:
+              type: ['number','null']
+            leakLossMinGal:
+              type: number
+            leakLossMaxGal:
+              type: number
+        userFeedback:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserFeedback'
+        feedback:
+          type: '#/components/schemas/NewFeedback'
+
+    UserFeedback:
+      type: object
+      properties:
+        userId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        feedback:
+          $ref: '#/components/schemas/Feedback'
+    Feedback:
+      type: array
+      items:
+        type: object
+        required:
+          - property
+          - value
+        properties:
+          property:
+            type: string
+          value:
+            anyOf:
+              - type: number
+              - type: string
+              - type: boolean
+              - $ref: '#/components/schemas/AnyValue'
+    SupportOption:
+      type: object
+      properties:
+        id:
+          type: integer
+        text:
+          type: string
+        alarmId:
+          type: integer
+        actionPath:
+          type: string
+        actionType:
+          type: integer
+        sort:
+          type: integer
+    AlertFeedbackStep:
+      type: object
+      properties:
+        titleText:
+          type: string
+        type:
+          enum:
+            - list
+            - text
+        options:
+          array:
+            items:
+              $ref '#/components/schemas/AlertFeedbackStepOption'
+    AlertFeedbackStepOption:
+      type: object
+      required:
+        - property
+      properties:
+        property:
+          type: string
+        displayText:
+          type: string
+        sortOrder:
+          type: string
+        action:
+          enum:
+            - sleep_2h
+            - sleep_24h
+        value:
+          oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+        flow:
+          oneOf:
+            - $ref: '#/components/schemas/AlertFeedbackStep'
+            - type: object
+              properties:
+                tag:
+                  type: string
+    AlertFeedbackFlow:
+      type: object
+      required:
+        - systemMode
+        - flow
+      properties:
+        systemMode:
+          enum:
+            - home
+            - away
+            - sleep
+        flow:
+          $ref: '#/components/schemas/AlertFeedbackStep'
+        flowTags:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AlertFeedbackStep'
+    NewFeedback:
+      type: object
+      properties:
+        options:
+          type: array
+          items:
+            type: object
+            properties:
+              id: string
+              value: string

@@ -1,0 +1,9 @@
+{
+  "roles": "app.task-scheduler",
+  "allows": [
+    {
+      "resources": ["TaskSchedulerLog"],
+      "permissions": ["logTaskStatus"]
+    }
+  ]
+}

@@ -1,0 +1,1644 @@
+[
+  {
+    "severity": 1,
+    "internal_id": 1010,
+    "optional": [
+      2
+    ],
+    "has_action": false,
+    "alarm_id": 10,
+    "friendly_name": "FLOW RATE LIMIT EXCEEDED",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected that your flow rate exceeded the normal expected level. If you don’t take action now, your Flo Device will shut off your water in 5 minutes.",
+    "user_actions": {
+      "timeout": 300,
+      "actions": [
+        {
+          "id": 1,
+          "display": "Snooze this alarm for 2 hours",
+          "option": "Ignore For 2 hours"
+        },
+        {
+          "id": 2,
+          "display": "Snooze till Midnight",
+          "option": "Midnight Cutoff"
+        },
+        {
+          "id": 3,
+          "display": "Permanently stop notifications regarding this problem",
+          "option": "Indefinite Override"
+        },
+        {
+          "id": 4,
+          "display": "Accept As Normal",
+          "option": "Accept As Normal"
+        }
+      ]
+    },
+    "name": "MAXIMUM ALLOWABLE FLOW RATE",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": true
+  },
+  {
+    "severity": 1,
+    "internal_id": 1011,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 10,
+    "friendly_name": "FLOW RATE LIMIT EXCEEDED",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected that your flow rate exceeded the normal expected level. Flo has shut off your water on your behalf.",
+    "user_actions": {
+      "timeout": null,
+      "actions": [
+        {
+          "id": 5,
+          "display": "Open Valve and switch to Home Mode",
+          "option": "Open Valve - Switch to Home Mode"
+        }
+      ]
+    },
+    "icd_action": "shut-off-water",
+    "name": "MAXIMUM ALLOWABLE FLOW RATE",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": true
+  },
+  {
+    "severity": 1,
+    "internal_id": 1012,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 10,
+    "friendly_name": "FLOW RATE LIMIT EXCEEDED",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected that your flow rate exceeded the normal expected level. Flo has shut off your water on your behalf.",
+    "user_actions": {
+      "timeout": null,
+      "actions": [
+        {
+          "id": 5,
+          "display": "Open Valve and switch to Home Mode",
+          "option": "Open Valve - Switch to Home Mode"
+        }
+      ]
+    },
+    "icd_action": "shut-off-water",
+    "name": "MAXIMUM ALLOWABLE FLOW RATE",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": true
+  },
+  {
+    "severity": 2,
+    "internal_id": 1037,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 31,
+    "friendly_name": "LEAK DETECTED",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected a non-critical leak. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "ZIT LEAK DETECTION POSITIVE – Cat 4",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1038,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 31,
+    "friendly_name": "LEAK DETECTED",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected a non-critical leak. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "ZIT LEAK DETECTION POSITIVE – Cat 4",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1039,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 31,
+    "friendly_name": "LEAK DETECTED",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected a non-critical leak. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "ZIT LEAK DETECTION POSITIVE – Cat 4",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1049,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 21,
+    "friendly_name": "PROXIMITY SENSOR FAILURE ERROR",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "PROXIMITY SENSOR FAILURE ERROR",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1050,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 21,
+    "friendly_name": "PROXIMITY SENSOR FAILURE ERROR",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "PROXIMITY SENSOR FAILURE ERROR",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1051,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 21,
+    "friendly_name": "PROXIMITY SENSOR FAILURE ERROR",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "PROXIMITY SENSOR FAILURE ERROR",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 1,
+    "internal_id": 1025,
+    "optional": [
+      2
+    ],
+    "has_action": false,
+    "alarm_id": 14,
+    "friendly_name": "TEMPERATURE MAXIMUM",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected that your home water temperature has exceeded your allowed maximum temperature. If you don’t take action now, your Flo Device will shut off your water in 5 minutes. ",
+    "user_actions": {
+      "timeout": 300,
+      "actions": [
+        {
+          "id": 1,
+          "display": "Snooze this alarm for 2 hours",
+          "option": "Ignore For 2 hours"
+        },
+        {
+          "id": 2,
+          "display": "Snooze till Midnight",
+          "option": "Midnight Cutoff"
+        },
+        {
+          "id": 3,
+          "display": "Permanently stop notifications regarding this problem",
+          "option": "Indefinite Override"
+        },
+        {
+          "id": 4,
+          "display": "Accept As Normal",
+          "option": "Accept As Normal"
+        }
+      ]
+    },
+    "name": "TEMPERATURE MAXIMUM",
+    "mandatory": [
+      3,
+      4,
+      2
+    ],
+    "essential": false
+  },
+  {
+    "severity": 1,
+    "internal_id": 1026,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 14,
+    "friendly_name": "TEMPERATURE MAXIMUM",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected that your home water temperature has exceeded your allowed maximum temperature. Flo has shut off your water on your behalf.",
+    "user_actions": {
+      "timeout": null,
+      "actions": [
+        {
+          "id": 5,
+          "display": "Open Valve and switch to Home Mode",
+          "option": "Open Valve - Switch to Home Mode"
+        }
+      ]
+    },
+    "icd_action": "shut-off-water",
+    "name": "TEMPERATURE MAXIMUM",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 1,
+    "internal_id": 1027,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 14,
+    "friendly_name": "TEMPERATURE MAXIMUM",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected that your home water temperature has exceeded your allowed maximum temperature. Flo has shut off your water on your behalf.",
+    "user_actions": {
+      "timeout": null,
+      "actions": [
+        {
+          "id": 5,
+          "action_type": 5,
+          "display": "Open Valve and switch to Home Mode",
+          "option": "Open Valve - Switch to Home Mode"
+        }
+      ]
+    },
+    "icd_action": "shut-off-water",
+    "name": "TEMPERATURE MAXIMUM",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 1,
+    "internal_id": 1043,
+    "optional": [
+      2
+    ],
+    "has_action": false,
+    "alarm_id": 18,
+    "friendly_name": "VALVE TIMEOUT ERROR",
+    "system_mode": 2,
+    "friendly_description": "your Flo device reported a temporary error and is not functioning correctly. This is a critical issue that needs to be addressed.",
+    "user_actions": {},
+    "name": "VALVE TIMEOUT ERROR",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 1,
+    "internal_id": 1044,
+    "optional": [
+      2
+    ],
+    "has_action": false,
+    "alarm_id": 18,
+    "friendly_name": "VALVE TIMEOUT ERROR",
+    "system_mode": 3,
+    "friendly_description": "your Flo device reported a temporary error and is not functioning correctly. This is a critical issue that needs to be addressed.",
+    "user_actions": {},
+    "name": "VALVE TIMEOUT ERROR",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 1,
+    "internal_id": 1045,
+    "optional": [
+      2
+    ],
+    "has_action": false,
+    "alarm_id": 18,
+    "friendly_name": "VALVE TIMEOUT ERROR",
+    "system_mode": 4,
+    "friendly_description": "your Flo device reported a temporary error and is not functioning correctly. This is a critical issue that needs to be addressed.",
+    "user_actions": {},
+    "name": "VALVE TIMEOUT ERROR",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1061,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 25,
+    "friendly_name": "ICD TEMPERATURE SENSOR ERROR",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "ICD TEMPERATURE SENSOR ERROR",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1062,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 25,
+    "friendly_name": "ICD TEMPERATURE SENSOR ERROR",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "ICD TEMPERATURE SENSOR ERROR",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1063,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 25,
+    "friendly_name": "ICD TEMPERATURE SENSOR ERROR",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "ICD TEMPERATURE SENSOR ERROR",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 1,
+    "internal_id": 1019,
+    "optional": [
+      2
+    ],
+    "has_action": false,
+    "alarm_id": 12,
+    "friendly_name": "DAILY OUTPUT LIMIT EXCEEDED",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected that your home water flowed more gallons in one day than the expected amount. If you don’t take action now, your Flo Device will shut off your water in 5 minutes.",
+    "user_actions": {
+      "timeout": 300,
+      "actions": [
+        {
+          "id": 1,
+          "action_type": 1,
+          "display": "Snooze this alarm for 2 hours",
+          "option": "Ignore For 2 hours"
+        },
+        {
+          "id": 2,
+          "action_type": 2,
+          "display": "Snooze till Midnight",
+          "option": "Midnight Cutoff"
+        },
+        {
+          "id": 3,
+          "action_type": 3,
+          "display": "Permanently stop notifications regarding this problem",
+          "option": "Indefinite Override"
+        },
+        {
+          "id": 4,
+          "action_type": 4,
+          "display": "Accept As Normal",
+          "option": "Accept As Normal"
+        }
+      ]
+    },
+    "name": "FLOW TOTALIZATION LIMIT (Daily)",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": true
+  },
+  {
+    "severity": 1,
+    "internal_id": 1020,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 12,
+    "friendly_name": "DAILY OUTPUT LIMIT EXCEEDED",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected that your home water flowed more gallons in one day than the expected amount. Flo has shut off your water on your behalf.",
+    "user_actions": {
+      "timeout": null,
+      "actions": [
+        {
+          "id": 5,
+          "action_type": 5,
+          "display": "Open Valve and switch to Home Mode",
+          "option": "Open Valve - Switch to Home Mode"
+        }
+      ]
+    },
+    "icd_action": "shut-off-water",
+    "name": "FLOW TOTALIZATION LIMIT (Daily)",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": true
+  },
+  {
+    "severity": 1,
+    "internal_id": 1021,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 12,
+    "friendly_name": "DAILY OUTPUT LIMIT EXCEEDED",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected that your home water flowed more gallons in one day than the expected amount. Flo has shut off your water on your behalf.",
+    "user_actions": {
+      "timeout": null,
+      "actions": [
+        {
+          "id": 5,
+          "display": "Open Valve and switch to Home Mode",
+          "option": "Open Valve - Switch to Home Mode"
+        }
+      ]
+    },
+    "icd_action": "shut-off-water",
+    "name": "FLOW TOTALIZATION LIMIT (Daily)",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": true
+  },
+  {
+    "severity": 1,
+    "internal_id": 1007,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 9,
+    "friendly_name": "FLOOR MOISTURE DETECTED",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected floor moisture. Flo has shut off your water on your behalf.",
+    "user_actions": {},
+    "icd_action": "shut-off-water",
+    "name": "FLOOR MOISTURE DETECTION POSITIVE",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 1,
+    "internal_id": 1008,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 9,
+    "friendly_name": "FLOOR MOISTURE DETECTED",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected floor moisture. Flo has shut off your water on your behalf.",
+    "user_actions": {},
+    "icd_action": "shut-off-water",
+    "name": "FLOOR MOISTURE DETECTION POSITIVE",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 1,
+    "internal_id": 1009,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 9,
+    "friendly_name": "FLOOR MOISTURE DETECTED",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected floor moisture. Flo has shut off your water on your behalf.",
+    "user_actions": {},
+    "icd_action": "shut-off-water",
+    "name": "FLOOR MOISTURE DETECTION POSITIVE",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 1,
+    "internal_id": 1013,
+    "optional": [
+      2
+    ],
+    "has_action": false,
+    "alarm_id": 26,
+    "friendly_name": "FLOW DURATION LIMIT EXCEEDED",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected that your flow duration exceeded the expected time. If you don’t take action now, your Flo Device will shut off your water in 5 minutes.",
+    "user_actions": {
+      "timeout": 300,
+      "actions": [
+        {
+          "id": 1,
+          "action_type": 1,
+          "display": "Snooze this alarm for 2 hours",
+          "option": "Ignore For 2 hours"
+        },
+        {
+          "id": 2,
+          "action_type": 2,
+          "display": "Snooze till Midnight",
+          "option": "Midnight Cutoff"
+        },
+        {
+          "id": 3,
+          "action_type": 3,
+          "display": "Permanently stop notifications regarding this problem",
+          "option": "Indefinite Override"
+        },
+        {
+          "id": 4,
+          "action_type": 4,
+          "display": "Accept As Normal",
+          "option": "Accept As Normal"
+        }
+      ]
+    },
+    "name": "CONTINUOUS FLOW DURATION",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": true
+  },
+  {
+    "severity": 1,
+    "internal_id": 1014,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 26,
+    "friendly_name": "FLOW DURATION LIMIT EXCEEDED",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected that your flow duration exceeded the expected time. Flo has shut off your water on your behalf.",
+    "user_actions": {
+      "timeout": null,
+      "actions": [
+        {
+          "id": 5,
+          "action_type": 5,
+          "display": "Open Valve and switch to Home Mode",
+          "option": "Open Valve - Switch to Home Mode"
+        }
+      ]
+    },
+    "icd_action": "shut-off-water",
+    "name": "CONTINUOUS FLOW DURATION",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": true
+  },
+  {
+    "severity": 1,
+    "internal_id": 1015,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 26,
+    "friendly_name": "FLOW DURATION LIMIT EXCEEDED",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected that your flow duration exceeded the expected time. Flo has shut off your water on your behalf.",
+    "user_actions": {
+      "timeout": null,
+      "actions": [
+        {
+          "id": 5,
+          "action_type": 5,
+          "display": "Open Valve and switch to Home Mode",
+          "option": "Open Valve - Switch to Home Mode"
+        }
+      ]
+    },
+    "icd_action": "shut-off-water",
+    "name": "CONTINUOUS FLOW DURATION",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": true
+  },
+  {
+    "severity": 1,
+    "internal_id": 1022,
+    "optional": [
+      2
+    ],
+    "has_action": false,
+    "alarm_id": 13,
+    "friendly_name": "FREEZE WARNING",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected that your home water temperature has dropped below your allowed minimum temperature. If you don’t take action now, your Flo Device will shut off your water in 5 minutes.",
+    "user_actions": {
+      "timeout": 300,
+      "actions": [
+        {
+          "id": 1,
+          "action_type": 1,
+          "display": "Snooze this alarm for 2 hours",
+          "option": "Ignore For 2 hours"
+        },
+        {
+          "id": 2,
+          "action_type": 2,
+          "display": "Snooze till Midnight",
+          "option": "Midnight Cutoff"
+        },
+        {
+          "id": 3,
+          "action_type": 3,
+          "display": "Permanently stop notifications regarding this problem",
+          "option": "Indefinite Override"
+        },
+        {
+          "id": 4,
+          "action_type": 4,
+          "display": "Accept As Normal",
+          "option": "Accept As Normal"
+        }
+      ]
+    },
+    "name": "TEMPERATURE MINIMUM",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 1,
+    "internal_id": 1023,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 13,
+    "friendly_name": "FREEZE WARNING",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected that your home water temperature has dropped below your allowed minimum temperature. Flo has shut off your water on your behalf.",
+    "user_actions": {
+      "timeout": null,
+      "actions": [
+        {
+          "id": 5,
+          "action_type": 5,
+          "display": "Open Valve and switch to Home Mode",
+          "option": "Open Valve - Switch to Home Mode"
+        }
+      ]
+    },
+    "icd_action": "shut-off-water",
+    "name": "TEMPERATURE MINIMUM",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 1,
+    "internal_id": 1024,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 13,
+    "friendly_name": "FREEZE WARNING",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected that your home water temperature has dropped below your allowed minimum temperature. Flo has shut off your water on your behalf.",
+    "user_actions": {
+      "timeout": null,
+      "actions": [
+        {
+          "id": 5,
+          "action_type": 5,
+          "display": "Open Valve and switch to Home Mode",
+          "option": "Open Valve - Switch to Home Mode"
+        }
+      ]
+    },
+    "icd_action": "shut-off-water",
+    "name": "TEMPERATURE MINIMUM",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 1,
+    "internal_id": 1031,
+    "optional": [
+      2
+    ],
+    "has_action": false,
+    "alarm_id": 16,
+    "friendly_name": "PRESSURE LIMIT EXCEEDED",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected that your home water pressure has exceeded your allowed maximum pressure. If you don’t take action now, your Flo Device will shut off your water in 5 minutes.",
+    "user_actions": {
+      "timeout": 300,
+      "actions": [
+        {
+          "id": 1,
+          "action_type": 1,
+          "display": "Snooze this alarm for 2 hours",
+          "option": "Ignore For 2 hours"
+        },
+        {
+          "id": 2,
+          "action_type": 2,
+          "display": "Snooze till Midnight",
+          "option": "Midnight Cutoff"
+        },
+        {
+          "id": 3,
+          "action_type": 3,
+          "display": "Permanently stop notifications regarding this problem",
+          "option": "Indefinite Override"
+        },
+        {
+          "id": 4,
+          "action_type": 4,
+          "display": "Accept As Normal",
+          "option": "Accept As Normal"
+        }
+      ]
+    },
+    "name": "PRESSURE MAXIMUM",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 1,
+    "internal_id": 1032,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 16,
+    "friendly_name": "PRESSURE LIMIT EXCEEDED",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected that your home water pressure has exceeded your allowed maximum pressure. Flo has shut off your water on your behalf.",
+    "user_actions": {
+      "timeout": null,
+      "actions": [
+        {
+          "id": 5,
+          "action_type": 5,
+          "display": "Open Valve and switch to Home Mode",
+          "option": "Open Valve - Switch to Home Mode"
+        }
+      ]
+    },
+    "icd_action": "shut-off-water",
+    "name": "PRESSURE MAXIMUM",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 1,
+    "internal_id": 1033,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 16,
+    "friendly_name": "PRESSURE LIMIT EXCEEDED",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected that your home water pressure has exceeded your allowed maximum pressure. Flo has shut off your water on your behalf. ",
+    "user_actions": {
+      "timeout": null,
+      "actions": [
+        {
+          "id": 5,
+          "action_type": 5,
+          "display": "Open Valve and switch to Home Mode",
+          "option": "Open Valve - Switch to Home Mode"
+        }
+      ]
+    },
+    "icd_action": "shut-off-water",
+    "name": "PRESSURE MAXIMUM",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1046,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 20,
+    "friendly_name": "FLOOR MOISTURE SENSOR FAILURE ERROR",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "FLOOR MOISTURE SENSOR FAILURE ERROR",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1047,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 20,
+    "friendly_name": "FLOOR MOISTURE SENSOR FAILURE ERROR",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "FLOOR MOISTURE SENSOR FAILURE ERROR",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1048,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 20,
+    "friendly_name": "FLOOR MOISTURE SENSOR FAILURE ERROR",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "FLOOR MOISTURE SENSOR FAILURE ERROR",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1040,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 33,
+    "friendly_name": "CLOUD COMMUNICATONS ERROR",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "CLOUD COMMUNICATONS ERROR",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1041,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 33,
+    "friendly_name": "CLOUD COMMUNICATONS ERROR",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "CLOUD COMMUNICATONS ERROR",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1042,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 33,
+    "friendly_name": "CLOUD COMMUNICATONS ERROR",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "CLOUD COMMUNICATONS ERROR",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 3,
+    "internal_id": 1064,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 5,
+    "friendly_name": "ZIT SUCCESSFULLY COMPLETED",
+    "system_mode": 2,
+    "friendly_description": null,
+    "user_actions": null,
+    "icd_action": null,
+    "name": "ZIT SUCCESSFULLY COMPLETED",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 3,
+    "internal_id": 1065,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 5,
+    "friendly_name": "ZIT SUCCESSFULLY COMPLETED",
+    "system_mode": 3,
+    "friendly_description": null,
+    "user_actions": null,
+    "icd_action": null,
+    "name": "ZIT SUCCESSFULLY COMPLETED",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 3,
+    "internal_id": 1066,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 5,
+    "friendly_name": "ZIT SUCCESSFULLY COMPLETED",
+    "system_mode": 4,
+    "friendly_description": null,
+    "user_actions": null,
+    "icd_action": null,
+    "name": "ZIT SUCCESSFULLY COMPLETED",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1052,
+    "optional": [
+      2
+    ],
+    "has_action": false,
+    "alarm_id": 22,
+    "friendly_name": "GENERAL SYSTEM ERROR",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "GENERAL SYSTEM ERROR",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1053,
+    "optional": [
+      2
+    ],
+    "has_action": false,
+    "alarm_id": 22,
+    "friendly_name": "GENERAL SYSTEM ERROR",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "GENERAL SYSTEM ERROR",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1054,
+    "optional": [
+      2
+    ],
+    "has_action": false,
+    "alarm_id": 22,
+    "friendly_name": "GENERAL SYSTEM ERROR",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "GENERAL SYSTEM ERROR",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 1,
+    "internal_id": 1004,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 29,
+    "friendly_name": "LEAK DETECTED",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected a critical leak. Flo has shut off your water on your behalf.",
+    "user_actions": {},
+    "icd_action": "shut-off-water",
+    "name": "ZIT LEAK DETECTION POSITIVE – Cat 2",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": true
+  },
+  {
+    "severity": 1,
+    "internal_id": 1005,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 29,
+    "friendly_name": "LEAK DETECTED",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected a critical leak. Flo has shut off your water on your behalf.",
+    "user_actions": {},
+    "icd_action": "shut-off-water",
+    "name": "ZIT LEAK DETECTION POSITIVE – Cat 2",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": true
+  },
+  {
+    "severity": 1,
+    "internal_id": 1006,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 29,
+    "friendly_name": "LEAK DETECTED",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected a critical leak. Flo has shut off your water on your behalf.",
+    "user_actions": {},
+    "icd_action": "shut-off-water",
+    "name": "ZIT LEAK DETECTION POSITIVE – Cat 2",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": true
+  },
+  {
+    "severity": 2,
+    "internal_id": 1058,
+    "optional": [
+      2
+    ],
+    "has_action": false,
+    "alarm_id": 24,
+    "friendly_name": "ICD PRESSURE SENSOR ERROR",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "ICD PRESSURE SENSOR ERROR",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1059,
+    "optional": [
+      2
+    ],
+    "has_action": false,
+    "alarm_id": 24,
+    "friendly_name": "ICD PRESSURE SENSOR ERROR",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "ICD PRESSURE SENSOR ERROR",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1060,
+    "optional": [
+      2
+    ],
+    "has_action": false,
+    "alarm_id": 24,
+    "friendly_name": "ICD PRESSURE SENSOR ERROR",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "ICD PRESSURE SENSOR ERROR",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1055,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 23,
+    "friendly_name": "DEVICE MEMORY ERROR",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "DEVICE MEMORY ERROR",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1056,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 23,
+    "friendly_name": "DEVICE MEMORY ERROR",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "DEVICE MEMORY ERROR",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1057,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 23,
+    "friendly_name": "DEVICE MEMORY ERROR",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected that there is a temporary error with the Flo system. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "DEVICE MEMORY ERROR",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1034,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 30,
+    "friendly_name": "LEAK DETECTED",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected a non-critical leak. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "ZIT LEAK DETECTION POSITIVE – Cat 3",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1035,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 30,
+    "friendly_name": "LEAK DETECTED",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected a non-critical leak. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "ZIT LEAK DETECTION POSITIVE – Cat 3",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1036,
+    "optional": [
+      2,
+      4
+    ],
+    "has_action": false,
+    "alarm_id": 30,
+    "friendly_name": "LEAK DETECTED",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected a non-critical leak. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {},
+    "name": "ZIT LEAK DETECTION POSITIVE – Cat 3",
+    "mandatory": [
+      3
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1028,
+    "optional": [
+      2
+    ],
+    "has_action": false,
+    "alarm_id": 15,
+    "friendly_name": "LOW PRESSURE",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected that your home water pressure has dropped below your allowed minimum pressure. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {
+      "timeout": 300,
+      "actions": [
+        {
+          "id": 1,
+          "display": "Snooze this alarm for 2 hours",
+          "option": "Ignore For 2 hours"
+        },
+        {
+          "id": 2,
+          "display": "Snooze till Midnight",
+          "option": "Midnight Cutoff"
+        },
+        {
+          "id": 3,
+          "display": "Permanently stop notifications regarding this problem",
+          "option": "Indefinite Override"
+        },
+        {
+          "id": 4,
+          "display": "Accept As Normal",
+          "option": "Accept As Normal"
+        }
+      ]
+    },
+    "name": "PRESSURE MINIMUM",
+    "mandatory": [
+      2,
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1029,
+    "optional": [
+      2
+    ],
+    "has_action": false,
+    "alarm_id": 15,
+    "friendly_name": "LOW PRESSURE",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected that your home water pressure has dropped below your allowed minimum pressure. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {
+      "timeout": null,
+      "actions": [
+        {
+          "id": 5,
+          "display": "Open Valve and switch to Home Mode",
+          "option": "Open Valve - Switch to Home Mode"
+        }
+      ]
+    },
+    "name": "PRESSURE MINIMUM",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 2,
+    "internal_id": 1030,
+    "optional": [
+      2
+    ],
+    "has_action": false,
+    "alarm_id": 15,
+    "friendly_name": "LOW PRESSURE",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected that your home water pressure has dropped below your allowed minimum pressure. Flo will not take any action on your behalf, and recommends you investigate and troubleshoot this potential issue as soon as possible.",
+    "user_actions": {
+      "timeout": null,
+      "actions": [
+        {
+          "id": 5,
+          "display": "Open Valve and switch to Home Mode",
+          "option": "Open Valve - Switch to Home Mode"
+        }
+      ]
+    },
+    "name": "PRESSURE MINIMUM",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": false
+  },
+  {
+    "severity": 1,
+    "internal_id": 1001,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 28,
+    "friendly_name": "LEAK DETECTED",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected a critical leak. Flo has shut off your water on your behalf.",
+    "user_actions": {},
+    "icd_action": "shut-off-water",
+    "name": "ZIT LEAK DETECTION POSITIVE – Cat 1",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": true
+  },
+  {
+    "severity": 1,
+    "internal_id": 1002,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 28,
+    "friendly_name": "LEAK DETECTED",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected a critical leak. Flo has shut off your water on your behalf.",
+    "user_actions": {},
+    "icd_action": "shut-off-water",
+    "name": "ZIT LEAK DETECTION POSITIVE – Cat 1",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": true
+  },
+  {
+    "severity": 1,
+    "internal_id": 1003,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 28,
+    "friendly_name": "LEAK DETECTED",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected a critical leak. Flo has shut off your water on your behalf.",
+    "user_actions": {},
+    "icd_action": "shut-off-water",
+    "name": "ZIT LEAK DETECTION POSITIVE – Cat 1",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": true
+  },
+  {
+    "severity": 1,
+    "internal_id": 1016,
+    "optional": [
+      2
+    ],
+    "has_action": false,
+    "alarm_id": 11,
+    "friendly_name": "FLOW OUTPUT LIMIT EXCEEDED",
+    "system_mode": 2,
+    "friendly_description": "your Flo device detected that your home water flowed more gallons in one use than the expected amount. If you don’t take action now, your Flo Device will shut off your water in 5 minutes.",
+    "user_actions": {
+      "timeout": 300,
+      "actions": [
+        {
+          "id": 1,
+          "display": "Snooze this alarm for 2 hours",
+          "option": "Ignore For 2 hours"
+        },
+        {
+          "id": 2,
+          "display": "Snooze till Midnight",
+          "option": "Midnight Cutoff"
+        },
+        {
+          "id": 3,
+          "display": "Permanently stop notifications regarding this problem",
+          "option": "Indefinite Override"
+        },
+        {
+          "id": 4,
+          "display": "Accept As Normal",
+          "option": "Accept As Normal"
+        }
+      ]
+    },
+    "name": "PER EVENT FLOW LIMIT",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": true
+  },
+  {
+    "severity": 1,
+    "internal_id": 1017,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 11,
+    "friendly_name": "FLOW OUTPUT LIMIT EXCEEDED",
+    "system_mode": 3,
+    "friendly_description": "your Flo device detected that your home water flowed more gallons in one use than the expected amount. Flo has shut off your water on your behalf.",
+    "user_actions": {
+      "timeout": null,
+      "actions": [
+        {
+          "id": 5,
+          "display": "Open Valve and switch to Home Mode",
+          "option": "Open Valve - Switch to Home Mode"
+        }
+      ]
+    },
+    "icd_action": "shut-off-water",
+    "name": "PER EVENT FLOW LIMIT",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": true
+  },
+  {
+    "severity": 1,
+    "internal_id": 1018,
+    "optional": [
+      2
+    ],
+    "has_action": true,
+    "alarm_id": 11,
+    "friendly_name": "FLOW OUTPUT LIMIT EXCEEDED",
+    "system_mode": 4,
+    "friendly_description": "your Flo device detected that your home water flowed more gallons in one use than the expected amount. Flo has shut off your water on your behalf.",
+    "user_actions": {
+      "timeout": null,
+      "actions": [
+        {
+          "id": 5,
+          "display": "Open Valve and switch to Home Mode",
+          "option": "Open Valve - Switch to Home Mode"
+        }
+      ]
+    },
+    "icd_action": "shut-off-water",
+    "name": "PER EVENT FLOW LIMIT",
+    "mandatory": [
+      3,
+      4
+    ],
+    "essential": true
+  }
+]

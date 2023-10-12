@@ -1,0 +1,19 @@
+{
+  "roles": "app.factory-proxy",
+  "allows": [
+    {
+      "resources": ["StockICD"],
+      "permissions": [
+        "retrieve",
+        "retrieveByQrCode"
+      ]
+    },
+    {
+      "resources": ["ICD"],
+      "permissions": [
+        "retrieve",
+        "retrieve_v2"
+      ]
+    }
+  ]
+}

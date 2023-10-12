@@ -1,0 +1,14 @@
+{
+  "roles": "Location.*.device-control",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "sleepSetSystemMode",
+        "setSystemMode",
+        "open-valve",
+        "close-valve"
+      ]
+    }
+  ]
+}

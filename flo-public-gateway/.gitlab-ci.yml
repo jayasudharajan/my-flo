@@ -1,0 +1,178 @@
+---
+image: registry.gitlab.com/flotechnologies/devops/docker-tools@sha256:4442bf7c5959ab0b9428af9fb43bf6cc15f5b7f9f1b59f281adba9781633bb43
+
+services:
+  - docker:18.09-dind
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_HOST: "tcp://localhost:2375"
+  CI_REGISTRY: "registry.gitlab.com"
+  CI_REGISTRY_IMAGE: "${CI_REGISTRY}/flotechnologies/flo-public-gateway"
+
+stages:
+  - build
+  - test
+  - deploy-rc
+  - verify-rc
+  - deploy
+  - verify
+  - deploy-flo-cloud-eks
+
+before_script:
+  - |
+    # TODO: this should be part of the compose image
+    apk add --no-cache make bash jq gettext
+    mkdir -pv "${HOME}/.docker/"
+    echo "${DOCKER_AUTH_CONFIG}" > "${HOME}/.docker/config.json"
+    docker login
+    docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+
+Compile:
+  stage: build
+  except:
+    - tags
+  tags:
+    - eks
+  artifacts:
+    paths:
+      - logs/
+      - node_modules/
+      - dist
+      - /root/.npm/_logs
+    expire_in: 1 week
+    # Cache modules in between jobs
+  cache:
+    untracked: true
+    key: "$CI_PROJECT_NAME-$CI_COMMIT_REF_SLUG"
+    paths:
+      - .npm/
+      - node_modules
+  script:
+    - make pull
+    - make build COMMIT_SHA="${CI_COMMIT_SHORT_SHA}"
+    - make audit
+    - make push
+
+Sanity:
+  stage: test
+  allow_failure: true
+  artifacts:
+    when: always
+    paths:
+      # Collect logs
+      - build.log
+      - /root/.npm/_logs
+  dependencies:
+    - Compile
+  script:
+    - make pull
+    - make test | tee build.log
+  tags:
+    - eks
+
+Dev:
+  variables:
+    VAULT_URL: ${VAULT_URL_DEV}
+    VAULT_TOKEN: ${VAULT_TOKEN_DEV}
+  image: registry.gitlab.com/flotechnologies/devops/docker-tools:helm-v3-5-4
+  stage: deploy
+  dependencies:
+    - Compile
+  only:
+    - dev
+    - eks
+    - /-ci$/i
+  environment:
+    name: dev-flo-cloud-eks
+    url: https://flo-public-gateway.flocloud.co/api/v2/ping
+  script:
+    - make environment
+    - make deploy
+    - make deploy-status
+  tags:
+    - dev-flo-cloud-eks
+
+ReleaseCandidate:
+  variables:
+    ENV: "rc"
+    HELM_RELEASE_NAME: "flo-public-gateway-rc"
+    K8S_NAMESPACE: "flo-public-gateway-rc"
+    VAULT_URL: ${VAULT_URL_PROD}
+    VAULT_TOKEN: ${VAULT_TOKEN_PROD}
+  image: registry.gitlab.com/flotechnologies/devops/docker-tools:helm-v3-5-4
+  stage: deploy-rc
+  allow_failure: true
+  dependencies:
+    - Compile
+  only:
+    - master
+  environment:
+    name: rc-eks
+    url: https://api-gw-rc.flosecurecloud.com/api/v2/ping
+  script:
+    - make environment
+    - make deploy
+    - make deploy-status
+  tags:
+    - eks-prod
+
+K8sProd:
+  variables:
+    VAULT_URL: ${VAULT_URL_PROD}
+    VAULT_TOKEN: ${VAULT_TOKEN_PROD}
+    ENV: prod
+  image: registry.gitlab.com/flotechnologies/devops/docker-tools:helm-v3-5-4
+  stage: deploy
+  dependencies:
+    - Compile
+  only:
+    - master
+    - eks-prod
+  environment:
+    name: prod-eks
+    url: https://api-gw.meetflo.com/api/v2/ping
+  script:
+    - make environment
+    - make deploy
+    - make deploy-status
+  tags:
+    - eks-prod
+
+.RunscopeRC:
+  variables:
+    RS_ENV: "afe789b6-72d2-4270-a03e-44ea3562150d"
+    RUNSCOPE_TRIGGER_URL: "https://api.runscope.com/radar/68e4a198-9132-4560-bb08-a2e746c8c3e6/trigger?runscope_environment=${RS_ENV}"
+  stage: verify-rc
+  allow_failure: true
+  dependencies:
+    - Compile
+  only:
+    - master
+  environment:
+    name: rc
+    url: https://api-gw-rc.flosecurecloud.com/api/v2/ping
+  script:
+    - sleep 20
+    - make runscope
+  tags:
+    - dev
+
+RunscopeProd:
+  variables:
+    RS_ENV: "9e1d6a87-e557-4051-a358-f0dd138b131a"
+    RUNSCOPE_TRIGGER_URL: "https://api.runscope.com/radar/ad4d355f-b4da-4588-83ab-bb6389b5410a/trigger?runscope_environment=${RS_ENV}"
+  stage: verify
+  dependencies:
+    - Compile
+  only:
+    - master
+    - fix-runscope-pull
+  environment:
+    name: prod-eks
+    url: https://api-gw.meetflo.com/api/v2/ping
+  script:
+    - sleep 20
+    - make runscope
+  tags:
+    - eks-prod

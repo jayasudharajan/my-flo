@@ -1,0 +1,15 @@
+{
+  "roles": "app.directive-router",
+  "allows": [
+    {
+      "resources": ["Directives"],
+      "permissions": [
+        "track"
+      ]
+    },
+    {
+      "resources": ["ICDForcedSystemMode"],
+      "permissions": ["retrieveLatestByDeviceId"]
+    }
+  ]
+}

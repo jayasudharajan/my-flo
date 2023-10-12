@@ -1,0 +1,16 @@
+{
+  "roles": "app.test-bench",
+  "allows": [
+    {
+      "resources": ["StockICD"],
+      "permissions": [
+      	"generate",
+      	"retrieve",
+      	"generateSerialNumber",
+      	"retrieveSerialNumberByDeviceId",
+      	"retrieveSerialNumber",
+      	"removeSerialNumber"
+      ]
+    }
+  ]
+}

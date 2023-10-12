@@ -1,0 +1,12 @@
+{
+  "roles": "Location.*.read-v2",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieve_v2",
+        "retrieveNotifications_v2"
+      ]
+    }
+  ]
+}

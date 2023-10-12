@@ -1,0 +1,2 @@
+INSERT into devices (device_id, firmware_version, is_connected, raw) values (1234567, 'v1.02', true, '{"payload":{"did":"c8df845a335e","wf":0,"f":0,"t":94,"p":0.5,"ts":1555452275158,"sw1":0,"sw2":1,"sm":2,"v":0,"rssi":-44}}');
+UPDATE devices SET (firmware_version, is_connected, raw) = ('v1.05', false, '{"payload":{"did":"c8df845a335e","wf":0,"f":0,"t":94,"p":0.5,"ts":1555452275158,"sw1":0,"sw2":1,"sm":2,"v":0,"rssi":-44}}') WHERE devices.device_id='1234567'

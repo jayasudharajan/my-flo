@@ -1,0 +1,66 @@
+{
+  "cryptoPassword": "",
+  "tokenSecret": "",
+  "aws": {
+    "accessKeyId": "",
+    "secretAccessKey": "",
+    "region": "",
+    "endpoint": "",
+    "apiVersion": "2012-08-10",
+    "dynamodb":{
+        "region": "",
+        "endpoint": "",
+        "prefix": "stg_"
+    }
+  },
+  "mqttBroker": {
+    "host": "",
+    "port": 1883,
+    "caFilePath": "",
+    "caV2FilePath": ""
+  },
+  "email": {
+    "company": "Flo Technologies",
+    "sender": "admin-noreply@flotechnologies.com",
+    "sendwithus": {
+      "api_key": "",
+      "templates": {
+        "forgot_password": "tem_t7UPKLecmvAHJTXMX3FhD6",
+        "registration": "tem_WrqE2RxjNynp6vyKmMZztG"
+      }
+    }
+  },
+  "admin_url": "https://admin-stg.flocloud.co",
+  "user_url": "https://user-site-stg.flocloud.co",
+  "contact_url": "http://www.flotechnologies.com/",
+  "mobile_registration_url": "floapp://register",
+  "endpointTests": {
+    "url": "",
+    "username": "",
+    "password": "",
+    "auth_path": "/api/v1/users/auth"
+  },
+  "systemAdmin": {
+    "username": "",
+    "password": ""
+  },
+  "redis": {
+    "url": "",
+    "options": {
+      "no_ready_check": true
+    }
+  },
+  "influxdb": {
+    "host": "",
+    "port": "",
+    "database": "",
+    "username": "",
+    "password": ""
+  },
+  "encryption": {
+    "kafka": {},
+    "dynamodb": {}
+  },
+  "pes": "",
+  "defaultFieldMaxLength": 256
+}

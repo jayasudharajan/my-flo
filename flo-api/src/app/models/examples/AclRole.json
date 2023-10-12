@@ -1,0 +1,9 @@
+{
+  "roles": "system.admin",
+  "allows": [
+    {
+      "resources": ["users", "accounts", "locations", "ICDAlarmIncidentRegistry"],
+      "permissions": ["*"]
+    }
+  ]
+}

@@ -1,0 +1,678 @@
+paths:
+  /api/v2/locations:
+    get:
+      summary: Returns a paginated list of locations
+      tags:
+        - Locations
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: userId
+          required: false
+          schema:
+            type: string
+            format: uuid
+          description: User ID. Required field unless it's called with a system admin token.
+        - in: query
+          name: class
+          required: false
+          schema:
+            type: string
+            enum:
+              - region
+              - property
+              - unit
+          description: |
+            Location type filter. Multiple filters are allowed.
+            * `unit`
+            * `region`
+            * `property`
+        - in: query
+          name: city
+          required: false
+          schema:
+            type: string
+          description: City filter. Multiple filters are allowed.
+        - in: query
+          name: state
+          required: false
+          schema:
+            type: string
+          description: State filter. Multiple filters are allowed.
+        - in: query
+          name: country
+          required: false
+          schema:
+            type: string
+          description: Country filter. Multiple filters are allowed.
+        - in: query
+          name: postalCode
+          required: false
+          schema:
+            type: string
+          description: Postal Code filter. Multiple filters are allowed.
+        - in: query
+          name: parentId
+          required: false
+          schema:
+            type: string
+            format: uuid
+          description: The parent location Id. If provided, the endpoint will return the children for the specified parent id.
+        - in: query
+          name: size
+          required: false
+          schema:
+            type: number
+          description: Page size. Default value is 100.
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: number
+          description: Page number. Default value is 1.
+        - in: query
+          name: withChildren
+          required: false
+          schema:
+            type: string
+            enum:
+              - true
+              - false
+          description: Whether locations with inherited permissions should be included or not. Default value is "true".
+        - in: query
+          name: rootOnly
+          required: false
+          schema:
+            type: string
+            enum:
+              - true
+              - false
+          description: If set to "true" the results will only include root locations, if "false" or undefined, will include all locations.
+        - in: query
+          name: q
+          required: false
+          schema:
+            type: string
+          description: Search query. Will search results comparing address, address2, nickname, city, state, postal code, country.
+        - in: query
+          name: sort
+          required: false
+          schema:
+            type: string
+          description: |
+            Comma delimited list of properties to sort on. When multiple properties are provided, the results will be sorted ascending in order of the properties. Currently supports:
+            * `id`
+            * `address`
+            * `nickname`
+        - $ref: '#/components/parameters/ExpandParam'
+      responses:
+        200:
+          description: A paginated list of locations.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationList'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+    post:
+      summary: Creates a Location.
+      tags:
+        - Locations
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationCreate'
+      responses:
+        201:
+          description: The newly created Location.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+  /api/v2/locations/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Location ID
+    get:
+      summary: Retrieves a Location by ID.
+      tags:
+        - Locations
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/components/parameters/ExpandParam'
+      responses:
+        200:
+          description: A Location with the specified ID or an empty object if not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+
+    delete:
+      summary: Deletes a Location by ID.
+      tags:
+        - Locations
+      produces:
+        - application/json
+      responses:
+        200:
+          description: The Location was successfully deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+        204:
+          description: A Location with the specified ID was not found.
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+
+    post:
+      summary: Updates a Location by ID (partially).
+      tags:
+        - Locations
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationUpdate'
+      responses:
+        200:
+          description: The Location was successfully updated.
+          schema:
+            $ref: '#/components/schemas/Location'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        409:
+          description: A Location with the specified ID was not found.
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  /api/v2/locations/{id}/user-roles/{userId}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Location ID
+      - in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: User ID
+    put:
+      summary: Adds a Location User Role for the given Location ID and User ID.
+      tags:
+        - Locations
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Roles'
+      responses:
+        200:
+          description: The Location User Role was successfully added.
+          schema:
+            $ref: '#/components/schemas/LocationUserRole'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+
+    delete:
+      summary: Deletes a Location User Role given the Location ID and User ID.
+      tags:
+        - Locations
+      produces:
+        - application/json
+      responses:
+        204:
+          description: The Location User Role was successfully deleted or not found.
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+  /api/v2/locations/{id}/systemMode:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Location ID
+    post:
+      summary: Set system mode
+      tags:
+        - Locations
+        - System Mode
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                target:
+                  type: string
+                  enum:
+                    - home
+                    - sleep
+                    - away
+                revertMinutes:
+                  type: number
+                revertMode:
+                  type: string
+                  enum:
+                    - home
+                    - away
+                    - sleep
+                shouldCascade:
+                  type: boolean
+      responses:
+        200:
+          description: System mode will be changed
+          schema:
+            $ref: '#/components/schemas/Location'
+        400:
+          description: Invalid request body
+
+  /api/v2/locations/{id}/areas:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Location ID
+    post:
+      summary: Add new custom area
+      tags:
+        - Locations
+        - Areas
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        201:
+          description: The newly created custom Area.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Areas'
+        400:
+          description: An area with the specified name already exists.
+          schema:
+            $ref: '#/components/schemas/Error'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        409:
+          description: A Location with the specified ID was not found.
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  /api/v2/locations/{id}/areas/{areaId}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Location ID
+      - in: path
+        name: areaId
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Area ID
+    post:
+      summary: Rename custom area
+      tags:
+        - Locations
+        - Areas
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        201:
+          description: The newly created Area.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Areas'
+        400:
+          description: An area with the specified name already exists.
+          schema:
+            $ref: '#/components/schemas/Error'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        409:
+          description: A Location or Area with the specified ID was not found.
+          schema:
+            $ref: '#/components/schemas/Error'
+    delete:
+      summary: Deletes a custom Area by ID.
+      tags:
+        - Locations
+        - Areas
+      produces:
+        - application/json
+      responses:
+        200:
+          description: The custom Area was successfully deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+        204:
+          description: A Location or Area with the specified ID was not found.
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+
+components:
+  schemas:
+    Area:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+
+    Areas:
+      type: object
+      properties:
+        default:
+          type: array
+          items:
+            $ref: '#/components/schemas/Area'
+        custom:
+          type: array
+          items:
+            $ref: '#/components/schemas/Area'
+
+    LocationUserRole:
+      allOf:
+        - type: object
+          properties:
+            userId:
+              type: string
+              format: uuid
+        - $ref: '#/components/schemas/Roles'
+
+    Address:
+      type: object
+      properties:
+        address:
+          type: string
+        address2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        postalCode:
+          type: string
+        timezone:
+          type: string
+
+    LocationProfile:
+      type: object
+      properties:
+        locationType:
+          type: string
+        residenceType:
+          type: string
+        waterSource:
+          type: string
+        locationSize:
+          type: string
+        showerBathCount:
+          type: number
+        toiletCount:
+          type: number
+        plumbingType:
+          type: string
+        homeownersInsurance:
+          type: string
+        waterUtility:
+          type: string
+        hasPastWaterDamage:
+            type: boolean
+        pastWaterDamageClaimAmount:
+            type: string
+
+    LocationProfileLegacy:
+      type: object
+      properties:
+        gallonsPerDayGoal:
+          type: number
+        occupants:
+          type: integer
+        stories:
+          type: integer
+        isProfileComplete:
+          type: boolean
+        waterShutoffKnown:
+          $ref: '#/components/schemas/NoYesUnsure'
+        indoorAmenities:
+          type: array
+          items:
+            type: string
+        outdoorAmenities:
+          type: array
+          items:
+            type: string
+        plumbingAppliances:
+          type: array
+          items:
+            type: string
+
+    LocationAdditionalProps:
+      type: object
+      properties:
+        nickname:
+          type: string
+        irrigationSchedule:
+          type: object
+          properties:
+            isEnabled:
+              type: boolean
+
+    LocationMutable:
+      allOf:
+        - $ref: '#/components/schemas/Address'
+        - $ref: '#/components/schemas/LocationProfile'
+        - $ref: '#/components/schemas/LocationProfileLegacy'
+        - $ref: '#/components/schemas/LocationAdditionalProps'
+
+    LocationUpdate:
+      $ref: '#/components/schemas/LocationMutable'
+
+    LocationCreate:
+      required:
+        - address
+        - city
+        - state
+        - country
+        - timezone
+        - locationType
+        - residenceType
+        - account
+      allOf:
+        - type: object
+          required:
+            - id
+          properties:
+            account:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+            nickname:
+              type: string
+        - $ref: '#/components/schemas/Address'
+        - $ref: '#/components/schemas/LocationProfile'
+        - $ref: '#/components/schemas/LocationProfileLegacy'
+
+    LocationList:
+      allOf:
+        - type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/Location'
+            total:
+              type: number
+            page:
+              type: number
+
+    Location:
+      allOf:
+        - $ref: '#/components/schemas/LocationUpdate'
+        - $ref: '#/components/schemas/Timestamped'
+        - $ref: '#/components/schemas/Notifications'
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            account:
+              $ref: '#/components/schemas/AccountExpandable'
+            userRoles:
+              type: array
+              items:
+                allOf:
+                  - type: object
+                    properties:
+                      userId:
+                        type: string
+                        format: uuid
+                  - $ref: '#/components/schemas/Roles'
+            class:
+              - type: object
+                properties:
+                  key: string
+                  level: number
+            users:
+              type: array
+              items:
+                $ref: '#/components/schemas/UserExpandable'
+            devices:
+              type: array
+              items:
+                $ref: '#/components/schemas/DeviceExpandable'
+            children:
+              type: array
+              items:
+                $ref: '#/components/schemas/LocationExpandable'
+            parent:
+              $ref: '#/components/schemas/LocationExpandable'
+            subscription:
+              $ref: '#/components/schemas/SubscriptionExpandable'
+            systemMode:
+              type: object
+              properties:
+                target:
+                  type: string
+                  enum:
+                    - home
+                    - away
+                    - sleep
+                revertMinutes:
+                  type: number
+                revertMode:
+                  type: string
+                  enum:
+                    - home
+                    - away
+                    - sleep
+                revertScheduledAt:
+                  type: string
+                  format: date-time
+            areas:
+              $ref: '#/components/schemas/Areas'
+
+    LocationExpandable:
+      oneOf:
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            nickname:
+              type: string
+        - $ref: '#/components/schemas/Location'
+    NoYesUnsure:
+      type: string
+      enum:
+        - no
+        - yes
+        - unsure

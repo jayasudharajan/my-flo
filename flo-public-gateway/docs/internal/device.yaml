@@ -1,0 +1,1226 @@
+paths:
+  /api/v2/devices/pair/init:
+    post:
+      summary: Begins pairing process by returning device pairing data from QR code contents
+      tags:
+        - Devices
+        - Pairing
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  oneOf:
+                    - type: object
+                      properties:
+                        i:
+                          type: string
+                          format: uuid
+                        e:
+                          type: string
+                          format: uuid
+                    - type: string
+      responses:
+        200:
+          description: Pairing data
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - apName
+                  - deviceId
+                  - macAddress
+                  - loginToken
+                  - clientCert
+                  - clientKey
+                  - serverCert
+                  - websocketKey
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  apName:
+                    type: string
+                  deviceId:
+                    type: string
+                  macAddress:
+                    type: string
+                  loginToken:
+                    type: string
+                  clientCert:
+                    type: string
+                  clientKey:
+                    type: string
+                  serverCert:
+                    type: string
+                  websocketCert:
+                    type: string
+                  websocketCertDer:
+                    type: string
+                  websocketKey:
+                    type: string
+                  firestore:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+        400:
+          description: Invalid request body
+        409:
+          description: Device already paired
+  /api/v2/devices/pair/complete:
+    post:
+      summary: Completes the pairing process, adding the device to the location and putting it into forced sleep
+      tags:
+        - Devices
+        - Pairing
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - macAddress
+                - location
+                - deviceType
+                - deviceModel
+              properties:
+                macAddress:
+                  type: string
+                nickname:
+                  type: string
+                location:
+                  type: object
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                deviceType:
+                  type: string
+                deviceModel:
+                  type: string
+                connectivity:
+                  type: object
+                  properties:
+                    lte: 
+                      type: object
+                      required:
+                        - qrCode
+                      properties:
+                        qrCode:
+                          type: string
+      responses:
+        200:
+          description: A Device with the specified MAC address or an empty object if not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        400:
+          description: Invalid request body
+        409:
+          description: Device already paired | Devices should only be paired to locations with location class unit
+  /api/v2/devices/pair/init/puck:
+    post:
+      summary: Begins pairing process
+      tags:
+        - Pairing
+      produces:
+        - application/json
+      requestBody:
+        required: false
+      responses:
+        200:
+          description: Pairing data
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  token:
+                    type: string
+        400:
+          description: Invalid request body
+  /api/v2/devices/pair/complete/puck:
+    post:
+      summary: Completes the pairing process, adding the puck to the location
+      tags:
+        - Pairing
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - macAddress
+                - location
+                - deviceType
+                - deviceModel
+              properties:
+                macAddress:
+                  type: string
+                nickname:
+                  type: string
+                location:
+                  type: object
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                deviceType:
+                  type: string
+                deviceModel:
+                  type: string
+      responses:
+        200:
+          description: A Device with the specified MAC address or an empty object if not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  device:
+                    $ref: '#/components/schemas/Device'
+                  token:
+                    type: string
+        400:
+          description: Invalid request body
+        401:
+          description: Invalid or expired pairing token
+        409:
+          description: Device already paired | Devices should only be paired to locations with location class unit
+  /api/v2/devices:
+    get:
+      summary: Retrieves a Device by MAC address.
+      tags:
+        - Devices
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: macAddress
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/ExpandParam'
+      responses:
+        200:
+          description: A Device with the specified MAC address.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+
+  /api/v2/devices/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Device ID
+    get:
+      summary: Retrieves a Device by ID.
+      tags:
+        - Devices
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/components/parameters/ExpandParam'
+      responses:
+        200:
+          description: A Device with the specified ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+
+    delete:
+      summary: Deletes a Device by ID.
+      tags:
+        - Devices
+      produces:
+        - application/json
+      responses:
+        200:
+          description: The Device was successfully deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+        204:
+          description: A Device with the specified ID was not found.
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+
+    post:
+      summary: Updates a Device by ID (partially).
+      tags:
+        - Devices
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceMutable'
+      responses:
+        200:
+          description: The Device was successfully updated.
+          schema:
+            $ref: '#/components/schemas/Device'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        409:
+          description: A Device with the specified ID was not found.
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  /api/v2/devices/{id}/fwproperties:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Device ID
+    post:
+      summary: Updates Device Firmware Properties by ID.
+      tags:
+        - Devices
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        200:
+          description: The Device Firmware Properties were successfully updated.
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+
+  /api/v2/devices/{id}/systemMode:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Device ID
+    post:
+      summary: Sends directive to change device system mode
+      tags:
+        - Devices
+        - System Mode
+      produces:
+        application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - target
+              properties:
+                target:
+                  $ref: '#/components/schemas/SystemMode'
+                isLocked:
+                  type: boolean
+                revertMode:
+                  $ref: '#/components/schemas/SystemMode'
+                revertMinutes:
+                  type: number
+      responses:
+        202:
+          description: Directive sent
+          schema:
+            $ref: '#/components/schemas/Device'
+        400:
+          description: Invalid request body
+        409:
+          description: Device system mode is locked and cannot be changed
+
+  /api/v2/devices/{id}/connection:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Device ID
+    post:
+      summary: Sets the on-site connection details on a device
+      tags:
+        - Devices
+        - Connectivity
+      produces:
+        application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - method
+              properties:
+                method:
+                  type: string
+                  enum:
+                    - unknown
+                    - wifi
+                    - lte
+                lte: 
+                  type: object
+                  required:
+                    - qrCode
+                  properties:
+                    qrCode:
+                      type: string
+      responses:
+        202:
+          description: Details set
+          schema:
+            $ref: '#/components/schemas/Device'
+        400:
+          description: Invalid request body
+        404:
+          description: Device does not exist
+
+  /api/v2/devices/{id}/reset:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Device ID
+    post:
+      summary: Sends directive to reset the device according to the given target.
+      tags:
+        - Devices
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - target
+              properties:
+                target:
+                  type: string
+                  enum:
+                    - power
+      responses:
+        202:
+          description: Directive sent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+        400:
+          description: Invalid request body
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+
+  /api/v2/devices/{id}/healthTest/run:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Device ID
+    post:
+      summary: Sends directive to run a Health Test.
+      tags:
+        - Devices
+      produces:
+        - application/json
+      responses:
+        202:
+          description: Directive sent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthTest'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        409:
+          description: A Device with the specified ID was not found.
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  /api/v2/devices/{id}/healthTest/{roundId}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Device ID
+      - in: path
+        name: roundId
+        required: true
+        schema:
+          type: string
+        description: Test Round ID - use 'latest' for last one run
+    get:
+      summary: Retrieve Health Test Result
+      description: Retrieve test result by round id (UUID), you can use 'latest' to retrieve the latest test
+      tags:
+        - Devices
+      produces:
+        - application/json
+      responses:
+        200:
+          description: The latest Health Test result or an empty object if there is none.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthTest'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        409:
+          description: A Device with the specified ID was not found.
+          schema:
+            $ref: '#/components/schemas/Error'
+  /api/v2/devices/{id}/actionRules:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Device ID
+    get:
+      summary: Retrieves Action Rules for the given Device ID
+      tags:
+        - Devices
+        - Action Rules
+      produces:
+        - application/json
+      responses:
+        200:
+          description: All Action Rules for the given Device ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionRules'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+    post:
+      summary: Upserts Action Rules for the given Device ID
+      tags:
+        - Devices
+        - Action Rules
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActionRules'
+      responses:
+        200:
+          description: All Action Rules for the given Device ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionRules'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+  /api/v2/devices/{id}/actionRules/{actionRuleId}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Device ID
+      - in: path
+        name: actionRuleId
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Action Rule ID
+    delete:
+      summary: Deletes an Action Rule for the given Device ID and Action Rule ID
+      tags:
+        - Devices
+        - Action Rules
+      produces:
+        - application/json
+      responses:
+        200:
+          description: The Action Rule was successfully deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+        204:
+          description: An Action Rule with the specified ID was not found.
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+
+  /api/v2/devices/lte:
+    post:
+      summary: Creates an LTE Device
+      tags:
+        - Devices
+        - LTE
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - imei
+                - iccid
+                - randomKey
+              properties:
+                imei:
+                  type: string
+                  minLength: 15
+                  maxLength: 15
+                iccid:
+                  type: string
+                  minLength: 20
+                  maxLength: 20
+                randomKey:
+                  type: string
+                  minLength: 512
+                  maxLength: 512
+                offsetIndex:
+                  type: number
+                  default: 1
+              example:
+                imei: 358666081365927
+                iccid: 89011702278473675084
+                randomKey: 194ffe16e26a81ac9b231602d41e45dbba4c76028d7e70e4d4990b3afdbed809d9a817f56b08af8e88cb3875d09d4fbbcff8591fd2e3ccbc4f294226769ddfb8dd8fcb61b9879c10b156f7e90032158efe6655c4c65f502315f8ddbbcd759c8626bcaafb94044b09f10052b7f0cd7bba6b9390044a3d91cf1bb149f0100ee994d028063bfea5298ef65c127a430178933ee6acac4e19c9573e31dcb7092117a648ad5f4a04f74ed29da4d662e429c82106d26c109869e077e6bb2c0bfc69570ea4c5d31f49b92b7912db8cab4d02aafcb53d46da636e26c5d178953f13e834bf99700bec17d34f9e9667903da2222aca71c493243ea346f44f92d6d4390c2c22
+      responses:
+        201:
+          description: LTE created
+        400:
+          description: Invalid request body
+
+  /api/v2/devices/lte/credentials:
+    post:
+      summary: Retrieves LTE device credentials
+      tags:
+        - Devices
+        - LTE
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: string
+                  description: LTE QR Code
+              example:
+                data: lte-a36b9e7423316fc17f055983f16c48b650905e0bc6ed4cacfd0574a450576b3d
+      responses:
+        200:
+          description: LTE Credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LteCredentials'
+        400:
+          description: Invalid request body
+
+  /api/v2/devices/{id}/sync:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Device ID
+    post:
+      summary: Syncs device state
+      tags:
+        - Devices
+        - Sync
+      produces:
+        - application/json
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                additional:
+                  type: object
+                  properties:
+                    syncInstallEvent:
+                      type: boolean
+                      default: false
+                    syncPesSchedule:
+                      type: boolean
+                      default: false
+                    syncEnterpriseSettings:
+                      type: boolean
+                      default: false
+                    syncFloSenseModel:
+                      type: boolean
+                      default: false
+              example:
+                additional:
+                  syncInstallEvent: true
+                  syncPesSchedule: false
+                  syncEnterpriseSettings: true
+                  syncFloSenseModel: false
+      responses:
+        204:
+          description: Device synced
+        400:
+          description: Invalid request body
+
+components:
+  schemas:
+    LteCredentials:
+      type: object
+      properties:
+        ssid:
+          type: string
+        password:
+          type: string
+        imeiLast4:
+          type: string
+        iccidLast4:
+          type: string
+
+    FirmwareInfo:
+      type: object
+      properties:
+        current:
+          type: object
+          properties:
+            version:
+              type: string
+        latest:
+          type: object
+          properties:
+            version:
+              type: string
+            sourceType:
+              type: string
+            sourceLocation:
+              type: string
+
+    ActionRules:
+      type: object
+      properties:
+        actionRules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionRule'
+      example:
+        actionRules:
+          - targetDeviceId: ae045418-c8d6-4737-91d7-83991a327289
+            event: waterDetected
+            action: shutOff
+            order: 1
+            enabled: true
+          - targetDeviceId: 03724bbe-4637-4af6-8f1b-1451baec9c39
+            event: waterDetected
+            action: shutOff
+            order: 2
+            enabled: true
+
+    ActionRule:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            action:
+              type: string
+            event:
+              type: string
+            targetDeviceId:
+              type: string
+              format: uuid
+            order:
+              type: number
+            enabled:
+              type: boolean
+          required:
+            - action
+            - event
+            - targetDeviceId
+            - order
+            - enabled
+        - $ref: '#/components/schemas/Timestamped'
+
+    DeviceMutable:
+      type: object
+      properties:
+        prvInstallation:
+          type: string
+        purchaseLocation:
+          type: string
+        irrigationType:
+          $ref: '#/components/schemas/IrrigationType'
+        installationPoint:
+          type: string
+        nickname:
+          type: string
+        valve:
+          type: object
+          properties:
+            target:
+              type: string
+              enum:
+                - open
+                - closed
+        area:
+          type: object
+          properties:
+            id:
+              type: string
+        puckConfig:
+          type: object
+          properties:
+            isConfigured:
+              type: boolean
+        hardwareThresholds:
+          allOf:
+            - $ref: '#/components/schemas/HardwareThresholds'
+            - type: object
+              properties:
+                humidityEnabled:
+                  type: boolean
+                  description: PUCK ONLY - Set whether to enable the humidity alert when its value is outside ranges.
+                temperatureEnabled:
+                  type: boolean
+                  description: PUCK ONLY - Set whether to enable the temperature alert when its value is outside ranges.
+                batteryEnabled:
+                  type: boolean
+                  description: PUCK ONLY - Set whether to enable the battery alert when its value is outside ranges.
+        componentHealth:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              health:
+                type: string
+              updated:
+                type: date-time
+        healthTest:
+          type: object
+          properties:
+            config:
+              $ref: '#/components/schemas/HealthTestConfig'
+
+    IrrigationType:
+      type: string
+
+    Device:
+      allOf:
+        - $ref: '#/components/schemas/DeviceMutable'
+        - $ref: '#/components/schemas/Timestamped'
+        - $ref: '#/components/schemas/Notifications'
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            macAddress:
+              type: string
+            location:
+              $ref: '#/components/schemas/LocationExpandable'
+            deviceType:
+              type: string
+            deviceModel:
+              type: string
+            isConnected:
+              type: boolean
+            lastHeardFromTime:
+              type: string
+              format: date-time
+            fwVersion:
+              type: string
+            fwProperties:
+              type: object
+            irrigationType:
+              $ref: '#/components/schemas/IrrigationType'
+            hardwareThresholds:
+              type: object
+              properties:
+                gpm:
+                  $ref: '#/components/schemas/HardwareThresholds'
+                psi:
+                  $ref: '#/components/schemas/HardwareThresholds'
+                temp:
+                  $ref: '#/components/schemas/HardwareThresholds'
+            telemetry:
+              type: object
+              properties:
+                current:
+                  type: object
+                  properties:
+                    gpm:
+                      type: number
+                    psi:
+                      type: number
+                    tempF:
+                      type: number
+                    humidity:
+                      type: number
+                    updated:
+                      type: string
+                      format: date-time
+            connectivity:
+              type: object
+              properties:
+                rssi:
+                  type: string
+            systemMode:
+              type: object
+              properties:
+                target:
+                  $ref: '#/components/schemas/SystemMode'
+                shouldInhert:
+                  type: boolean
+                revertMinutes:
+                  type: number
+                revertMode:
+                  $ref: '#/components/schemas/SystemMode'
+                revertScheduledAt:
+                  type: string
+                  format: date-time
+                lastKnown:
+                  $ref: '#/components/schemas/SystemMode'
+            valve:
+              type: object
+              properties:
+                target:
+                  type: string
+                  enum:
+                    - open
+                    - closed
+                lastKnown:
+                  type: string
+                  enum:
+                    - open
+                    - closed
+                    - in_transition
+            irrigationSchedule:
+              type: object
+              properties:
+                computed:
+                  type: object
+                  properties:
+                    status:
+                      type: string
+                    times:
+                      type: array
+                      items:
+                        type: array
+                        items:
+                          type: string
+                          pattern: '^\d{2}:\d{2}:\d{2}$'
+                isEnabled:
+                  type: boolean
+                updatedAt:
+                  type: string
+                  format: date-time
+            installStatus:
+              type: object
+              properties:
+                isInstalled:
+                  type: boolean
+                installDate:
+                  type: string
+                  format: date-time
+            learning:
+              type: object
+              properties:
+                outOfLearningDate:
+                  type: string
+                  format: date-time
+            pairingData:
+              oneOf:
+                - $ref: '#/components/schemas/DevicePairingData'
+                - $ref: '#/components/schemas/PuckPairingData'
+            serialNumber:
+              type: string
+            healthTest:
+              type: object
+              properties:
+                latest:
+                  $ref: '#/components/schemas/HealthTest'
+                config:
+                  $ref: '#/components/schemas/HealthTestConfig'
+            shutoff:
+              type: object
+              properties:
+                scheduledAt:
+                  type: string
+                  format: date-time
+            puckConfig:
+              type: object
+              properties:
+                isConfigured:
+                  type: boolean
+                configuredAt:
+                  type: string
+                  format: date-time
+            actionRules:
+              $ref: '#/components/schemas/ActionRules'
+            battery:
+              type: object
+              description: Battery information - Puck only
+              properties:
+                level:
+                  type: number
+                updated:
+                  type: string
+                  format: date-time
+            audio:
+              type: object
+              description: Audio information - Puck only
+              properties:
+                snoozeSeconds:
+                  type: number
+                snoozeTo:
+                  type: string
+                  format: date-time
+            firmware:
+              $ref: '#/components/schemas/FirmwareInfo'
+
+    DeviceExpandable:
+      oneOf:
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+        - $ref: '#/components/schemas/Device'
+
+    SystemMode:
+      type: string
+      enum:
+        - home
+        - away
+        - sleep
+
+    ThresholdDefinition:
+      type: object
+      properties:
+        okMin:
+          type: number
+        okMax:
+          type: number
+        minValue:
+          type: number
+        maxValue:
+          type: number
+
+    HardwareThresholds:
+      type: object
+      properties:
+        gpm:
+          $ref: '#/components/schemas/ThresholdDefinition'
+        lpm:
+          $ref: '#/components/schemas/ThresholdDefinition'
+        psi:
+          $ref: '#/components/schemas/ThresholdDefinition'
+        kpa:
+          $ref: '#/components/schemas/ThresholdDefinition'
+        tempF:
+          $ref: '#/components/schemas/ThresholdDefinition'
+        tempC:
+          $ref: '#/components/schemas/ThresholdDefinition'
+        humidity:
+          $ref: '#/components/schemas/ThresholdDefinition'
+        battery:
+          $ref: '#/components/schemas/ThresholdDefinition'
+    HealthTestConfig:
+      type: object
+      properties:
+        scheduler:
+          type: string
+          enum:
+            - manual
+            - auto
+            - disabled
+        timesPerDay:
+          type: number
+        times:
+          type: array
+          items:
+            type: string
+            format: ^\d{2}:\d{2}$\
+    HealthTest:
+      type: object
+      properties:
+        roundId:
+          type: string
+          format: uuid
+        deviceId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+            - pending
+            - running
+            - completed
+            - cancelled
+            - timeout
+          description: >
+            Health Test Status:
+              * `pending` - Health test request was initiated and the device has not responded yet
+              * `running` - Health test is running
+              * `completed` - Health test completed
+              * `cancelled` - Health test was cancelled either by the device or user. Check results
+              * `timeout` - Health test timed out. Device did not respond in time
+        type:
+          type: string
+          enum:
+            - auto
+            - manual
+          description: >
+            Health Test Type:
+              * `auto` - Initiated by a schedule or device
+              * `manual` - Initiated by user or admin
+        leakType:
+          type: number
+        leakLossMinGal:
+          type: number
+        leakLossMaxGal:
+          type: number
+        startPressure:
+          type: number
+        endPressure:
+          type: number
+        startRawPayload:
+          type: object
+        endRawPayload:
+          type: object
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+
+    DevicePairingData:
+      type: object
+      properties:
+        apName:
+          type: string
+        loginToken:
+          type: string
+        clientCert:
+          type: string
+        clientKey:
+          type: string
+        serverCert:
+          type: string
+        websocketCert:
+          type: string
+        websocketCertDer:
+          type: string
+        websocketKey:
+          type: string
+
+    PuckPairingData:
+      type: object
+      properties:
+        accessToken:
+          type: string

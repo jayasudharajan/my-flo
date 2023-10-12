@@ -1,0 +1,14 @@
+
+export default {
+  NONE: 1,
+  TRIGGERED: 2,
+  SENT: 3,
+  DELIVERED: 4,
+  FAILED: 5,
+  OPENED: 6,
+  BOUNCE: 7,
+  DROPPED: 8,
+  GRAVEYARD_FILTERED: 9,
+  CLOSED_VALVE_FILTERED: 10
+};
+

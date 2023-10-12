@@ -1,0 +1,11 @@
+{
+  "roles": "WeeklyReport.*.unsubscribeLink",
+  "allows": [
+    {
+      "resources": ["WeeklyReport"],
+      "permissions": [
+        "unsubscribeByEmbeddedLink"
+      ]
+    }
+  ]
+}

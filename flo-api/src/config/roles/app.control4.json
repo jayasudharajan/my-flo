@@ -1,0 +1,11 @@
+{
+  "roles": "app.control4",
+  "allows": [
+    {
+      "resources": ["Client"],
+      "permissions": [
+        "patchRedirectURIWhitelist"
+      ]
+    }
+  ]
+}

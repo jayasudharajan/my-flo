@@ -1,0 +1,23 @@
+{
+  "account_id": "f98c8286-f6e5-495d-b113-6811ee3ef4c1",
+  "location_id": "f98c8286-f6e5-495d-b113-6811ee3ef4ce",
+  "location_name": "home",
+  "address": "2012 Maple Street",
+  "address2": "Unit #2",
+  "city": "South Middlesville",
+  "state": "AK",
+  "postalcode": "10292",
+  "country": "USA",
+  "location_type": "sfr",
+  "stories": 2,
+  "location_size_category": 2,
+  "location_size": 1753,
+  "bathrooms": 2,
+  "occupants": 2,
+  "bathroom_amenities": ["bathtub","jacuzzi","spa"],
+  "kitchen_amenities": ["washer","dishwasher","freezer"],
+  "outdoor_amenities": ["swimming pool","jacuzzi","spa"],
+  "tankless": true,
+  "expansion_tank": true,
+  "profile_completed": true
+}

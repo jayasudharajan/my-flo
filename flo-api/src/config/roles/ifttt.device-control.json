@@ -1,0 +1,11 @@
+{
+  "roles": "IFTTT.*.device-control",
+  "allows": [
+    {
+      "resources": ["IFTTT"],
+      "permissions": [
+        "deviceControlAction"
+      ]
+    }
+  ]
+}

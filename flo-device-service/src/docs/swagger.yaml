@@ -1,0 +1,470 @@
+basePath: /v1
+definitions:
+  main.ActionRule:
+    properties:
+      action:
+        type: string
+      createdAt:
+        type: string
+      enabled:
+        type: boolean
+      event:
+        type: string
+      id:
+        type: string
+      order:
+        type: integer
+      targetDeviceId:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  main.ActionRules:
+    properties:
+      actionRules:
+        items:
+          $ref: '#/definitions/main.ActionRule'
+        type: array
+    type: object
+  main.DeviceBase:
+    properties:
+      createdTime:
+        example: "2019-05-03T22:30:15.82285Z"
+        type: string
+      deviceId:
+        example: 000005f0cccc
+        type: string
+      floSense:
+        type: object
+      fwProperties:
+        type: object
+      fwVersion:
+        example: 3.5.12
+        type: string
+      isConnected:
+        example: true
+        type: boolean
+      lastHeardFromTime:
+        example: "2019-05-06T07:14:36Z"
+        type: string
+      updatedTime:
+        example: "2019-05-06T07:14:36Z"
+        type: string
+    type: object
+  main.DeviceExtended:
+    properties:
+      connectivity:
+        type: object
+      createdTime:
+        example: "2019-05-03T22:30:15.82285Z"
+        type: string
+      deviceId:
+        example: 000005f0cccc
+        type: string
+      floSense:
+        type: object
+      fwProperties:
+        type: object
+      fwVersion:
+        example: 3.5.12
+        type: string
+      isConnected:
+        example: true
+        type: boolean
+      lastHeardFromTime:
+        example: "2019-05-06T07:14:36Z"
+        type: string
+      systemMode:
+        type: object
+      telemetry:
+        type: object
+      updatedTime:
+        example: "2019-05-06T07:14:36Z"
+        type: string
+      valve:
+        type: object
+    type: object
+  main.Devices:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/main.DeviceBase'
+        type: array
+      meta:
+        $ref: '#/definitions/main.Meta'
+        type: object
+    type: object
+  main.ErrorResponse:
+    properties:
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+  main.FirestoreToken:
+    properties:
+      token:
+        example: tbd
+        type: string
+    type: object
+  main.Meta:
+    properties:
+      limit:
+        example: 10
+        type: integer
+      offset:
+        example: 0
+        type: integer
+      total:
+        example: 1
+        type: integer
+    type: object
+  main.Ping:
+    properties:
+      build_date:
+        example: "2019-05-03T18:44:37Z"
+        type: string
+      commit_name:
+        example: cleanup_and_todo
+        type: string
+      commit_sha:
+        example: b32ecf837b64055626a7403c15c8fb8195f4197a
+        type: string
+      env:
+        example: dev
+        type: string
+      service_name:
+        example: flo-device-service
+        type: string
+      stats:
+        type: object
+      timestamp:
+        example: flo-device-service
+        type: string
+    type: object
+host: flo-device-service.flocloud.co
+info:
+  contact:
+    email: alex.galushka@flotechnologies.com
+    name: Alexander Galushka
+  description: This is service which takes provides information about FLO devices,
+    its properties and states.
+  license: {}
+  title: Device Service API
+  version: "1.0"
+paths:
+  /device/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete device
+      parameters:
+      - description: DeviceBase Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            items:
+              $ref: '#/definitions/main.DeviceBase'
+            type: array
+        "400":
+          description: parameter id can not be empty
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "404":
+          description: deviceId_f045da2cc1ed doesn't exist
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "500":
+          description: failed to delete device props from the SQL datastore" "failed
+            to delete device props from the NOSQL datastore
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: delete device by id
+      tags:
+      - devices
+    get:
+      consumes:
+      - application/json
+      description: |-
+        get device by id (device mac address), device state includes itself: isConnected flag, providing the
+        knowledge about the device online state (connected or disconnected from the network), firmware properties
+        passed from the device (the list of the properties is lengthy and is still growing), keep in mind that
+        there is no validation on the firmware properties in the device service (it takes the data as is from the device)
+        sytem mode, valve state and telemetry
+      parameters:
+      - description: device id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.DeviceExtended'
+            type: array
+        "400":
+          description: path parameter id can not be empty
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "404":
+          description: deviceId_f045da2cc1ed doesn't exist
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "500":
+          description: failed to retrieve record for deviceId_000005f0cccc from the
+            datastore
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: get device state by id
+      tags:
+      - devices
+  /device/{id}/sync:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        forces the device to sync with the backend services, providing the latest data for for System Mode,
+        Valve State, Firmware Properties
+      parameters:
+      - description: device id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "202": {}
+        "400":
+          description: path parameter id can not be empty
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "404":
+          description: deviceId_f045da2cc1ed doesn't exist
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: forces the device to sync
+      tags:
+      - devices
+  /devices:
+    get:
+      consumes:
+      - application/json
+      description: get devices
+      parameters:
+      - description: the limit parameter controls the maximum number of items that
+          may be returned for a single request, default as well as max value is 10
+        in: query
+        name: limit
+        type: integer
+      - description: the offset parameter controls the starting point within the collection
+          of resource results, default values is 0
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Devices'
+            type: array
+        "400":
+          description: parameter limit has to be a number" "parameter offset has to
+            be a number
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "500":
+          description: failed to retrieve devices records with offset 0 and limit
+            10
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: List devices
+      tags:
+      - devices
+  /devices/{id}/actionRules:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves Action Rules for the given Device ID
+      parameters:
+      - description: device id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.ActionRules'
+        "500":
+          description: failed to retrieve action rules
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: Retrieves Action Rules for the given Device ID
+      tags:
+      - devices
+    post:
+      consumes:
+      - application/json
+      description: Upserts Action Rules for the given Device ID
+      parameters:
+      - description: device id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Action Rules
+        in: body
+        name: actionRules
+        required: true
+        schema:
+          $ref: '#/definitions/ActionRules'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.ActionRules'
+        "500":
+          description: failed to upsert action rules
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: Upserts Action Rules for the given Device ID
+      tags:
+      - devices
+  /devices/{id}/actionRules/{actionRuleId}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes Action Rules for the given Device ID and Action Rule ID
+      parameters:
+      - description: device id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.ActionRule'
+        "500":
+          description: failed to delete action rule
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: Deletes Action Rules for the given Device ID and Action Rule ID
+      tags:
+      - devices
+  /devices/{id}/fwproperties:
+    post:
+      consumes:
+      - application/json
+      description: updates device firmware properties
+      parameters:
+      - description: Update device firmware properties
+        in: body
+        name: device
+        required: true
+        schema:
+          $ref: '#/definitions/map%5Bstring%5Dinterface%7B%7D'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "202": {}
+        "400":
+          description: failed to marshal device fw props setter
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: updates device firmware properties, you can update any fields in model
+      tags:
+      - devices
+  /firestore/auth:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        generates custom JWT token to authenticate clients with Firestore limiting access to specified asset ids
+        it is achieved by passing the ids of customer's asset such as devices in the request body which is going to be baked in as a custom claim "ids" into the jwt
+      parameters:
+      - description: specifies the devices ids client has access to
+        in: body
+        name: firestoreAuth
+        required: true
+        schema:
+          $ref: '#/definitions/FirestoreAuth'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.FirestoreToken'
+        "400":
+          description: parameter ids has to be a string" "parameter ids can not be
+            empty
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+        "500":
+          description: failed to generate firestore jwt
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: generates custom JWT token to authenticate clients with Firestore
+      tags:
+      - devices
+      - firestore
+  /ping:
+    get:
+      consumes:
+      - application/json
+      description: get devices
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Ping'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: check the health status of the service and list its config data
+      tags:
+      - devices
+schemes:
+- http
+- https
+swagger: "2.0"

@@ -1,0 +1,13 @@
+{
+  "id": "5d04a411-36d4-4256-884f-f20463242882",
+  "user_id": "8799JHBJHVJBBV989",
+  "icd_id": "7989h9bs89bs99abs9baisbaib",
+  "platform": "APPLE_IPHONE",
+  "registration_token": "4326ca02a68effe4583a06f5cd373433f87417591511ba314ac17bdc2307bc0e",
+  "status": "OK",
+  "status_message": "Sumthin real bad, brohemus.",
+  "platform_arn": "arn:aws:sns:us-west-2:098786959887:app/APNS_SANDBOX/iflo-development",
+  "endpoint_arn": "arn:aws:sns:us-west-2:098786959887:endpoint/APNS_SANDBOX/iflo-development/e2a1801e-d7e6-34cb-9037-364e2608738e",
+  "ts": "2016-07-07T00:33:55.080Z",
+  "ts_updated": "2016-07-07T00:33:55.080Z"
+}

@@ -1,0 +1,22 @@
+{
+  "roles": "Location.*.write",
+  "allows": [
+    {
+        "resources": ["Location"],
+        "permissions": [
+            "update_v2",
+            "retrieve_v2",
+            "pairDevice_v2",
+            "unpairDevice_v2",
+            "updateDevice_v2",
+            "addUserRole_v2",
+            "updateUserRole_v2",
+            "removeUserRole_v2",
+            "retrieveNotifications_v2",
+            "removeNotifications_v2",
+            "open-valve",
+            "close-valve"
+        ]
+    }
+  ]
+}

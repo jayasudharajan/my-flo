@@ -1,0 +1,1 @@
+alter table devices drop column fw_properties_req;

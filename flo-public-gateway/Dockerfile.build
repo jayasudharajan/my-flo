@@ -1,0 +1,24 @@
+# This image is used as a build environment to run nodejs tools, like npm
+FROM node:18-alpine
+
+ARG NODE_ENV=development
+ARG COMMIT_SHA_ARG=blank
+
+ENV COMMIT_SHA=$COMMIT_SHA_ARG
+
+RUN echo https://mirrors.edge.kernel.org/alpine/v3.18/main > /etc/apk/repositories
+RUN echo https://mirrors.edge.kernel.org/alpine/v3.18/community >> /etc/apk/repositories
+
+RUN rm -rf /var/cache/apk/* && \
+    rm -rf /tmp/* && \
+    apk add --no-cache \
+      bash \
+      gcc \
+      g++ \
+      make \
+      python3 \
+      git
+
+RUN npm install -g npm@10.1.0
+
+WORKDIR /app

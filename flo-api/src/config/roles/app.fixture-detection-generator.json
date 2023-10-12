@@ -1,0 +1,18 @@
+{
+  "roles": "app.fixture-detection-generator",
+  "allows": [
+    {
+      "resources": ["ICD"],
+      "permissions": [
+        "logFixtureDetection",
+        "retrieveByDevice"
+      ]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveByLocationId"
+      ]
+    }
+  ]
+}

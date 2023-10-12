@@ -1,0 +1,11 @@
+{
+  "roles": "User.*.presence",
+  "allows": [
+    {
+      "resources": ["User"],
+      "permissions": [
+        "presence"
+      ]
+    }
+  ]
+}

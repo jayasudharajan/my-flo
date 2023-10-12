@@ -1,0 +1,15 @@
+{
+  "roles": "app.health-test-time-calculator",
+  "allows": [
+    {
+      "resources": [
+        "ICD"
+      ],
+      "permissions": [
+        "retrieveAll",
+        "deployMicroleakTestTimeConfig",
+        "retrievePendingMicroleakTestTimeConfig"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "roles": "app.default-health-test-time",
+  "allows": [
+    {
+      "resources": [
+        "ICD"
+      ],
+      "permissions": [
+        "deployMicroleakTestTimeConfig"
+      ]
+    }
+  ]
+}

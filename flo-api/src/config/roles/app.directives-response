@@ -1,0 +1,23 @@
+{
+  "roles": "app.directives-response",
+  "allows": [
+    {
+      "resources": ["ZITResult"],
+      "permissions": [
+        "create"
+      ]
+    },
+    {
+      "resources": ["DirectiveResponseLog"],
+      "permissions": [
+      	"logDirectiveResponse"
+      ]
+    },
+    {
+      "resources": ["Directives"],
+      "permissions": [
+        "retrieveDirectiveLogByDirectiveId"
+      ]
+    }
+  ]
+}

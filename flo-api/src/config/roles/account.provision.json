@@ -1,0 +1,13 @@
+{
+    "roles": "Account.*.provision",
+    "allows": [
+      {
+        "resources": ["Account"],
+        "permissions": [
+          "retrieve_v2",
+          "updateUserRole_v2",
+          "retrieveUser_v2"
+        ]
+      }
+    ]
+}

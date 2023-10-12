@@ -1,0 +1,57 @@
+FROM 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-pes-docker:anaconda3-run
+MAINTAINER Flo Technologies Engineering Team
+
+
+ENV PATH="$PATH:/opt/conda/envs/fpw/bin" \
+    PYTHONPATH="/app/flo-ml:/app/flo-pes" \
+    REFRESHED_AT="2017-06-13"
+ARG DEPLOY_TOKEN
+
+
+
+################################################################################
+# Container Scripts
+################################################################################
+# Add app-env
+ADD .docker/bin/app-env /usr/local/bin/app-env
+RUN chmod a+x /usr/local/bin/app-env
+
+# Add start
+ADD .docker/bin/start /usr/local/bin/start
+RUN chmod a+x /usr/local/bin/start
+
+# Add configuration files
+ADD .docker/templates/ /etc/templates/
+
+RUN mkdir /app
+WORKDIR /app/
+
+
+################################################################################
+# Add App
+################################################################################
+ADD ./ /app/
+
+RUN git clone https://${DEPLOY_TOKEN}@github.com/FloTechnologies/flo-ml
+
+RUN conda env create -n fpw -f /app/environment.yml
+
+
+
+################################################################################
+# Volumes
+################################################################################
+VOLUME ["/var/log/app"]
+
+
+################################################################################
+# Ports
+################################################################################
+
+EXPOSE 8000
+
+################################################################################
+# Entrypoint
+################################################################################
+
+ENTRYPOINT ["/usr/local/bin/start"]

@@ -1,0 +1,13 @@
+{
+  "roles": "Localization.read-v2",
+  "allows": [
+    {
+      "resources": ["Localization"],
+      "permissions": [
+        "retrieveLocalization_v2",
+        "retrieveLocale_v2",
+        "retrieveAssest_v2"
+      ]
+    }
+  ]
+}

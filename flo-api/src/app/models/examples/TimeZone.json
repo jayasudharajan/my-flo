@@ -1,0 +1,7 @@
+{
+  "id": "785f6a95-1d07-4d4a-9a2c-c92c1f903d03",  
+  "abbreviation": "PST",
+  "name": "Pacific Standard",  
+  "offset": "UTC -8",
+  "is_active": true
+}

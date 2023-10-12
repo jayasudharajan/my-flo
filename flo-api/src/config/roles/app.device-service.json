@@ -1,0 +1,21 @@
+{
+  "roles": "app.device-service",
+  "allows": [
+    {
+      "resources": ["User"],
+      "permissions": ["retrieve_v2"]
+    },
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveAwayModeState",
+        "retrieveIrrigationSchedule",
+        "retrieve_v2",
+        "update_v2",
+        "setSystemMode",
+        "disableForcedSleep",
+        "enableForcedSleep"
+      ]
+    }
+  ]
+}

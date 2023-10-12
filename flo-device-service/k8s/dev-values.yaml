@@ -1,0 +1,15 @@
+---
+ingress:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
+    kubernetes.io/tls-acme: "true"
+  enabled: true
+  hosts:
+    - flo-device-service.flocloud.co
+    - flo-device-service-dev.flocloud.co
+  path: "/*"
+  tls:
+    - secretName: flo-device-service
+      hosts:
+        - flo-device-service.flocloud.co
+        - flo-device-service-dev.flocloud.co

@@ -1,0 +1,11 @@
+{
+  "roles": "Account.*.readonly",
+  "allows": [
+    {
+      "resources": ["Account"],
+      "permissions": [
+        "retrieve_v2"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+FROM 098786959887.dkr.ecr.us-west-2.amazonaws.com/flo-scala-docker:java-8-alpine-2018-05-03
+MAINTAINER Flo Technologies Engineering Team
+
+################################################################################
+# Container Scripts
+################################################################################
+# Add app-env
+ADD .docker/bin/app-env /usr/local/bin/app-env
+RUN chmod a+x /usr/local/bin/app-env
+
+# Add start
+ADD .docker/bin/start /usr/local/bin/start
+RUN chmod a+x /usr/local/bin/start
+
+# Add configuration files
+ADD .docker/templates/ /etc/templates/
+
+
+################################################################################
+# Add App
+################################################################################
+# Place flat jar and configs to /app
+ADD ./target/ /app/build/target/
+RUN cp -dR /app/build/target/scala-*/*.jar /app/
+
+RUN rm -rf /app/build/
+WORKDIR /app
+
+
+################################################################################
+# Volumes
+################################################################################
+
+VOLUME ["/var/log/app"]
+
+
+################################################################################
+# Ports
+################################################################################
+
+EXPOSE 8000
+
+################################################################################
+# Entrypoint
+################################################################################
+
+WORKDIR /app
+ENTRYPOINT ["/usr/local/bin/start"]

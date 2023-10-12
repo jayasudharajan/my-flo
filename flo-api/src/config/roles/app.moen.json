@@ -1,0 +1,11 @@
+{
+  "roles": "app.moen",
+  "allows": [
+    {
+      "resources": ["Client"],
+      "permissions": [
+        "patchRedirectURIWhitelist"
+      ]
+    }
+  ]
+}

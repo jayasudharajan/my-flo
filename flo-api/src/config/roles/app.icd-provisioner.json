@@ -1,0 +1,17 @@
+{
+  "roles": "app.icd-provisioner",
+  "allows": [
+    {
+      "resources": ["StockICD"],
+      "permissions": [
+        "retrieve",
+        "generate",
+        "retrieveQrCode",
+        "generateSerialNumber",
+        "retrieveSerialNumberByDeviceId",
+        "retrieveSerialNumber",
+        "removeSerialNumber"
+      ]
+    }
+  ]
+}

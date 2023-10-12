@@ -1,0 +1,13 @@
+{
+  "roles": "Location.*.waterflow-read",
+  "allows": [
+    {
+      "resources": ["Location"],
+      "permissions": [
+        "retrieveCurrentICDOnboardingState",
+        "retrieveDailyWaterFlow",
+        "retrieveMonthlyUsage"
+      ]
+    }
+  ]
+}
