@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-for i in res/values/*/; do
-  echo $i;
-  lang="$(basename $i)"
-  mv "$i/localize.json" "res/values/strings_${lang}.arb"
-done

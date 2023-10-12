@@ -1,9 +1,0 @@
-{
-  "name": "kafka-snapshot-lambda",
-  "description": "",
-  "version": "0.1.0",
-  "dependencies": {},
-  "devDependencies": {
-    "serverless-local-schedule": "^0.1.6"
-  }
-}

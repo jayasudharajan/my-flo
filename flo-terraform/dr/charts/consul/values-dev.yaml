@@ -1,8 +1,0 @@
-Gossip:
-  Create: true
-Storage: 5Gi
-Replicas: 5
-StorageClass: gp2
-
-nodeSelector:
-  kops.k8s.io/instancegroup: nodes

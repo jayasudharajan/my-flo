@@ -1,6 +1,0 @@
-vpc:
-  securityGroupIds:
-    - sg-026b0a393f13a4993
-  subnetIds:
-    - subnet-a9c538df
-    - subnet-5feb333b

@@ -1,9 +1,0 @@
-{
-  "roles": "AccountGroup.*.admin",
-  "allows": [
-    {
-      "resources": ["AccountGroup"],
-      "permissions": ["*"]
-    }
-  ]
-}

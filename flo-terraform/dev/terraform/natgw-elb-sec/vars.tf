@@ -1,3 +1,0 @@
-variable "global" {
-  type = "map"
-}

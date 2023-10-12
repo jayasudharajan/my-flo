@@ -1,1 +1,0 @@
-UPDATE alarm SET enabled = false WHERE id = 12;

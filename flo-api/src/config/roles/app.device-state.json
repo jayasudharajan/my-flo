@@ -1,9 +1,0 @@
-{
-  "roles": "app.device-state",
-  "allows": [
-    {
-      "resources": ["ICD"],
-      "permissions": ["forwardDeviceState"]
-    }
-  ]
-}

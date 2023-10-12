@@ -1,9 +1,0 @@
-{
-  "roles": "app.flo-onboarding-service",
-  "allows": [
-    {
-      "resources": ["Onboarding"],
-      "permissions": ["triggerEvent"]
-    }
-  ]
-}

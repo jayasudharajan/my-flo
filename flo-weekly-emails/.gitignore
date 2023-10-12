@@ -1,8 +1,0 @@
-.idea
-.vscode
-**/main
-#src/src
-**/_debug_bin
-**/.swp
-**/tmp
-.creds

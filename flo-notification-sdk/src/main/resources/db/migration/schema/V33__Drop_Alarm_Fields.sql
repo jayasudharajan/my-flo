@@ -1,3 +1,0 @@
-ALTER TABLE alarm
-DROP COLUMN IF EXISTS description,
-DROP COLUMN IF EXISTS display_name;

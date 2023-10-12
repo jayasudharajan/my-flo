@@ -1,9 +1,0 @@
-.idea
-.vscode
-**/main
-**/_debug_bin
-**/.swp
-**/tmp
-**/*.log
-bin
-pkg

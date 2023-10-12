@@ -1,9 +1,0 @@
-{
-  "roles": "app.weekly-report-subscription-lambda",
-  "allows": [
-    {
-      "resources": ["WeeklyReport"],
-      "permissions": ["subscribe", "unsubscribe"]
-    }
-  ]
-}

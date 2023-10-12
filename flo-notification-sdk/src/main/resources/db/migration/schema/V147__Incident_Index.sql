@@ -1,1 +1,0 @@
-CREATE INDEX ix_account_idlocation_id ON public.incident (account_id, location_id);

@@ -1,3 +1,0 @@
-variable "aws" {
-    type = "map"
-}

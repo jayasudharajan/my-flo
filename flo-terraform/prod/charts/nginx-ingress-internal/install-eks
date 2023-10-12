@@ -1,6 +1,0 @@
-#!/bin/bash
-
-helm upgrade ingress-nginx-internal ingress-nginx/ingress-nginx \
-  --values values-eks.yaml \
-  --namespace ingress-nginx-internal \
-  --install --create-namespace

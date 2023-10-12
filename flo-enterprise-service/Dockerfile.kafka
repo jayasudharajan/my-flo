@@ -1,4 +1,0 @@
-FROM bitnami/kafka:2
-USER root
-RUN mkdir -p /var/lib/apt/lists/partial && apt-get update && apt-get -y install netcat
-USER 1001

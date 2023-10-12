@@ -1,2 +1,0 @@
-ALTER TABLE public.alarm
-    ADD COLUMN tags TEXT NOT NULL DEFAULT '';

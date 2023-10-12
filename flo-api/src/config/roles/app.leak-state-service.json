@@ -1,9 +1,0 @@
-{
-  "roles": "app.leak-state-service",
-  "allows": [
-    {
-      "resources": ["ICD"],
-      "permissions": ["retrieve", "forwardDeviceState"]
-    }
-  ]
-}

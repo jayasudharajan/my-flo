@@ -1,2 +1,0 @@
-1-) Container Ports 8080
-2-) Secrets enabled

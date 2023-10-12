@@ -1,9 +1,0 @@
-{
-  "roles": "app.odt-vpn-server",
-  "allows": [
-    {
-      "resources": ["ICD"],
-      "permissions": ["vpn"]
-    }
-  ]
-}

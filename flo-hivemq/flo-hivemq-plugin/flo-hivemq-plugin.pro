@@ -1,3 +1,0 @@
--keep class com.flotechnologies.plugin.FloMainPlugin { *; }
--keep class com.flotechnologies.plugin.** { *; }
--dontwarn com.flotechnologies.plugin.**

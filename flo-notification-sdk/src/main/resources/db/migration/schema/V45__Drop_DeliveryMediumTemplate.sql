@@ -1,1 +1,0 @@
-DROP TABLE IF EXISTS public.delivery_medium_template;

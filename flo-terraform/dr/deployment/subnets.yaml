@@ -1,9 +1,0 @@
-
-subnets:
-- {"name": "private-us-east-2a", "zone": "us-east-2a", "cidr": "10.0.0.0/19", "type": "Private", "id":"subnet-0d51b76da3f7e9adc"}
-- {"name": "private-us-east-2b", "zone": "us-east-2b", "cidr": "10.0.32.0/19", "type": "Private", "id":"subnet-04f91c22708dea711"}
-- {"name": "private-us-east-2c", "zone": "us-east-2c", "cidr": "10.0.64.0/19", "type": "Private", "id":"subnet-0efbfc2d9afdb66b6"}
-- {"name": "public-us-east-2a", "zone": "us-east-2a", "cidr": "10.0.96.0/19", "type": "Utility", "id":"subnet-0877417cd9ea1ce13"}
-- {"name": "public-us-east-2b", "zone": "us-east-2b", "cidr": "10.0.128.0/19", "type": "Utility", "id":"subnet-0fa0853be13335e76"}
-- {"name": "public-us-east-2c", "zone": "us-east-2c", "cidr": "10.0.160.0/19", "type": "Utility", "id":"subnet-08a60edc2cab3be10"}
-    

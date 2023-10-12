@@ -1,6 +1,0 @@
-FROM alpine:3.8
-ADD connectors /var/connectors
-ADD entrypoint.sh /
-RUN chmod +x /entrypoint.sh
-VOLUME /var/connectors
-ENTRYPOINT /entrypoint.sh

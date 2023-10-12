@@ -1,1 +1,0 @@
-alter table devices add column fw_properties_req JSON;

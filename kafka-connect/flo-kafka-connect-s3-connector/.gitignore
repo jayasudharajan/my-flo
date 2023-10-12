@@ -1,5 +1,0 @@
-.idea/
-target/
-connectors/s3-connector
-.DS_Store
-*.iml
